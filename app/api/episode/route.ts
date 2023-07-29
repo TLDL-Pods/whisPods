@@ -11,7 +11,7 @@ export async function GET(req: NextRequest) {
     // const episodeNumberStr: string | null =
     //   req.nextUrl.searchParams.get("episode_number");
 
-    const { searchParams } = new URL(req.url);
+    const { searchParams } = new URL(req.url, "http://localhost");
     const episodeNumberStr = searchParams.get("episode_number");
 
     if (episodeNumberStr !== null) {
