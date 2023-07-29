@@ -2,6 +2,8 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { getClientAndDb } from "../mongo/db";
 
+export const dynamic = "force-dynamic";
+
 export async function GET(req: NextRequest) {
   try {
     const { client, db } = await getClientAndDb();
@@ -11,7 +13,8 @@ export async function GET(req: NextRequest) {
     // const episodeNumberStr: string | null =
     //   req.nextUrl.searchParams.get("episode_number");
 
-    const { searchParams } = new URL(req.url, "http://localhost");
+    // const { searchParams } = new URL(req.url, "http://localhost");
+    const { searchParams } = req.nextUrl;
     const episodeNumberStr = searchParams.get("episode_number");
 
     if (episodeNumberStr !== null) {
