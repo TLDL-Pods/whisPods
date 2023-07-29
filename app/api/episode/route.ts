@@ -8,8 +8,12 @@ export async function GET(req: NextRequest) {
     const collection = db.collection("thedailygweiRecap");
 
     // Get episode Number
-    const episodeNumberStr: string | null =
-      req.nextUrl.searchParams.get("episode_number");
+    // const episodeNumberStr: string | null =
+    //   req.nextUrl.searchParams.get("episode_number");
+
+    const { searchParams } = new URL(req.url);
+    const episodeNumberStr = searchParams.get("episode_number");
+
     if (episodeNumberStr !== null) {
       const episodeNumberInt = parseInt(episodeNumberStr, 10);
       // Fetch data from the collection based on episode number
