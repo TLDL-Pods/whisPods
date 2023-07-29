@@ -8,7 +8,7 @@ interface PageSelectProps {
 
 export default function PageSelect({ index, episode }: PageSelectProps) {
   return (
-    <div className="mt-5 flex text-black">
+    <div className="mt-5 flex">
       <div key={index} className="mb-5">
         <p>{episode.release_date}</p>
         <h2 className="flex">
