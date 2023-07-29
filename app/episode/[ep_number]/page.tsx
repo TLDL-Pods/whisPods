@@ -28,27 +28,15 @@ export default function EpisodePage({
   }, []);
 
   if (!data) {
-    return (
-      <div>
-        Loading... <br />
-        <button
-          onClick={async () => {
-            const res = await fetch(`/api/episode?episode_number="624"}`);
-            console.log(res);
-          }}
-        >
-          Reload
-        </button>
-      </div>
-    );
+    return <div>Loading...</div>;
   }
 
   return (
-    <div className="flex w-full justify-center">
+    <div className="flex justify-center w-full">
       <div className="w-3/4 ">
-        <div className="my-4 flex w-40">
+        <div className="flex w-40 my-4">
           <label>Mode:</label>
-          <div className="ml-4 flex">
+          <div className="flex ml-4">
             <button
               className={`${
                 !isELI5 ? "bg-opacity-100" : "bg-opacity-20"
