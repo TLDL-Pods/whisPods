@@ -10,14 +10,10 @@ export async function GET() {
 
     // Fetch all documents from the collection
     const data = await collection.find().toArray();
-    // console.log("data", data);
 
-    // Return the data in a standard response format
     return NextResponse.json({ status: 200, message: "Success", data: data });
-  } catch (error) {
+  } catch (error: any) {
     console.error(error);
-
-    // Return a 500 Internal Server Error response with the error message
-    return NextResponse.error({ status: 500, message: error.message });
+    return NextResponse.json({ status: 500, message: error.message });
   }
 }
