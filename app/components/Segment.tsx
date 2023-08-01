@@ -14,35 +14,23 @@ export default function IndividualSegment({
   segment,
   isELI5,
 }: IndividualSegmentProps) {
-  if (!isELI5) {
-    return (
-      <div key={index} className="my-6">
-        <h1 className="mb-2 text-xl font-bold">{segment.headline}</h1>
-        <ul>
-          {data.episode_data[index].bullets.map((bullet, index) => (
+  return (
+    <div key={index} className="my-6">
+      <h1 className="mb-2 text-xl font-bold">
+        {isELI5 ? segment.headline_ELI5 : segment.headline}
+      </h1>
+      <ul>
+        {(isELI5 ? segment.bullets_ELI5 : segment.bullets).map(
+          (bullet, index) => (
             <li key={index} className="ml-8">
               -- {bullet}
             </li>
-          ))}
-        </ul>
-        <p className="my-2 text-sm">{segment.summary}</p>
-      </div>
-    );
-  }
-
-  if (isELI5) {
-    return (
-      <div key={index} className="my-6">
-        <h1 className="mb-2 text-xl font-bold">{segment.headline_ELI5}</h1>
-        <ul>
-          {data.episode_data[index].bullets_ELI5.map((bullet, index) => (
-            <li key={index} className="ml-8">
-              -- {bullet}
-            </li>
-          ))}
-        </ul>
-        <p className="my-2 text-sm">{segment.summary_ELI5}</p>
-      </div>
-    );
-  }
+          )
+        )}
+      </ul>
+      <p className="my-2 text-sm">
+        {isELI5 ? segment.summary_ELI5 : segment.summary}
+      </p>
+    </div>
+  );
 }

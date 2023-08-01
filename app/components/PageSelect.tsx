@@ -1,5 +1,6 @@
 import { EpisodeProps } from "@/types";
 import Link from "next/link";
+import { RiMegaphoneLine } from "react-icons/ri";
 
 interface PageSelectProps {
   index: number;
@@ -12,6 +13,14 @@ export default function PageSelect({
   episode,
   cleanEpisodeTitle,
 }: PageSelectProps) {
+  const topThreeSegments = episode.episode_data
+    .sort((a, b) => {
+      const lengthA = a.end_time_ms - a.start_time_ms;
+      const lengthB = b.end_time_ms - b.start_time_ms;
+      return lengthB - lengthA; // for descending order
+    })
+    .slice(0, 3);
+
   return (
     <Link href={`/episode/${episode.episode_number}`}>
       <div className="mx-auto flex h-96 w-full justify-center bg-stone-950 text-center transition-all duration-500 hover:bg-stone-800">
@@ -29,6 +38,16 @@ export default function PageSelect({
             <p className="text-blue-600">{episode.episode_number}</p>
 
             {cleanEpisodeTitle(episode.episode_title)}
+            <div className="mt-4 w-fit">
+              {topThreeSegments.map((segment, index) => (
+                <div key={index} className="mx-auto my-auto flex">
+                  <p className="my-auto">
+                    <RiMegaphoneLine />
+                  </p>
+                  <p className="ml-2">{segment.headline}</p>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>

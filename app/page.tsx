@@ -42,10 +42,13 @@ export default function Home() {
     return () => clearInterval(interval);
   }, [latestEpisode, animationState]);
 
-  const displayedSegments = latestEpisode?.episode_data.slice(
-    startIndex,
-    startIndex + 4
-  );
+  const displayedSegments = latestEpisode?.episode_data
+    .sort((a: SegmentProps, b: SegmentProps) => {
+      const lengthA = a.end_time_ms - a.start_time_ms;
+      const lengthB = b.end_time_ms - b.start_time_ms;
+      return lengthB - lengthA;
+    })
+    .slice(startIndex, startIndex + 4);
 
   function cleanEpisodeTitle(title: string): string {
     if (title?.endsWith("and more")) {
@@ -70,7 +73,7 @@ export default function Home() {
             </div>
           )}
           <div className="relative flex h-full w-full justify-center">
-            <div className="flex h-full w-full items-center justify-start bg-gradient-to-r from-stone-950 via-black via-65% to-transparent">
+            <div className="flex h-full w-full items-center justify-start bg-gradient-to-r from-stone-950 via-stone-950 via-65% to-transparent">
               <div className="h-full w-2/3 p-12">
                 <h1 className="text-center text-xl text-violet-200">
                   LATEST EPISODE
@@ -78,11 +81,10 @@ export default function Home() {
                 <p className="mb-5 text-center">
                   {latestEpisode?.release_date}
                 </p>
-
                 <h2 className="text-center text-2xl text-violet-400">
                   TDGR #{latestEpisode?.episode_number}
                 </h2>
-                <h1 className="mt-4 text-center text-4xl">
+                <h1 className="text-center text-4xl">
                   {cleanEpisodeTitle(
                     latestEpisode?.episode_title
                   )?.toUpperCase()}

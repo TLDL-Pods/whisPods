@@ -13,7 +13,7 @@ export default function Navbar({ children }: { children: React.ReactNode }) {
               <p className="my-auto text-5xl text-violet-400">
                 <RiGasStationFill />
               </p>
-              <p className="my-auto ml-2">TDGR Recap</p>
+              <p className="mx-auto my-auto ml-2 text-5xl">TLDL:</p>
             </div>
           </Link>
         </div>
