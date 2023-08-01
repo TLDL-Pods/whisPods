@@ -60,7 +60,7 @@ export default function Home() {
   }
 
   return (
-    <div className="h-screen min-h-screen w-full max-w-full">
+    <div className="h-screen min-h-screen w-full max-w-full overflow-y-scroll">
       <Link href={`/episode/${latestEpisode?.episode_number}`}>
         <div className="hero relative h-1/2 w-full overflow-x-hidden border-b border-opacity-40">
           {latestEpisode && (

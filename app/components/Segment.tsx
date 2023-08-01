@@ -15,7 +15,10 @@ export default function IndividualSegment({
   isELI5,
 }: IndividualSegmentProps) {
   return (
-    <div key={index} className="my-6">
+    <div
+      key={index}
+      className={`h-fit p-24 transition-all duration-1000 hover:bg-stone-950`}
+    >
       <h1 className="mb-2 text-xl font-bold">
         {isELI5 ? segment.headline_ELI5 : segment.headline}
       </h1>
