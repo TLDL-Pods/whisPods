@@ -25,7 +25,7 @@ export default function Navbar({ children }: { children: React.ReactNode }) {
       </header>
 
       {/* Main Content */}
-      <div className="flex-1 overflow-hidden bg-zinc-900">{children}</div>
+      <div className="flex-1 overflow-hidden bg-stone-950">{children}</div>
     </div>
   );
 }
