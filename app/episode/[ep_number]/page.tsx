@@ -75,7 +75,7 @@ export default function EpisodePage({
             ))}
           </ul>
         </div>
-        <div className="ml-80 w-full">
+        <div className="w-full pl-80">
           <div className="my-8 pl-24">
             <h3 className="mb-6 text-3xl font-bold text-violet-400">
               The Daily Gwei Refuel
