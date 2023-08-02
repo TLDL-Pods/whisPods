@@ -42,10 +42,13 @@ export default function Home() {
     return () => clearInterval(interval);
   }, [latestEpisode, animationState]);
 
-  const displayedSegments = latestEpisode?.episode_data.slice(
-    startIndex,
-    startIndex + 4
-  );
+  const displayedSegments = latestEpisode?.episode_data
+    .sort((a: SegmentProps, b: SegmentProps) => {
+      const lengthA = a.end_time_ms - a.start_time_ms;
+      const lengthB = b.end_time_ms - b.start_time_ms;
+      return lengthB - lengthA;
+    })
+    .slice(startIndex, startIndex + 4);
 
   function cleanEpisodeTitle(title: string): string {
     if (title?.endsWith("and more")) {
@@ -57,37 +60,36 @@ export default function Home() {
   }
 
   return (
-    <div className="h-screen min-h-screen w-full max-w-full">
+    <div className="w-full h-screen max-w-full min-h-screen overflow-y-scroll">
       <Link href={`/episode/${latestEpisode?.episode_number}`}>
-        <div className="hero relative h-1/2 w-full overflow-x-hidden border-b border-opacity-40">
+        <div className="relative w-full overflow-x-hidden border-b hero h-1/2 border-opacity-40">
           {latestEpisode && (
             <div className="absolute inset-0">
               <img
                 src="https://picsum.photos/1920/1080/"
                 alt="Background"
-                className="h-full w-full object-cover"
+                className="object-cover w-full h-full"
               />
             </div>
           )}
-          <div className="relative flex h-full w-full justify-center">
-            <div className="flex h-full w-full items-center justify-start bg-gradient-to-r from-stone-950 via-black via-65% to-transparent">
-              <div className="h-full w-2/3 p-12">
-                <h1 className="text-center text-xl text-violet-200">
+          <div className="relative flex justify-center w-full h-full">
+            <div className="flex h-full w-full items-center justify-start bg-gradient-to-r from-stone-950 via-stone-950 via-65% to-transparent">
+              <div className="w-2/3 h-full p-12">
+                <h1 className="text-xl text-center text-violet-200">
                   LATEST EPISODE
                 </h1>
                 <p className="mb-5 text-center">
                   {latestEpisode?.release_date}
                 </p>
-
-                <h2 className="text-center text-2xl text-violet-400">
+                <h2 className="text-2xl text-center text-violet-400">
                   TDGR #{latestEpisode?.episode_number}
                 </h2>
-                <h1 className="mt-4 text-center text-4xl">
+                <h1 className="text-4xl text-center">
                   {cleanEpisodeTitle(
                     latestEpisode?.episode_title
                   )?.toUpperCase()}
                 </h1>
-                <div className="animatedHeadlines mx-auto my-6 flex h-2/5 w-fit flex-col p-6 transition-all duration-500">
+                <div className="flex flex-col p-6 mx-auto my-6 transition-all duration-500 animatedHeadlines h-2/5 w-fit">
                   {displayedSegments?.map(
                     (segment: SegmentProps, index: number) => (
                       <div
@@ -100,7 +102,7 @@ export default function Home() {
                         }}
                       >
                         {segment.headline.length > 1 && (
-                          <div className="mx-auto flex">
+                          <div className="flex mx-auto">
                             <div className="my-auto">
                               <RiMegaphoneLine />
                             </div>
@@ -112,7 +114,7 @@ export default function Home() {
                   )}
                 </div>
                 <div className="flex w-full">
-                  <button className="btn mx-auto rounded-lg bg-violet-700 bg-opacity-50 px-4 py-2 transition-all duration-500 hover:bg-opacity-100">
+                  <button className="px-4 py-2 mx-auto transition-all duration-500 bg-opacity-50 rounded-lg btn bg-violet-700 hover:bg-opacity-100">
                     View More
                   </button>
                 </div>
