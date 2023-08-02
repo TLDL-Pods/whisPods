@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { RiGasStationFill } from "react-icons/ri";
 
 export default function Navbar({ children }: { children: React.ReactNode }) {
   return (
@@ -10,11 +9,8 @@ export default function Navbar({ children }: { children: React.ReactNode }) {
       <header className="flex items-center justify-between h-20 px-6 text-xl font-semibold text-gray-100 bg-stone-950">
         {/* Logo */}
         <Link href={"/"}>
-          <div className="flex items-center text-4xl font-bold">
-            <p className="text-5xl text-violet-400">
-              <RiGasStationFill />
-            </p>
-            <p className="ml-2 text-5xl">TLDL:</p>
+          <div className="my-auto flex items-center text-4xl font-bold">
+            <p className="my-auto ml-2 text-4xl">TLDL:</p>
           </div>
         </Link>
 
