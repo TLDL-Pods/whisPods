@@ -12,14 +12,6 @@ import {
   RiArrowUpSFill,
   RiMegaphoneLine,
 } from "react-icons/ri";
-import { useState } from "react";
-import {
-  RiArrowUpCircleFill,
-  RiArrowUpCircleLine,
-  RiArrowUpFill,
-  RiArrowUpSFill,
-  RiMegaphoneLine,
-} from "react-icons/ri";
 
 interface IndividualSegmentProps {
   index: number;
