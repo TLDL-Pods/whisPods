@@ -1,7 +1,17 @@
 "use client";
 
+"use client";
+
 import { EpisodeProps, SegmentProps } from "@/types";
 import Link from "next/link";
+import { useState } from "react";
+import {
+  RiArrowUpCircleFill,
+  RiArrowUpCircleLine,
+  RiArrowUpFill,
+  RiArrowUpSFill,
+  RiMegaphoneLine,
+} from "react-icons/ri";
 import { useState } from "react";
 import {
   RiArrowUpCircleFill,

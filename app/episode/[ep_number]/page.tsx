@@ -2,6 +2,8 @@
 import IndividualSegment from "@/app/components/Segment";
 import { EpisodeProps, SegmentProps } from "@/types";
 import { useState, useEffect, useRef, createRef } from "react";
+import { EpisodeProps, SegmentProps } from "@/types";
+import { useState, useEffect, useRef, createRef } from "react";
 
 export default function EpisodePage({
   params,
@@ -10,6 +12,8 @@ export default function EpisodePage({
 }) {
   const [data, setData] = useState<EpisodeProps>();
   const [isELI5, setIsELI5] = useState<boolean>(false);
+
+  const segmentRefs = useRef<Array<React.RefObject<HTMLDivElement>>>([]);
 
   const segmentRefs = useRef<Array<React.RefObject<HTMLDivElement>>>([]);
 
@@ -22,6 +26,21 @@ export default function EpisodePage({
       const episodeNumber = parseInt(params.ep_number, 10);
       const res = await fetch(`/api/episode?episode_number=${episodeNumber}`);
       const json = await res.json();
+      const sortedData = {
+        ...json["data"],
+        episode_data: json["data"].episode_data.sort(
+          (a: SegmentProps, b: SegmentProps) => {
+            const lengthA = a.end_time_ms - a.start_time_ms;
+            const lengthB = b.end_time_ms - b.start_time_ms;
+            return lengthB - lengthA;
+          }
+        ),
+      };
+
+      segmentRefs.current = sortedData.episode_data.map(() =>
+        createRef<HTMLDivElement>()
+      );
+      setData(sortedData);
       const sortedData = {
         ...json["data"],
         episode_data: json["data"].episode_data.sort(
