@@ -1,7 +1,7 @@
 "use client";
 import IndividualSegment from "@/app/components/Segment";
 import { EpisodeProps, SegmentProps } from "@/types";
-import { useState, useEffect, useRef, createRef } from "react";
+import { useState, useEffect, useRef, createRef, useContext } from "react";
 
 export default function EpisodePage({
   params,
@@ -59,7 +59,7 @@ export default function EpisodePage({
             {data.episode_data.map((segment, index) => (
               <li
                 key={segment.segment_number}
-                className="my-auto flex h-24 w-80 cursor-pointer border-b border-violet-400 border-opacity-40 align-middle text-sm transition-all duration-500 hover:bg-stone-800"
+                className="my-auto flex h-24 w-80 cursor-pointer border-b border-violet-200 border-opacity-40 align-middle text-sm transition-all duration-500 hover:bg-stone-800"
                 onClick={() => {
                   const segmentRef = segmentRefs.current[index]?.current;
                   if (segmentRef) {
@@ -87,7 +87,7 @@ export default function EpisodePage({
             </h3>
             <h3 className="text-violet-100">{data.release_date}</h3>
             <h1 className="mt-4 text-4xl text-violet-100">
-              {data.episode_title.toUpperCase()}
+              {data.episode_title_generated.toUpperCase()}
             </h1>
           </div>
           <div>

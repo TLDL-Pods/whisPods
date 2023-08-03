@@ -35,7 +35,7 @@ export default function PageSelect({
 
             <p className="text-blue-600">{episode.episode_number}</p>
 
-            {cleanEpisodeTitle(episode.episode_title)}
+            {cleanEpisodeTitle(episode.episode_title_generated.toUpperCase())}
             <div className="mt-4 w-fit">
               {topThreeSegments.map((segment, index) => (
                 <div

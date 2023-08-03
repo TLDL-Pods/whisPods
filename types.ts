@@ -32,3 +32,8 @@ export interface EpisodeProps {
   youtube_url: string;
   _id: string;
 }
+
+export interface EpisodeContextType {
+  data: EpisodeProps[];
+  setData: (data: EpisodeProps[]) => void;
+}

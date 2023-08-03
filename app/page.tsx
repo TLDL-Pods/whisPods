@@ -1,13 +1,14 @@
 "use client";
 
 import Link from "next/link";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import PageSelect from "./components/PageSelect";
 import { EpisodeProps, SegmentProps } from "@/types";
 import { RiMegaphoneLine } from "react-icons/ri";
+import { useEpisodeContext } from "./hooks/useEpisodeContext";
 
 export default function Home() {
-  const [data, setData] = useState<EpisodeProps[]>([]);
+  const { data, setData } = useEpisodeContext();
   const [currentPage, setCurrentPage] = useState(1);
   const [episodesPerPage] = useState(10);
   const [startIndex, setStartIndex] = useState(0);
@@ -19,15 +20,6 @@ export default function Home() {
   const [animationState, setAnimationState] = useState<
     "slide-in" | "slide-out"
   >("slide-in");
-
-  useEffect(() => {
-    const fetchData = async () => {
-      const res = await fetch(`/api/all-episodes`);
-      const json = await res.json();
-      setData(json["data"]);
-    };
-    fetchData();
-  }, []);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -86,7 +78,7 @@ export default function Home() {
                 </h2>
                 <h1 className="text-center text-4xl">
                   {cleanEpisodeTitle(
-                    latestEpisode?.episode_title
+                    latestEpisode?.episode_title_generated
                   )?.toUpperCase()}
                 </h1>
                 <div className="animatedHeadlines mx-auto my-6 flex h-2/5 w-fit flex-col p-6 transition-all duration-500">

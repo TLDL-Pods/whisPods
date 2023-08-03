@@ -1,7 +1,5 @@
-"use client";
-
 import Link from "next/link";
-
+import { SearchBar } from "./components/SearchBar";
 export default function Navbar({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex h-screen flex-col bg-stone-950">
@@ -11,7 +9,7 @@ export default function Navbar({ children }: { children: React.ReactNode }) {
             <p className="my-auto ml-2 text-4xl">TLDL:</p>
           </div>
         </Link>
-        <div className="mx-12 hidden text-gray-100 lg:flex"></div>
+        <SearchBar />
       </header>
       <div className="flex-1 overflow-hidden bg-stone-950">{children}</div>
     </div>

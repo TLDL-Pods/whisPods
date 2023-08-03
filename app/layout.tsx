@@ -1,6 +1,6 @@
 import "./globals.css";
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { EpisodeProvider } from "./contexts/dataContext";
 import Navbar from "./Navbar";
 
 export const metadata: Metadata = {
@@ -19,7 +19,9 @@ export default function RootLayout({
         className="min-h-screen w-full
        bg-stone-900 text-white"
       >
-        <Navbar>{children}</Navbar>
+        <EpisodeProvider>
+          <Navbar>{children}</Navbar>
+        </EpisodeProvider>
       </body>
     </html>
   );
