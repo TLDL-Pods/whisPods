@@ -93,7 +93,7 @@ export default function Home() {
                   {displayedSegments?.map(
                     (segment: SegmentProps, index: number) => (
                       <div
-                        key={index}
+                        key={segment.segment_number}
                         className={animationState}
                         onAnimationEnd={(e) => {
                           if (e.animationName === "slideInFromLeft") {
@@ -129,7 +129,6 @@ export default function Home() {
           (episode: EpisodeProps, index: number) =>
             index > 1 && (
               <PageSelect
-                key={index}
                 index={index}
                 episode={episode}
                 cleanEpisodeTitle={cleanEpisodeTitle}

@@ -9,7 +9,6 @@ interface PageSelectProps {
 }
 
 export default function PageSelect({
-  index,
   episode,
   cleanEpisodeTitle,
 }: PageSelectProps) {
@@ -24,7 +23,7 @@ export default function PageSelect({
   return (
     <Link href={`/episode/${episode.episode_number}`}>
       <div className="mx-auto flex h-96 w-full justify-center bg-stone-950 text-center transition-all duration-500 hover:bg-stone-800">
-        <div key={index} className="relative my-auto flex">
+        <div className="relative my-auto flex">
           <div className="my-auto h-64 w-64">
             <img
               src="https://picsum.photos/1920/1080"
@@ -40,7 +39,10 @@ export default function PageSelect({
             {cleanEpisodeTitle(episode.episode_title)}
             <div className="mt-4 w-fit">
               {topThreeSegments.map((segment, index) => (
-                <div key={index} className="mx-auto my-auto flex">
+                <div
+                  key={segment.segment_number}
+                  className="mx-auto my-auto flex"
+                >
                   <p className="my-auto">
                     <RiMegaphoneLine />
                   </p>

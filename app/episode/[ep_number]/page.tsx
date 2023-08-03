@@ -59,7 +59,7 @@ export default function EpisodePage({
             {data.episode_data.map((segment, index) => (
               <div>
                 <li
-                  key={index}
+                  key={segment.segment_number}
                   className="cursor-pointer overflow-hidden truncate whitespace-nowrap px-6 pt-8 transition-all duration-500 hover:bg-stone-800"
                   onClick={() => {
                     const segmentRef = segmentRefs.current[index]?.current;
@@ -89,13 +89,16 @@ export default function EpisodePage({
             </h1>
           </div>
           <div>
-            {data.episode_data.map((item, index) => (
-              <div ref={segmentRefs.current[index]} key={index}>
+            {data.episode_data.map((segment, index) => (
+              <div
+                ref={segmentRefs.current[index]}
+                key={segment.segment_number}
+              >
                 <IndividualSegment
-                  key={index}
+                  key={segment.segment_number}
                   index={index}
                   data={data}
-                  segment={item}
+                  segment={segment}
                   isELI5={isELI5}
                 />
                 <div className="mx-auto h-1 w-full border-b border-white border-opacity-40"></div>

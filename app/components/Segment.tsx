@@ -34,16 +34,14 @@ export default function IndividualSegment({
       <div className="p-4">
         <h3 className="text-lg font-bold text-violet-400">TLDL:</h3>
         <ul className="mt-2 w-fit bg-stone-950 p-4">
-          {(isELI5 ? segment.bullets_ELI5 : segment.bullets).map(
-            (bullet, index) => (
-              <li key={index} className="flex">
-                <div className="my-auto">
-                  <RiMegaphoneLine />
-                </div>
-                <p className="ml-2">{bullet}</p>
-              </li>
-            )
-          )}
+          {(isELI5 ? segment.bullets_ELI5 : segment.bullets).map((bullet) => (
+            <li key={bullet} className="flex">
+              <div className="my-auto">
+                <RiMegaphoneLine />
+              </div>
+              <p className="ml-2">{bullet}</p>
+            </li>
+          ))}
         </ul>
       </div>
       <div className="w-fit px-4">
