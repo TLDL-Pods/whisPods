@@ -22,21 +22,21 @@ export default function EpisodePage({
       const episodeNumber = parseInt(params.ep_number, 10);
       const res = await fetch(`/api/episode?episode_number=${episodeNumber}`);
       const json = await res.json();
+      const filteredSegments = json["data"].episode_data.filter(
+        (segment: SegmentProps) => segment.segment_number !== 0
+      );
       const sortedData = {
         ...json["data"],
-        episode_data: json["data"].episode_data.sort(
-          (a: SegmentProps, b: SegmentProps) => {
-            const lengthA = a.end_time_ms - a.start_time_ms;
-            const lengthB = b.end_time_ms - b.start_time_ms;
-            return lengthB - lengthA;
-          }
+        episode_data: filteredSegments.sort(
+          (a: SegmentProps, b: SegmentProps) =>
+            b.segment_length_ms - a.segment_length_ms
         ),
       };
-
       segmentRefs.current = sortedData.episode_data.map(() =>
         createRef<HTMLDivElement>()
       );
       setData(sortedData);
+      console.log(sortedData);
     };
     fetchData();
   }, []);
@@ -48,30 +48,35 @@ export default function EpisodePage({
   return (
     <div className="flex h-screen">
       <div className="w-full justify-center overflow-y-scroll">
-        <div className="fixed left-0 h-screen w-80 overflow-y-scroll bg-stone-950">
+        <div className="fixed left-0 h-full w-80 overflow-y-scroll bg-stone-950">
           <h3 className="mt-4 text-center text-violet-200">
             Episode {data.episode_number}
           </h3>
           <h4 className="text-center text-2xl font-bold text-violet-400">
             Stories
           </h4>
-          <ul>
+          <ul
+            className="pb-32
+          "
+          >
             {data.episode_data.map((segment, index) => (
-              <div>
-                <li
-                  key={segment.segment_number}
-                  className="cursor-pointer overflow-hidden truncate whitespace-nowrap px-6 pt-8 transition-all duration-500 hover:bg-stone-800"
-                  onClick={() => {
-                    const segmentRef = segmentRefs.current[index]?.current;
-                    if (segmentRef) {
-                      segmentRef.scrollIntoView();
-                    }
-                  }}
-                >
+              <li
+                key={segment.segment_number}
+                className="my-auto flex h-24 w-80 cursor-pointer border-b border-violet-400 border-opacity-40 align-middle text-sm transition-all duration-500 hover:bg-stone-800"
+                onClick={() => {
+                  const segmentRef = segmentRefs.current[index]?.current;
+                  if (segmentRef) {
+                    segmentRef.scrollIntoView();
+                  }
+                }}
+              >
+                <p className="mx-4 my-auto text-lg font-semibold text-violet-400">
+                  {index + 1}
+                </p>
+                <div className="my-auto w-4/5 p-2">
                   {isELI5 ? segment.headline_ELI5 : segment.headline}
-                  <div className="mx-auto w-1/4 border-b border-violet-400 border-opacity-25 pb-8"></div>
-                </li>
-              </div>
+                </div>
+              </li>
             ))}
           </ul>
         </div>

@@ -1,30 +1,34 @@
 export interface SegmentProps {
-  segment_number: number;
-  complete_transcript: string;
-  timestamp: string;
-  story: string;
   URL: string;
-  start_time_ms: number;
+  bullets: string[];
+  bullets_ELI5: string[];
+  complete_transcript: string;
   end_time_ms: number;
   headline: string;
   headline_ELI5: string;
+  segment_length_ms: number;
+  segment_number: number;
+  start_time_ms: number;
+  story: string;
   summary: string;
   summary_ELI5: string;
-  bullets: string[];
-  bullets_ELI5: string[];
+  timestamp: string;
 }
 
 export interface EpisodeProps {
-  item_title: string;
-  release_date: string;
-  full_item_url: string;
-  item_body: string;
-  episode_title: string;
-  episode_number: number;
+  episode_data: SegmentProps[];
   episode_date: number;
-  episode_year: number;
-  episode_month: number;
   episode_day: number;
   episode_day_of_week: number;
-  episode_data: SegmentProps[];
+  episode_month: number;
+  episode_number: number;
+  episode_title: string;
+  episode_title_generated: string;
+  episode_year: number;
+  full_item_url: string;
+  item_body: string;
+  item_title: string;
+  release_date: string;
+  youtube_url: string;
+  _id: string;
 }

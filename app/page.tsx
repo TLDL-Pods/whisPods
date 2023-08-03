@@ -127,9 +127,9 @@ export default function Home() {
         .reverse()
         .map(
           (episode: EpisodeProps, index: number) =>
-            index > 1 && (
+            index > 0 && (
               <PageSelect
-                index={index}
+                key={episode._id}
                 episode={episode}
                 cleanEpisodeTitle={cleanEpisodeTitle}
               />

@@ -3,7 +3,6 @@ import Link from "next/link";
 import { RiMegaphoneLine } from "react-icons/ri";
 
 interface PageSelectProps {
-  index: number;
   episode: EpisodeProps;
   cleanEpisodeTitle: (title: string) => string;
 }

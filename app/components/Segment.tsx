@@ -47,7 +47,7 @@ export default function IndividualSegment({
         </ul>
       </div>
       <div className="w-fit px-4">
-        <h3
+        <div
           className="flex cursor-pointer text-lg font-bold text-violet-400"
           onClick={() => setShowFullStory(!showFullStory)}
         >
@@ -59,7 +59,7 @@ export default function IndividualSegment({
           >
             <RiArrowUpSFill />
           </div>
-        </h3>
+        </div>
 
         <div
           className={`ml-6 max-h-fit w-3/4 cursor-pointer overflow-y-auto transition-all duration-500 ${
