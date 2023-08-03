@@ -55,10 +55,7 @@ export default function EpisodePage({
           <h4 className="text-center text-2xl font-bold text-violet-400">
             Stories
           </h4>
-          <ul
-            className="pb-32
-          "
-          >
+          <ul className="pb-32">
             {data.episode_data.map((segment, index) => (
               <li
                 key={segment.segment_number}
