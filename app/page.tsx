@@ -1,12 +1,8 @@
 "use client";
 
 import Link from "next/link";
-
-import Link from "next/link";
 import { useState, useEffect } from "react";
 import PageSelect from "./components/PageSelect";
-import { EpisodeProps, SegmentProps } from "@/types";
-import { RiMegaphoneLine } from "react-icons/ri";
 import { EpisodeProps, SegmentProps } from "@/types";
 import { RiMegaphoneLine } from "react-icons/ri";
 
@@ -14,15 +10,6 @@ export default function Home() {
   const [data, setData] = useState<EpisodeProps[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [episodesPerPage] = useState(10);
-  const [startIndex, setStartIndex] = useState(0);
-  const indexOfLastEpisode = currentPage * episodesPerPage;
-  const indexOfFirstEpisode = indexOfLastEpisode - episodesPerPage;
-  const currentEpisodes = data.slice(indexOfFirstEpisode, indexOfLastEpisode);
-  const latestEpisode = currentEpisodes[currentEpisodes.length - 1];
-
-  const [animationState, setAnimationState] = useState<
-    "slide-in" | "slide-out"
-  >("slide-in");
   const [startIndex, setStartIndex] = useState(0);
   const indexOfLastEpisode = currentPage * episodesPerPage;
   const indexOfFirstEpisode = indexOfLastEpisode - episodesPerPage;
@@ -42,35 +29,6 @@ export default function Home() {
     fetchData();
   }, []);
 
-  useEffect(() => {
-    const interval = setInterval(() => {
-      if (latestEpisode && animationState === "slide-out") {
-        setStartIndex(
-          (prevIndex) => (prevIndex + 4) % latestEpisode.episode_data.length
-        );
-        setAnimationState("slide-in");
-      }
-    }, 6000);
-
-    return () => clearInterval(interval);
-  }, [latestEpisode, animationState]);
-
-  const displayedSegments = latestEpisode?.episode_data
-    .sort((a: SegmentProps, b: SegmentProps) => {
-      const lengthA = a.end_time_ms - a.start_time_ms;
-      const lengthB = b.end_time_ms - b.start_time_ms;
-      return lengthB - lengthA;
-    })
-    .slice(startIndex, startIndex + 4);
-
-  function cleanEpisodeTitle(title: string): string {
-    if (title?.endsWith("and more")) {
-      return title.replace("and more", "").trim();
-    } else if (title?.endsWith("& more")) {
-      return title.replace("& more", "").trim();
-    }
-    return title;
-  }
   useEffect(() => {
     const interval = setInterval(() => {
       if (latestEpisode && animationState === "slide-out") {
