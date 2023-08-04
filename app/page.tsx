@@ -42,15 +42,6 @@ export default function Home() {
     })
     .slice(startIndex, startIndex + 4);
 
-  function cleanEpisodeTitle(title: string): string {
-    if (title?.endsWith("and more")) {
-      return title.replace("and more", "").trim();
-    } else if (title?.endsWith("& more")) {
-      return title.replace("& more", "").trim();
-    }
-    return title;
-  }
-
   return (
     <div className="h-screen min-h-screen w-full max-w-full overflow-y-scroll">
       <Link href={`/episode/${latestEpisode?.episode_number}`}>
@@ -77,9 +68,7 @@ export default function Home() {
                   TDGR #{latestEpisode?.episode_number}
                 </h2>
                 <h1 className="text-center text-4xl">
-                  {cleanEpisodeTitle(
-                    latestEpisode?.episode_title_generated
-                  )?.toUpperCase()}
+                  {latestEpisode?.episode_title_generated?.toUpperCase()}
                 </h1>
                 <div className="animatedHeadlines mx-auto my-6 flex h-2/5 w-fit flex-col p-6 transition-all duration-500">
                   {displayedSegments?.map(
@@ -115,18 +104,14 @@ export default function Home() {
           </div>
         </div>
       </Link>
-      {currentEpisodes
-        .reverse()
-        .map(
-          (episode: EpisodeProps, index: number) =>
-            index > 0 && (
-              <PageSelect
-                key={episode._id}
-                episode={episode}
-                cleanEpisodeTitle={cleanEpisodeTitle}
-              />
-            )
-        )}
+      <div className="pb-32">
+        {currentEpisodes
+          .reverse()
+          .map(
+            (episode: EpisodeProps, index: number) =>
+              index > 0 && <PageSelect key={episode._id} episode={episode} />
+          )}
+      </div>
     </div>
   );
 }
