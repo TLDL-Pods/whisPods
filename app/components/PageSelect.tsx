@@ -17,7 +17,7 @@ export default function PageSelect({ episode }: PageSelectProps) {
 
   return (
     <Link href={`/episode/${episode.episode_number}`}>
-      <div className="mx-auto flex h-96 min-h-full w-full justify-center border-b border-violet-400 border-opacity-40 bg-stone-950 text-center transition-all duration-500 hover:bg-stone-800">
+      <div className="mx-auto flex h-96 min-h-full w-full justify-center border-t border-violet-400 border-opacity-40 bg-stone-950 text-center transition-all duration-500 hover:bg-stone-800">
         <div className="relative my-auto flex h-full w-3/4">
           <p className="my-auto mr-8 w-24">{episode.release_date}</p>
           <div className="my-auto h-64 w-64">

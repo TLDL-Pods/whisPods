@@ -46,15 +46,15 @@ export default function EpisodePage({
   }
 
   return (
-    <div className="flex h-screen">
-      <div className="h-full w-96 overflow-y-scroll bg-stone-950">
+    <div className="grid grid-cols-4">
+      <div className="fixed left-0 col-span-1 h-screen overflow-y-auto bg-stone-950">
         <h3 className="mt-4 text-center text-violet-200">
           Episode {data.episode_number}
         </h3>
         <h4 className="text-center text-2xl font-bold text-violet-400">
           Stories
         </h4>
-        <ul className="py-12">
+        <ul className="pb-12 pt-2">
           {data.episode_data.map((segment, index) => (
             <li
               key={segment.segment_number}
@@ -76,7 +76,7 @@ export default function EpisodePage({
           ))}
         </ul>
       </div>
-      <div className="w-full justify-center">
+      <div className="col-span-3 ml-[25%]">
         <div className="w-full">
           <div className="my-8 pl-24">
             <h3 className="mb-6 text-3xl font-bold text-violet-400">
@@ -111,7 +111,7 @@ export default function EpisodePage({
           </div>
         </div>
       </div>
-      <div className="fixed bottom-20 right-8 flex w-48 flex-col rounded-lg bg-stone-700 bg-opacity-40 px-4 pb-4 pt-2 text-center">
+      <div className="fixed bottom-8 right-8 flex w-48 flex-col rounded-lg bg-stone-700 bg-opacity-40 px-4 pb-4 pt-2 text-center">
         <label>Mode:</label>
         <div className="mt-2 flex">
           <button
