@@ -80,7 +80,7 @@ export default function Home() {
                 <h1 className="text-center text-4xl">
                   {latestEpisode?.episode_title_generated?.toUpperCase()}
                 </h1>
-                <div className="animatedHeadlines mx-auto my-6 flex h-2/5 w-fit flex-col p-6 transition-all duration-500">
+                <div className="animatedHeadlines mx-auto my-auto flex h-40 w-fit flex-col p-6 transition-all duration-500">
                   {displayedSegments?.map(
                     (segment: SegmentProps, index: number) => (
                       <div
