@@ -1,5 +1,7 @@
 "use client";
 
+"use client";
+
 import { EpisodeProps, SegmentProps } from "@/types";
 import Link from "next/link";
 import { useState } from "react";
@@ -34,20 +36,18 @@ export default function IndividualSegment({
       <div className="p-4">
         <h3 className="text-lg font-bold text-violet-400">TLDL:</h3>
         <ul className="mt-2 w-fit bg-stone-950 p-4">
-          {(isELI5 ? segment.bullets_ELI5 : segment.bullets).map(
-            (bullet, index) => (
-              <li key={index} className="flex">
-                <div className="my-auto">
-                  <RiMegaphoneLine />
-                </div>
-                <p className="ml-2">{bullet}</p>
-              </li>
-            )
-          )}
+          {(isELI5 ? segment.bullets_ELI5 : segment.bullets).map((bullet) => (
+            <li key={bullet} className="flex">
+              <div className="my-auto">
+                <RiMegaphoneLine />
+              </div>
+              <p className="ml-2">{bullet}</p>
+            </li>
+          ))}
         </ul>
       </div>
       <div className="w-fit px-4">
-        <h3
+        <div
           className="flex cursor-pointer text-lg font-bold text-violet-400"
           onClick={() => setShowFullStory(!showFullStory)}
         >
@@ -59,7 +59,7 @@ export default function IndividualSegment({
           >
             <RiArrowUpSFill />
           </div>
-        </h3>
+        </div>
 
         <div
           className={`ml-6 max-h-fit w-3/4 cursor-pointer overflow-y-auto transition-all duration-500 ${

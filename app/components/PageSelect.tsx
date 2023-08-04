@@ -3,13 +3,11 @@ import Link from "next/link";
 import { RiMegaphoneLine } from "react-icons/ri";
 
 interface PageSelectProps {
-  index: number;
   episode: EpisodeProps;
   cleanEpisodeTitle: (title: string) => string;
 }
 
 export default function PageSelect({
-  index,
   episode,
   cleanEpisodeTitle,
 }: PageSelectProps) {
@@ -24,7 +22,7 @@ export default function PageSelect({
   return (
     <Link href={`/episode/${episode.episode_number}`}>
       <div className="flex justify-center w-full mx-auto text-center transition-all duration-500 h-96 bg-stone-950 hover:bg-stone-800">
-        <div key={index} className="relative flex my-auto">
+        <div className="relative flex my-auto">
           <div className="w-64 h-64 my-auto">
             <img
               src="https://picsum.photos/1920/1080"
@@ -37,10 +35,15 @@ export default function PageSelect({
 
             <p className="text-blue-600">{episode.episode_number}</p>
 
-            {cleanEpisodeTitle(episode.episode_title)}
+            {episode.episode_title_generated
+              ? cleanEpisodeTitle(episode.episode_title_generated.toUpperCase())
+              : null}
             <div className="mt-4 w-fit">
               {topThreeSegments.map((segment, index) => (
-                <div key={index} className="flex mx-auto my-auto">
+                <div
+                  key={segment.segment_number}
+                  className="flex mx-auto my-auto"
+                >
                   <p className="my-auto">
                     <RiMegaphoneLine />
                   </p>
