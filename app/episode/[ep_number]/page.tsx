@@ -87,7 +87,9 @@ export default function EpisodePage({
             </h3>
             <h3 className="text-violet-100">{data.release_date}</h3>
             <h1 className="mt-4 text-4xl text-violet-100">
-              {data.episode_title_generated.toUpperCase()}
+              {data.episode_title_generated
+                ? data.episode_title_generated.toUpperCase()
+                : null}
             </h1>
           </div>
           <div>
