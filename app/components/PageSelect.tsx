@@ -21,26 +21,28 @@ export default function PageSelect({
 
   return (
     <Link href={`/episode/${episode.episode_number}`}>
-      <div className="mx-auto flex h-96 w-full justify-center bg-stone-950 text-center transition-all duration-500 hover:bg-stone-800">
-        <div className="relative my-auto flex">
-          <div className="my-auto h-64 w-64">
+      <div className="flex justify-center w-full mx-auto text-center transition-all duration-500 h-96 bg-stone-950 hover:bg-stone-800">
+        <div className="relative flex my-auto">
+          <div className="w-64 h-64 my-auto">
             <img
               src="https://picsum.photos/1920/1080"
               alt="Background"
-              className="my-auto h-full w-full object-cover"
+              className="object-cover w-full h-full my-auto"
             />
           </div>
-          <div className="my-auto flex flex-col p-12">
+          <div className="flex flex-col p-12 my-auto">
             <p>{episode.release_date}</p>
 
             <p className="text-blue-600">{episode.episode_number}</p>
 
-            {cleanEpisodeTitle(episode.episode_title_generated.toUpperCase())}
+            {episode.episode_title_generated
+              ? cleanEpisodeTitle(episode.episode_title_generated.toUpperCase())
+              : null}
             <div className="mt-4 w-fit">
               {topThreeSegments.map((segment, index) => (
                 <div
                   key={segment.segment_number}
-                  className="mx-auto my-auto flex"
+                  className="flex mx-auto my-auto"
                 >
                   <p className="my-auto">
                     <RiMegaphoneLine />
