@@ -52,8 +52,11 @@ export default function PageSelect({ episode }: PageSelectProps) {
               ))}
             </div>
             <div className="mx-auto flex text-xs">
-              {episode.episode_keywords.map((keyword) => (
-                <div className="mx-2 my-auto rounded-lg bg-violet-600 bg-opacity-30 p-1 px-2">
+              {episode.episode_keywords.map((keyword, index) => (
+                <div
+                  key={index}
+                  className="mx-2 my-auto rounded-lg bg-violet-600 bg-opacity-30 p-1 px-2"
+                >
                   <p>{keyword.toUpperCase()}</p>
                 </div>
               ))}

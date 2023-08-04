@@ -11,11 +11,19 @@ export default function Home() {
   const { data, setData } = useEpisodeContext();
   const [currentPage, setCurrentPage] = useState(1);
   const [episodesPerPage] = useState(10);
-  const [startIndex, setStartIndex] = useState(0);
   const indexOfLastEpisode = currentPage * episodesPerPage;
   const indexOfFirstEpisode = indexOfLastEpisode - episodesPerPage;
-  const currentEpisodes = data.slice(indexOfFirstEpisode, indexOfLastEpisode);
-  const latestEpisode = currentEpisodes[currentEpisodes.length - 1];
+  const [startIndex, setStartIndex] = useState(0);
+
+  const sortedEpisodes = [...data].sort(
+    (a, b) => b.episode_date - a.episode_date
+  );
+  const currentEpisodes = sortedEpisodes.slice(
+    indexOfFirstEpisode,
+    indexOfLastEpisode
+  );
+
+  const latestEpisode = currentEpisodes[0];
 
   const [animationState, setAnimationState] = useState<
     "slide-in" | "slide-out"
@@ -28,6 +36,8 @@ export default function Home() {
           (prevIndex) => (prevIndex + 4) % latestEpisode.episode_data.length
         );
         setAnimationState("slide-in");
+      } else if (animationState === "slide-in") {
+        setAnimationState("slide-out");
       }
     }, 6000);
 
@@ -105,12 +115,10 @@ export default function Home() {
         </div>
       </Link>
       <div className="pb-32">
-        {currentEpisodes
-          .reverse()
-          .map(
-            (episode: EpisodeProps, index: number) =>
-              index > 0 && <PageSelect key={episode._id} episode={episode} />
-          )}
+        {currentEpisodes.map(
+          (episode: EpisodeProps, index: number) =>
+            index > 0 && <PageSelect key={episode._id} episode={episode} />
+        )}
       </div>
     </div>
   );
