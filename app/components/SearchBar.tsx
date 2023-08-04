@@ -35,9 +35,7 @@ const darkModeStyles: StylesConfig<OptionType, false> = {
   }),
 };
 
-interface SearchBarProps {}
-
-export function SearchBar({}: SearchBarProps) {
+export function SearchBar() {
   const [options, setOptions] = useState<OptionType[]>([]);
   const [selectedEpisode, setSelectedEpisode] = useState<OptionType | null>(
     null

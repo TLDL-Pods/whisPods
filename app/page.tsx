@@ -43,7 +43,7 @@ export default function Home() {
     .slice(startIndex, startIndex + 4);
 
   return (
-    <div className="h-screen min-h-screen w-full max-w-full overflow-y-scroll">
+    <div className="w-full max-w-full">
       <Link href={`/episode/${latestEpisode?.episode_number}`}>
         <div className="hero relative h-1/2 w-full overflow-x-hidden border-b border-opacity-40">
           {latestEpisode && (
