@@ -20,6 +20,7 @@ export interface EpisodeProps {
   episode_date: number;
   episode_day: number;
   episode_day_of_week: number;
+  episode_keywords: string[];
   episode_month: number;
   episode_number: number;
   episode_title: string;

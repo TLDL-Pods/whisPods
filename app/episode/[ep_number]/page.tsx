@@ -46,39 +46,39 @@ export default function EpisodePage({
   }
 
   return (
-    <div className="flex h-screen">
-      <div className="justify-center w-full overflow-y-scroll">
-        <div className="fixed left-0 h-full overflow-y-scroll w-80 bg-stone-950">
-          <h3 className="mt-4 text-center text-violet-200">
-            Episode {data.episode_number}
-          </h3>
-          <h4 className="text-2xl font-bold text-center text-violet-400">
-            Stories
-          </h4>
-          <ul className="pb-32">
-            {data.episode_data.map((segment, index) => (
-              <li
-                key={segment.segment_number}
-                className="flex h-24 my-auto text-sm align-middle transition-all duration-500 border-b cursor-pointer w-80 border-violet-200 border-opacity-40 hover:bg-stone-800"
-                onClick={() => {
-                  const segmentRef = segmentRefs.current[index]?.current;
-                  if (segmentRef) {
-                    segmentRef.scrollIntoView();
-                  }
-                }}
-              >
-                <p className="mx-4 my-auto text-lg font-semibold text-violet-400">
-                  {index + 1}
-                </p>
-                <div className="w-4/5 p-2 my-auto">
-                  {isELI5 ? segment.headline_ELI5 : segment.headline}
-                </div>
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div className="w-full pl-80">
-          <div className="pl-24 my-8">
+    <div className="grid grid-cols-4">
+      <div className="fixed left-0 col-span-1 h-screen overflow-y-auto bg-stone-950">
+        <h3 className="mt-4 text-center text-violet-200">
+          Episode {data.episode_number}
+        </h3>
+        <h4 className="text-center text-2xl font-bold text-violet-400">
+          Stories
+        </h4>
+        <ul className="pb-12 pt-2">
+          {data.episode_data.map((segment, index) => (
+            <li
+              key={segment.segment_number}
+              className="my-auto flex h-24 w-80 cursor-pointer border-b border-violet-200 border-opacity-40 align-middle text-sm transition-all duration-500 hover:bg-stone-800"
+              onClick={() => {
+                const segmentRef = segmentRefs.current[index]?.current;
+                if (segmentRef) {
+                  segmentRef.scrollIntoView();
+                }
+              }}
+            >
+              <p className="mx-4 my-auto text-lg font-semibold text-violet-400">
+                {index + 1}
+              </p>
+              <div className="my-auto w-4/5 p-2">
+                {isELI5 ? segment.headline_ELI5 : segment.headline}
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+      <div className="col-span-3 ml-[25%]">
+        <div className="w-full">
+          <div className="my-8 pl-24">
             <h3 className="mb-6 text-3xl font-bold text-violet-400">
               The Daily Gwei Refuel
             </h3>
@@ -105,15 +105,15 @@ export default function EpisodePage({
                   segment={segment}
                   isELI5={isELI5}
                 />
-                <div className="w-full h-1 mx-auto border-b border-white border-opacity-40"></div>
+                <div className="mx-auto h-1 w-full border-b border-white border-opacity-40"></div>
               </div>
             ))}
           </div>
         </div>
       </div>
-      <div className="fixed flex flex-col w-48 px-4 pt-2 pb-4 text-center rounded-lg bottom-4 right-4 bg-stone-700 bg-opacity-40">
+      <div className="fixed bottom-8 right-8 flex w-48 flex-col rounded-lg bg-stone-700 bg-opacity-40 px-4 pb-4 pt-2 text-center">
         <label>Mode:</label>
-        <div className="flex mt-2">
+        <div className="mt-2 flex">
           <button
             className={`${
               !isELI5 ? "bg-opacity-100" : "bg-opacity-20"

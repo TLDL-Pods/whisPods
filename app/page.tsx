@@ -11,11 +11,19 @@ export default function Home() {
   const { data, setData } = useEpisodeContext();
   const [currentPage, setCurrentPage] = useState(1);
   const [episodesPerPage] = useState(10);
-  const [startIndex, setStartIndex] = useState(0);
   const indexOfLastEpisode = currentPage * episodesPerPage;
   const indexOfFirstEpisode = indexOfLastEpisode - episodesPerPage;
-  const currentEpisodes = data.slice(indexOfFirstEpisode, indexOfLastEpisode);
-  const latestEpisode = currentEpisodes[currentEpisodes.length - 1];
+  const [startIndex, setStartIndex] = useState(0);
+
+  const sortedEpisodes = [...data].sort(
+    (a, b) => b.episode_date - a.episode_date
+  );
+  const currentEpisodes = sortedEpisodes.slice(
+    indexOfFirstEpisode,
+    indexOfLastEpisode
+  );
+
+  const latestEpisode = currentEpisodes[0];
 
   const [animationState, setAnimationState] = useState<
     "slide-in" | "slide-out"
@@ -28,6 +36,8 @@ export default function Home() {
           (prevIndex) => (prevIndex + 4) % latestEpisode.episode_data.length
         );
         setAnimationState("slide-in");
+      } else if (animationState === "slide-in") {
+        setAnimationState("slide-out");
       }
     }, 6000);
 
@@ -42,17 +52,8 @@ export default function Home() {
     })
     .slice(startIndex, startIndex + 4);
 
-  function cleanEpisodeTitle(title: string): string {
-    if (title?.endsWith("and more")) {
-      return title.replace("and more", "").trim();
-    } else if (title?.endsWith("& more")) {
-      return title.replace("& more", "").trim();
-    }
-    return title;
-  }
-
   return (
-    <div className="h-screen min-h-screen w-full max-w-full overflow-y-scroll">
+    <div className="w-full max-w-full">
       <Link href={`/episode/${latestEpisode?.episode_number}`}>
         <div className="hero relative h-1/2 w-full overflow-x-hidden border-b border-opacity-40">
           {latestEpisode && (
@@ -77,11 +78,9 @@ export default function Home() {
                   TDGR #{latestEpisode?.episode_number}
                 </h2>
                 <h1 className="text-center text-4xl">
-                  {cleanEpisodeTitle(
-                    latestEpisode?.episode_title_generated
-                  )?.toUpperCase()}
+                  {latestEpisode?.episode_title_generated?.toUpperCase()}
                 </h1>
-                <div className="animatedHeadlines mx-auto my-6 flex h-2/5 w-fit flex-col p-6 transition-all duration-500">
+                <div className="animatedHeadlines mx-auto my-auto flex h-40 w-fit flex-col p-6 transition-all duration-500">
                   {displayedSegments?.map(
                     (segment: SegmentProps, index: number) => (
                       <div
@@ -115,18 +114,12 @@ export default function Home() {
           </div>
         </div>
       </Link>
-      {currentEpisodes
-        .reverse()
-        .map(
+      <div className="pb-32">
+        {currentEpisodes.map(
           (episode: EpisodeProps, index: number) =>
-            index > 0 && (
-              <PageSelect
-                key={episode._id}
-                episode={episode}
-                cleanEpisodeTitle={cleanEpisodeTitle}
-              />
-            )
+            index > 0 && <PageSelect key={episode._id} episode={episode} />
         )}
+      </div>
     </div>
   );
 }
