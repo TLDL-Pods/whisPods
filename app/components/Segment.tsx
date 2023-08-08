@@ -35,7 +35,7 @@ export default function IndividualSegment({
       </h1>
       <div className="p-4">
         <h3 className="text-lg font-bold text-violet-400">TLDL:</h3>
-        <ul className="mt-2 w-fit bg-stone-950 p-4">
+        <ul className="p-4 mt-2 w-fit bg-stone-950">
           {(isELI5 ? segment.bullets_ELI5 : segment.bullets).map((bullet) => (
             <li key={bullet} className="flex">
               <div className="my-auto">
@@ -46,9 +46,9 @@ export default function IndividualSegment({
           ))}
         </ul>
       </div>
-      <div className="w-fit px-4">
+      <div className="px-4 w-fit">
         <div
-          className="flex cursor-pointer text-lg font-bold text-violet-400"
+          className="flex text-lg font-bold cursor-pointer text-violet-400"
           onClick={() => setShowFullStory(!showFullStory)}
         >
           <h3 className="mr-2">Full Story</h3>{" "}

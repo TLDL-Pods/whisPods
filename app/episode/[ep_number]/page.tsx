@@ -47,18 +47,21 @@ export default function EpisodePage({
 
   return (
     <div className="grid grid-cols-4">
-      <div className="fixed left-0 col-span-1 h-screen overflow-y-auto bg-stone-950">
+      <div className="fixed left-0 h-screen col-span-1 overflow-y-auto bg-stone-950">
         <h3 className="mt-4 text-center text-violet-200">
           Episode {data.episode_number}
         </h3>
-        <h4 className="text-center text-2xl font-bold text-violet-400">
+        <h3 className="mt-1 text-center text-violet-200">
+          {data.release_date}
+        </h3>
+        <h4 className="text-2xl font-bold text-center text-violet-400">
           Stories
         </h4>
-        <ul className="pb-12 pt-2">
+        <ul className="pt-2 pb-12">
           {data.episode_data.map((segment, index) => (
             <li
               key={segment.segment_number}
-              className="my-auto flex h-24 w-80 cursor-pointer border-b border-violet-200 border-opacity-40 align-middle text-sm transition-all duration-500 hover:bg-stone-800"
+              className="flex h-24 my-auto text-sm align-middle transition-all duration-500 border-b cursor-pointer w-80 border-violet-200 border-opacity-40 hover:bg-stone-800"
               onClick={() => {
                 const segmentRef = segmentRefs.current[index]?.current;
                 if (segmentRef) {
@@ -69,7 +72,7 @@ export default function EpisodePage({
               <p className="mx-4 my-auto text-lg font-semibold text-violet-400">
                 {index + 1}
               </p>
-              <div className="my-auto w-4/5 p-2">
+              <div className="w-4/5 p-2 my-auto">
                 {isELI5 ? segment.headline_ELI5 : segment.headline}
               </div>
             </li>
@@ -78,12 +81,9 @@ export default function EpisodePage({
       </div>
       <div className="col-span-3 ml-[25%]">
         <div className="w-full">
-          <div className="my-8 pl-24">
+          <div className="pl-24 my-8">
             <h3 className="mb-6 text-3xl font-bold text-violet-400">
-              The Daily Gwei Refuel
-            </h3>
-            <h3 className="text-2xl text-violet-400">
-              Episode {data.episode_number}
+              The Daily Gwei Refuel - Episode {data.episode_number}
             </h3>
             <h3 className="text-violet-100">{data.release_date}</h3>
             <h1 className="mt-4 text-4xl text-violet-100">
@@ -105,15 +105,15 @@ export default function EpisodePage({
                   segment={segment}
                   isELI5={isELI5}
                 />
-                <div className="mx-auto h-1 w-full border-b border-white border-opacity-40"></div>
+                <div className="w-full h-1 mx-auto border-b border-white border-opacity-40"></div>
               </div>
             ))}
           </div>
         </div>
       </div>
-      <div className="fixed bottom-8 right-8 flex w-48 flex-col rounded-lg bg-stone-700 bg-opacity-40 px-4 pb-4 pt-2 text-center">
+      <div className="fixed flex flex-col w-48 px-4 pt-2 pb-4 text-center rounded-lg bottom-8 right-8 bg-stone-700 bg-opacity-40">
         <label>Mode:</label>
-        <div className="mt-2 flex">
+        <div className="flex mt-2">
           <button
             className={`${
               !isELI5 ? "bg-opacity-100" : "bg-opacity-20"
