@@ -1,5 +1,7 @@
 "use client";
 import IndividualSegment from "@/app/components/Segment";
+import Image from "next/image";
+
 import { EpisodeProps, SegmentProps } from "@/types";
 import { useState, useEffect, useRef, createRef, useContext } from "react";
 import {
@@ -10,6 +12,8 @@ import {
   RiMegaphoneLine,
   RiBookLine,
 } from "react-icons/ri";
+import sassalImage from "@/app/assets/sassal.webp";
+import creepySassalImage from "@/app/assets/creepySassal.webp";
 
 export default function EpisodePage({
   params,
@@ -22,6 +26,7 @@ export default function EpisodePage({
     number | null
   >(null);
   const [showSummary, setShowSummary] = useState<number | null>(null);
+  const [showVideo, setShowVideo] = useState<boolean>(false);
 
   const segmentRefs = useRef<Array<React.RefObject<HTMLDivElement>>>([]);
 
@@ -61,13 +66,55 @@ export default function EpisodePage({
     fetchData();
   }, []);
 
+  function YouTubeEmbed({ youtubeUrl, startTimeMs }) {
+    // Convert start time from milliseconds to seconds
+    const startTimeSeconds = Math.floor(startTimeMs / 1000);
+
+    // Extract the video ID from the youtube URL
+    // const videoIdMatch = youtubeUrl.match(/v=([^&]+)/);
+    // const videoId = videoIdMatch ? videoIdMatch[1] : null;
+    const shortFormatMatch = youtubeUrl.match(/youtu.be\/([^&]+)/);
+    const videoId = shortFormatMatch ? shortFormatMatch[1] : null;
+    // Construct the embed URL
+    const embedUrl = `https://www.youtube.com/embed/${videoId}?start=${startTimeSeconds}`;
+    // const embedUrl = `https://www.youtube.com/embed/${videoId}`;
+
+    //   return (
+    //     <div>
+    //       <h3 className="mt-1 text-center text-violet-200">{youtubeUrl}</h3>
+    //       <h3 className="mt-1 text-center text-violet-200">{shortFormatMatch}</h3>
+    //       <h3 className="mt-1 text-center text-violet-200">{embedUrl}</h3>
+    //     </div>
+    //   );
+    // }
+
+    return (
+      <iframe
+        width="560"
+        height="315"
+        src={embedUrl}
+        title="YouTube video player"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowFullScreen
+      ></iframe>
+    );
+    // <iframe
+    //   width="560"
+    //   height="315"
+    //   src="https://www.youtube.com/embed/Dyh2EDPwVeM?start=11"
+    //   title="YouTube video player"
+    //   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+    //   allowfullscreen
+    // ></iframe>
+  }
+
   if (!data) {
     return <div>Loading...</div>;
   }
 
   return (
     <div className="flex items-center justify-center h-screen">
-      <div className="w-1/4 h-screen overflow-y-auto bg-stone-950">
+      <div className="h-screen overflow-y-auto w-3/8 bg-stone-950">
         <h3 className="mt-4 text-center text-violet-200">
           Episode {data.episode_number}
         </h3>
@@ -77,6 +124,7 @@ export default function EpisodePage({
         <h4 className="text-2xl font-bold text-center text-violet-400">
           Stories
         </h4>
+
         <ul className="pt-2 pb-12">
           {data.episode_data.map((segment, index) => (
             <div className="border-b border-violet-200 border-opacity-40">
@@ -115,7 +163,6 @@ export default function EpisodePage({
                       <RiBookLine size={24} />
                     )}
                   </button>
-
                   {showSummary === index ? (
                     // Display the summary when showSummary is equal to the current index
                     <>
@@ -147,6 +194,26 @@ export default function EpisodePage({
                       </ul>
                     </>
                   )}
+                  <div style={{ display: "flex", justifyContent: "flex-end" }}>
+                    <button
+                      style={{ border: "none", background: "transparent" }}
+                      onClick={() => setShowVideo(!showVideo)}
+                    >
+                      <Image
+                        src={showVideo ? creepySassalImage : sassalImage}
+                        alt="Toggle Video"
+                        width={40}
+                        height={40}
+                      />
+                    </button>
+                  </div>
+
+                  {showVideo && (
+                    <YouTubeEmbed
+                      youtubeUrl={data.youtube_url}
+                      startTimeMs={segment.start_time_ms}
+                    />
+                  )}
 
                   {/* Ssection for Story sources */}
                   <div className="mt-4">
@@ -154,18 +221,18 @@ export default function EpisodePage({
                       Sources:
                     </h4>
                     <ul>
-                      {segment.URL}
-                      {/* {segment.URL.map((url, idx) => (
+                      {segment.URL.map((url, idx) => (
                         <li key={idx}>
                           <a
                             href={url}
                             target="_blank"
                             rel="noopener noreferrer"
+                            style={{ color: "blue" }}
                           >
                             {url}
                           </a>
                         </li>
-                      ))} */}
+                      ))}
                     </ul>
                   </div>
                 </div>
