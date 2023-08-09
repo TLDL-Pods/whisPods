@@ -1,5 +1,5 @@
 export interface SegmentProps {
-  URL: string;
+  URL: string[];
   bullets: string[];
   bullets_ELI5: string[];
   complete_transcript: string;
