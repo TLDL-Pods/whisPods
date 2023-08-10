@@ -66,27 +66,21 @@ export default function EpisodePage({
     fetchData();
   }, []);
 
-  function YouTubeEmbed({ youtubeUrl, startTimeMs }) {
+  function YouTubeEmbed({
+    youtubeUrl,
+    startTimeMs,
+  }: {
+    youtubeUrl: string;
+    startTimeMs: number;
+  }) {
     // Convert start time from milliseconds to seconds
     const startTimeSeconds = Math.floor(startTimeMs / 1000);
 
     // Extract the video ID from the youtube URL
-    // const videoIdMatch = youtubeUrl.match(/v=([^&]+)/);
-    // const videoId = videoIdMatch ? videoIdMatch[1] : null;
     const shortFormatMatch = youtubeUrl.match(/youtu.be\/([^&]+)/);
     const videoId = shortFormatMatch ? shortFormatMatch[1] : null;
     // Construct the embed URL
     const embedUrl = `https://www.youtube.com/embed/${videoId}?start=${startTimeSeconds}`;
-    // const embedUrl = `https://www.youtube.com/embed/${videoId}`;
-
-    //   return (
-    //     <div>
-    //       <h3 className="mt-1 text-center text-violet-200">{youtubeUrl}</h3>
-    //       <h3 className="mt-1 text-center text-violet-200">{shortFormatMatch}</h3>
-    //       <h3 className="mt-1 text-center text-violet-200">{embedUrl}</h3>
-    //     </div>
-    //   );
-    // }
 
     return (
       <iframe
@@ -98,14 +92,6 @@ export default function EpisodePage({
         allowFullScreen
       ></iframe>
     );
-    // <iframe
-    //   width="560"
-    //   height="315"
-    //   src="https://www.youtube.com/embed/Dyh2EDPwVeM?start=11"
-    //   title="YouTube video player"
-    //   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-    //   allowfullscreen
-    // ></iframe>
   }
 
   if (!data) {
