@@ -3,31 +3,33 @@
 import Link from "next/link";
 import { useState, useEffect, useContext } from "react";
 import PageSelect from "./components/PageSelect";
+import { useEpisodeContext } from "./hooks/useEpisodeContext";
 import { EpisodeProps, SegmentProps } from "@/types";
 import { RiMegaphoneLine } from "react-icons/ri";
-import { useEpisodeContext } from "./hooks/useEpisodeContext";
 
 export default function Home() {
+  const [latestEpisode, setLatestEpisode] = useState<EpisodeProps>();
   const { data, setData } = useEpisodeContext();
   const [currentPage, setCurrentPage] = useState(1);
   const [episodesPerPage] = useState(10);
   const indexOfLastEpisode = currentPage * episodesPerPage;
   const indexOfFirstEpisode = indexOfLastEpisode - episodesPerPage;
   const [startIndex, setStartIndex] = useState(0);
-
-  const sortedEpisodes = [...data].sort(
-    (a, b) => b.episode_date - a.episode_date
-  );
-  const currentEpisodes = sortedEpisodes.slice(
-    indexOfFirstEpisode,
-    indexOfLastEpisode
-  );
-
-  const latestEpisode = currentEpisodes[0];
-
   const [animationState, setAnimationState] = useState<
     "slide-in" | "slide-out"
   >("slide-in");
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await fetch(`/api/latest-episode`);
+      const json = await res.json();
+      console.log(json);
+      setLatestEpisode(json["data"]);
+      console.log(json);
+    };
+    fetchData();
+    console.log("data", latestEpisode);
+  }, []);
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -54,71 +56,78 @@ export default function Home() {
 
   return (
     <div className="w-full max-w-full">
-      <Link href={`/episode/${latestEpisode?.episode_number}`}>
-        <div className="hero relative h-1/2 w-full overflow-x-hidden border-b border-opacity-40">
-          {latestEpisode && (
-            <div className="absolute inset-0">
-              <img
-                src="https://picsum.photos/1920/1080/"
-                alt="Background"
-                className="h-full w-full object-cover"
-              />
-            </div>
-          )}
-          <div className="relative flex h-full w-full justify-center">
-            <div className="flex h-full w-full items-center justify-start bg-gradient-to-r from-stone-950 via-stone-950 via-65% to-transparent">
-              <div className="h-full w-2/3 p-12">
-                <h1 className="text-center text-xl text-violet-200">
-                  LATEST EPISODE
-                </h1>
-                <p className="mb-5 text-center">
-                  {latestEpisode?.release_date}
-                </p>
-                <h2 className="text-center text-2xl text-violet-400">
-                  TDGR #{latestEpisode?.episode_number}
-                </h2>
-                <h1 className="text-center text-4xl">
-                  {latestEpisode?.episode_title_generated?.toUpperCase()}
-                </h1>
-                <div className="animatedHeadlines mx-auto my-auto flex h-40 w-fit flex-col p-6 transition-all duration-500">
-                  {displayedSegments?.map(
-                    (segment: SegmentProps, index: number) => (
-                      <div
-                        key={segment.segment_number}
-                        className={animationState}
-                        onAnimationEnd={(e) => {
-                          if (e.animationName === "slideInFromLeft") {
-                            setAnimationState("slide-out");
-                          }
-                        }}
-                      >
-                        {segment.headline.length > 1 && (
-                          <div className="mx-auto flex">
-                            <div className="my-auto">
-                              <RiMegaphoneLine />
-                            </div>
-                            <p className="ml-2">{segment.headline}</p>
-                          </div>
-                        )}
-                      </div>
-                    )
-                  )}
+      {/* Header */}
+      <header className="p-4 text-white bg-gray-800">
+        <h1 className="text-2xl font-bold">Too Long Didn't Listen</h1>
+        <p className="mt-2">Summarize, trends, and references for Podcasts</p>
+      </header>
+
+      {/* Latest */}
+      <div className="w-full max-w-full">
+        <div className="w-full max-w-2xl">
+          <Link
+            href={`/podcasts/thedailygwei/episode/${latestEpisode?.episode_number}`}
+          >
+            <div className="relative w-full overflow-x-hidden border-b hero h-1/2 border-opacity-40">
+              {latestEpisode && (
+                <div className="absolute inset-0">
+                  <img
+                    src="https://picsum.photos/1920/1080/"
+                    alt="Background"
+                    className="object-cover w-full h-full"
+                  />
                 </div>
-                <div className="flex w-full">
-                  <button className="btn mx-auto rounded-lg bg-violet-700 bg-opacity-50 px-4 py-2 transition-all duration-500 hover:bg-opacity-100">
-                    View More
-                  </button>
+              )}
+              <div className="relative flex justify-center w-full h-full">
+                <div className="flex h-full w-full items-center justify-start bg-gradient-to-r from-stone-950 via-stone-950 via-65% to-transparent">
+                  <div className="w-2/3 h-full p-12">
+                    <h1 className="text-xl text-center text-violet-200">
+                      LATEST EPISODE
+                    </h1>
+                    <p className="mb-5 text-center">
+                      {latestEpisode?.release_date}
+                    </p>
+                    <h2 className="text-2xl text-center text-violet-400">
+                      TDGR #{latestEpisode?.episode_number}
+                    </h2>
+                    <h1 className="text-4xl text-center">
+                      {latestEpisode?.episode_title_generated?.toUpperCase()}
+                    </h1>
+                    <div className="flex flex-col h-40 p-6 mx-auto my-auto transition-all duration-500 animatedHeadlines w-fit">
+                      {displayedSegments?.map(
+                        (segment: SegmentProps, index: number) => (
+                          <div
+                            key={segment.segment_number}
+                            className={animationState}
+                            onAnimationEnd={(e) => {
+                              if (e.animationName === "slideInFromLeft") {
+                                setAnimationState("slide-out");
+                              }
+                            }}
+                          >
+                            {segment.headline.length > 1 && (
+                              <div className="flex mx-auto">
+                                <div className="my-auto">
+                                  <RiMegaphoneLine />
+                                </div>
+                                <p className="ml-2">{segment.headline}</p>
+                              </div>
+                            )}
+                          </div>
+                        )
+                      )}
+                    </div>
+                    <div className="flex w-full">
+                      <button className="px-4 py-2 mx-auto transition-all duration-500 bg-opacity-50 rounded-lg btn bg-violet-700 hover:bg-opacity-100">
+                        View More
+                      </button>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
+          </Link>
         </div>
-      </Link>
-      <div className="pb-32">
-        {currentEpisodes.map(
-          (episode: EpisodeProps, index: number) =>
-            index > 0 && <PageSelect key={episode._id} episode={episode} />
-        )}
       </div>
     </div>
   );
