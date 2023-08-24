@@ -3,12 +3,12 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useState, useEffect, useContext } from "react";
-import PageSelect from "../components/PageSelect";
+import PageSelect from "@/app/components/PageSelect";
 import { EpisodeProps, SegmentProps } from "@/types";
 import { RiMegaphoneLine } from "react-icons/ri";
-import { useEpisodeContext } from "../hooks/useEpisodeContext";
-import TDG from "../../assets/the-daily-gwei.jpg";
-import sassano from "../../assets/sassano_400x400.jpg";
+import { useEpisodeContext } from "@/app/hooks/useEpisodeContext";
+import TDG from "@/app/assets/the-daily-gwei.jpg";
+import sassano from "@/app/assets/sassano_400x400.jpg";
 
 export default function Home() {
   const { data, setData } = useEpisodeContext();
