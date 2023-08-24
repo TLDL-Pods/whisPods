@@ -1,6 +1,8 @@
 import { EpisodeProps } from "@/types";
 import Link from "next/link";
+import Image from "next/image";
 import { RiMegaphoneLine } from "react-icons/ri";
+import TDG from "../assets/the-daily-gwei.jpg";
 
 interface PageSelectProps {
   episode: EpisodeProps;
@@ -16,32 +18,46 @@ export default function PageSelect({ episode }: PageSelectProps) {
     .slice(0, 3);
 
   return (
-    <Link href={`/episode/${episode.episode_number}`}>
-      <div className="mx-auto flex h-96 min-h-full w-full justify-center border-t border-violet-400 border-opacity-40 bg-stone-950 text-center transition-all duration-500 hover:bg-stone-800">
-        <div className="relative my-auto flex h-full w-3/4">
-          <p className="my-auto mr-8 w-24">{episode.release_date}</p>
-          <div className="my-auto h-64 w-64">
-            <img
-              src="https://picsum.photos/1920/1080"
+    <Link href={`/thedailygwei/${episode.episode_number}`}>
+      <div className="flex justify-center w-full min-h-full mx-auto text-center transition-all duration-500 border-t h-96 border-violet-400 border-opacity-40 bg-stone-950 hover:bg-stone-800">
+        <div className="relative flex w-3/4 h-full my-auto">
+          <div className="relative w-64 h-64 my-auto">
+            {/* Image container */}
+            <Image
+              src={TDG}
               alt="Background"
-              className="my-auto h-full w-full object-cover"
+              className="object-cover w-full h-full"
             />
+            {/* Number overlay */}
+            <div
+              className="absolute transform -translate-x-1/2 top-1/2 left-1/2 -translate-y-3/5"
+              style={{ transform: "translate(-60%, -150%) rotate(-32deg)" }}
+            >
+              <span className="text-xl font-bold text-black">
+                {episode.episode_number}
+              </span>
+            </div>
+            {/* Date overlay */}
+            <div className="absolute bottom-0 pb-1 transform -translate-x-1/2 left-1/2">
+              <span className="text-xl font-bold text-black">
+                {episode.release_date}
+              </span>
+            </div>
           </div>
-          <div className="mx-auto my-auto flex w-3/5 flex-col justify-between p-12">
-            <div className="mb-8">
+          <div className="flex flex-col justify-between w-3/5 p-12 mx-auto my-auto">
+            <div className="mb-4">
               <div className="w-full text-2xl text-violet-100">
-                {episode.episode_title_generated
-                  ? episode.episode_title_generated.toUpperCase()
+                {episode.episode_title
+                  ? episode.episode_title.toUpperCase()
                   : null}
               </div>
-              <p className="text-violet-400">TDGR #{episode.episode_number}</p>
             </div>
 
-            <div className="mx-auto mt-4 w-fit pb-8">
+            <div className="pb-4 mx-auto mt-2 w-fit">
               {topThreeSegments.map((segment, index) => (
                 <div
                   key={segment.segment_number}
-                  className="mx-auto my-auto flex"
+                  className="flex mx-auto my-auto"
                 >
                   <div className="mt-1 text-violet-400">
                     <RiMegaphoneLine />
@@ -51,11 +67,11 @@ export default function PageSelect({ episode }: PageSelectProps) {
                 </div>
               ))}
             </div>
-            <div className="mx-auto flex text-xs">
+            <div className="flex mx-auto text-xs">
               {episode.episode_keywords.map((keyword, index) => (
                 <div
                   key={index}
-                  className="mx-2 my-auto rounded-lg bg-violet-600 bg-opacity-30 p-1 px-2"
+                  className="p-1 px-2 mx-2 my-auto rounded-lg bg-violet-600 bg-opacity-30"
                 >
                   <p>{keyword.toUpperCase()}</p>
                 </div>

@@ -1,11 +1,13 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useState, useEffect, useContext } from "react";
 import PageSelect from "./components/PageSelect";
 import { useEpisodeContext } from "./hooks/useEpisodeContext";
 import { EpisodeProps, SegmentProps } from "@/types";
 import { RiMegaphoneLine } from "react-icons/ri";
+import TDG from "./assets/the-daily-gwei.jpg";
 
 export default function Home() {
   const [latestEpisode, setLatestEpisode] = useState<EpisodeProps>();
@@ -55,16 +57,48 @@ export default function Home() {
     .slice(startIndex, startIndex + 4);
 
   return (
-    <div className="w-full max-w-full">
+    <div className="flex-col justify-center w-full p-4">
       {/* Header */}
       <header className="p-4 text-white bg-gray-800">
         <h1 className="text-2xl font-bold">Too Long Didn't Listen</h1>
         <p className="mt-2">Summarize, trends, and references for Podcasts</p>
       </header>
 
-      {/* Latest */}
-      <div className="w-full max-w-full">
-        <div className="w-full max-w-2xl">
+      {/* Latest Story */}
+      <div className="flex items-center justify-center pt-4">
+        <Link href={`/thedailygwei/${latestEpisode?.episode_number}`}>
+          <div className="flex flex-col space-y-6">
+            <div className="flex items-center p-4 border rounded">
+              {/* Image on the left */}
+              <div className="mr-4">
+                {" "}
+                {/* Note the added mr-4 class for some spacing between the image and the text */}
+                <Image
+                  src={TDG}
+                  alt={"The Daily Gwei"}
+                  className="w-32 h-32"
+                  width={90}
+                  height={90}
+                />
+              </div>
+              {/* Info on the right */}
+              <div>
+                <h1 className="text-xl text-center text-violet-200">
+                  LATEST EPISODE
+                </h1>
+                <p className="text-center ">{latestEpisode?.release_date}</p>
+                <p className="text-center text-violet-400">
+                  #{latestEpisode?.episode_number}
+                </p>
+                <h2 className="text-center text-l">
+                  {latestEpisode?.episode_title}
+                </h2>
+              </div>
+            </div>
+          </div>
+        </Link>
+
+        {/* <div className="w-full max-w-2xl mx-auto">
           <Link
             href={`/podcasts/thedailygwei/episode/${latestEpisode?.episode_number}`}
           >
@@ -127,7 +161,7 @@ export default function Home() {
               </div>
             </div>
           </Link>
-        </div>
+        </div> */}
       </div>
     </div>
   );

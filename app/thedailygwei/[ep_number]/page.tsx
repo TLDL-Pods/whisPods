@@ -1,6 +1,7 @@
 "use client";
 import IndividualSegment from "@/app/components/Segment";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 import { EpisodeProps, SegmentProps } from "@/types";
 import { useState, useEffect, useRef, createRef, useContext } from "react";
@@ -12,6 +13,7 @@ import {
   RiMegaphoneLine,
   RiBookLine,
 } from "react-icons/ri";
+import { IoArrowBack } from "react-icons/io5";
 import sassalImage from "@/app/assets/sassal.webp";
 import creepySassalImage from "@/app/assets/creepySassal.webp";
 import moarImage from "@/app/assets/moar.webp";
@@ -31,7 +33,7 @@ export default function EpisodePage({
   const [showAllStories, setShowAllStories] = useState<boolean>(false);
 
   const segmentRefs = useRef<Array<React.RefObject<HTMLDivElement>>>([]);
-
+  const router = useRouter();
   const handleMode = () => {
     setIsELI5(!isELI5);
   };
@@ -43,6 +45,16 @@ export default function EpisodePage({
       setShowSummary(index);
     }
   };
+
+  const [currentEpisode, setCurrentEpisode] = useState<number>(
+    parseInt(params.ep_number, 10)
+  );
+  const [nextEpisode, setNextEpisode] = useState<number>(
+    parseInt(params.ep_number, 10) + 1
+  );
+  const [previousEpisode, setPreviousEpisode] = useState<number>(
+    parseInt(params.ep_number, 10) - 1
+  );
 
   useEffect(() => {
     const fetchData = async () => {
@@ -67,6 +79,29 @@ export default function EpisodePage({
     };
     fetchData();
   }, []);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const res = await fetch(`/api/episode?episode_number=${currentEpisode}`);
+      const json = await res.json();
+      const filteredSegments = json["data"].episode_data.filter(
+        (segment: SegmentProps) => segment.segment_number !== 0
+      );
+      const sortedData = {
+        ...json["data"],
+        episode_data: filteredSegments.sort(
+          (a: SegmentProps, b: SegmentProps) =>
+            b.segment_length_ms - a.segment_length_ms
+        ),
+      };
+      segmentRefs.current = sortedData.episode_data.map(() =>
+        createRef<HTMLDivElement>()
+      );
+      setData(sortedData);
+      console.log(sortedData);
+    };
+    fetchData();
+  }, [currentEpisode]);
 
   function YouTubeEmbed({
     youtubeUrl,
@@ -104,6 +139,35 @@ export default function EpisodePage({
   return (
     <div className="flex items-center justify-center h-screen">
       <div className="h-screen overflow-y-auto w-3/8 bg-stone-950">
+        <div className="flex justify-between mb-4">
+          <button
+            onClick={() => {
+              setCurrentEpisode(previousEpisode);
+              setNextEpisode(currentEpisode);
+              setPreviousEpisode(previousEpisode - 1);
+            }}
+            disabled={currentEpisode <= 1} // Optional: Disabling if it's the first episode
+          >
+            <RiArrowUpCircleFill />
+          </button>
+          <button
+            onClick={() => {
+              setCurrentEpisode(nextEpisode);
+              setPreviousEpisode(currentEpisode);
+              setNextEpisode(nextEpisode + 1);
+            }}
+          >
+            <RiArrowUpCircleLine />
+          </button>
+        </div>
+        <button
+          type="button"
+          className="flex items-center"
+          onClick={() => router.push("/thedailygwei")}
+        >
+          <IoArrowBack className="mr-2" /> Episodes
+        </button>
+
         <h3 className="mt-4 text-center text-violet-200">
           Episode {data.episode_number}
         </h3>

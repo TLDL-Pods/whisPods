@@ -11,14 +11,19 @@ export default function Navbar({ children }: { children: React.ReactNode }) {
           <Link href={"/"}>
             <div className="flex items-center my-auto text-4xl font-bold cursor-pointer">
               <GiSoundWaves className="my-auto mr-2 text-6xl" />
-              {/* <BsCode className="my-auto mr-2 text-2xl" /> */}
-
               <p className="my-auto">TLDL</p>
             </div>
           </Link>
-          <Link href="/about" className="hover:text-gray-300">
-            About
-          </Link>
+          <div className="flex space-x-4">
+            {" "}
+            {/* This div wraps the two links */}
+            <Link href="/podcasts" className="hover:text-gray-300">
+              Podcasts
+            </Link>
+            <Link href="/about" className="hover:text-gray-300">
+              About
+            </Link>
+          </div>
         </div>
       </header>
 

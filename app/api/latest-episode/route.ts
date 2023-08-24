@@ -11,7 +11,7 @@ export async function GET() {
     // Fetch the latest episode from the collection
     const latestEpisode = await collection
       .find()
-      .sort({ episode_data: -1 })
+      .sort({ episode_date: -1 })
       .limit(1)
       .toArray();
 
