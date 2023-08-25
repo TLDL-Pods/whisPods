@@ -119,9 +119,9 @@ export default function Home() {
         </Link>
       </div>
       {/* Search Bar */}
-      <div className="flex items-center pt-4 justify-left">
+      {/* <div className="flex items-center pt-4 justify-left">
         <SearchBar />
-      </div>
+      </div> */}
       <Link href={`/thedailygwei/${latestEpisode?.episode_number}`}>
         <div className="relative w-full overflow-x-hidden border-b hero h-1/2 border-opacity-40">
           {latestEpisode && (
