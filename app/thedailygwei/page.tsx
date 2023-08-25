@@ -9,6 +9,7 @@ import { RiMegaphoneLine } from "react-icons/ri";
 import { useEpisodeContext } from "@/app/hooks/useEpisodeContext";
 import TDG from "@/app/assets/the-daily-gwei.jpg";
 import sassano from "@/app/assets/sassano_400x400.jpg";
+import { SearchBar } from "@/app/components/SearchBar";
 
 export default function Home() {
   const { data, setData } = useEpisodeContext();
@@ -57,7 +58,7 @@ export default function Home() {
 
   return (
     <div className="w-full max-w-full">
-      {/* Podcast */}
+      {/* Podcast Card*/}
       <div className="flex items-center pt-4 justify-left">
         <Link href={`/thedailygwei`}>
           <div className="flex flex-col space-y-6">
@@ -89,7 +90,7 @@ export default function Home() {
           </div>
         </Link>
       </div>
-      {/* Host */}
+      {/* Host Card*/}
       <div className="flex items-center pt-4 justify-left">
         <Link href={`/thedailygwei`}>
           <div className="flex flex-col space-y-6">
@@ -117,6 +118,10 @@ export default function Home() {
           </div>
         </Link>
       </div>
+      {/* Search Bar */}
+      <div className="flex items-center pt-4 justify-left">
+        <SearchBar />
+      </div>
       <Link href={`/thedailygwei/${latestEpisode?.episode_number}`}>
         <div className="relative w-full overflow-x-hidden border-b hero h-1/2 border-opacity-40">
           {latestEpisode && (
@@ -128,7 +133,7 @@ export default function Home() {
               />
             </div>
           )}
-          <div className="relative flex justify-center w-full h-full">
+          {/* <div className="relative flex justify-center w-full h-full">
             <div className="flex h-full w-full items-center justify-start bg-gradient-to-r from-stone-950 via-stone-950 via-65% to-transparent">
               <div className="w-2/3 h-full p-12">
                 <h1 className="text-xl text-center text-violet-200">
@@ -141,7 +146,7 @@ export default function Home() {
                   TDG #{latestEpisode?.episode_number}
                 </h2>
                 <h1 className="text-4xl text-center">
-                  {latestEpisode?.episode_title_generated?.toUpperCase()}
+                  {latestEpisode?.episode_title?.toUpperCase()}
                 </h1>
                 <div className="flex flex-col h-40 p-6 mx-auto my-auto transition-all duration-500 animatedHeadlines w-fit">
                   {displayedSegments?.map(
@@ -174,14 +179,13 @@ export default function Home() {
                 </div>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
       </Link>
       <div className="pb-32">
-        {currentEpisodes.map(
-          (episode: EpisodeProps, index: number) =>
-            index > 0 && <PageSelect key={episode._id} episode={episode} />
-        )}
+        {currentEpisodes.map((episode: EpisodeProps, index: number) => (
+          <PageSelect key={episode._id} episode={episode} />
+        ))}
       </div>
     </div>
   );

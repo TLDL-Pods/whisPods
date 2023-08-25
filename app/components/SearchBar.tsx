@@ -1,76 +1,42 @@
 "use client";
-
-import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
-import Select, { SingleValue, StylesConfig } from "react-select";
-import { useEpisodeContext } from "../hooks/useEpisodeContext";
+import { FC } from "react";
 import { EpisodeProps } from "@/types";
+import debounce from "lodash.debounce";
 
-type OptionType = EpisodeProps & { value: number; label: string };
+interface SearchBarProps {
+  onEpisodesSearch: (episodes: EpisodeProps[]) => void;
+}
 
-const darkModeStyles: StylesConfig<OptionType, false> = {
-  // control (the container of the selected value and dropdown arrow)
-  control: (provided) => ({
-    ...provided,
-    backgroundColor: "black",
-  }),
-
-  // option (each individual option in the dropdown)
-  option: (provided, state) => ({
-    ...provided,
-    backgroundColor: state.isSelected ? "gray" : "black",
-    color: state.isSelected ? "black" : "white",
-  }),
-
-  // single-value (the selected value displayed in the control)
-  singleValue: (provided) => ({
-    ...provided,
-    color: "white",
-  }),
-
-  // Style the placeholder text
-  placeholder: (provided) => ({
-    ...provided,
-    color: "gray",
-  }),
-};
-
-export function SearchBar() {
-  const [options, setOptions] = useState<OptionType[]>([]);
-  const [selectedEpisode, setSelectedEpisode] = useState<OptionType | null>(
-    null
-  );
-  const { data } = useEpisodeContext();
-  const router = useRouter();
-
-  useEffect(() => {
-    if (data && Array.isArray(data)) {
-      const transformedOptions = data.map((episode) => ({
-        value: episode.episode_number,
-        label: episode.episode_title,
-        ...episode,
-      }));
-      setOptions(transformedOptions);
+export const SearchBar: FC<SearchBarProps> = ({ onEpisodesSearch }) => {
+  const searchEpisodes = debounce(async (searchTerm) => {
+    try {
+      const response = await fetch(`/api/search?term=${searchTerm}`);
+      const data = await response.json();
+      if (data && Array.isArray(data.data)) {
+        onEpisodesSearch(data.data);
+      }
+    } catch (error) {
+      console.error("Error fetching search results:", error);
     }
-  }, [data]);
+  }, 300);
 
-  const handleEpisodeSelect = (selectedOption: SingleValue<OptionType>) => {
-    if (selectedOption) {
-      setSelectedEpisode(selectedOption);
-      router.push(`/episode/${selectedOption.value}`);
+  const handleInputChange = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
+      const inputValue = (event.target as HTMLInputElement).value;
+      if (inputValue) {
+        searchEpisodes(inputValue);
+      }
     }
   };
 
   return (
-    <div className="mx-12 hidden w-full lg:flex">
-      <Select
-        options={options}
-        value={selectedEpisode}
-        onChange={handleEpisodeSelect}
-        placeholder="Search for episodes..."
-        styles={darkModeStyles}
-        className="mx-auto w-1/2 rounded-lg "
-      />
-    </div>
+    <input
+      type="text"
+      placeholder="Search for episodes..."
+      className="w-1/2 mx-auto text-black rounded-lg"
+      onKeyDown={handleInputChange}
+    />
   );
-}
+};
+
+export default SearchBar;
