@@ -1,6 +1,7 @@
 import { NextResponse, NextRequest } from "next/server";
 import { getClientAndDb } from "@/app/api/mongo/db";
 import type { SegmentProps } from "@/types";
+import { parse } from "url";
 
 export async function GET(req: NextRequest) {
   if (req.method !== "GET") {
@@ -11,18 +12,14 @@ export async function GET(req: NextRequest) {
     const { db } = await getClientAndDb();
     const collection = db.collection("thedailygweiRecap");
 
-    // Check if the index already exists
-    const indexes = await collection.listIndexes().toArray();
-    if (!indexes.some((index) => "episode_data.summary" in index.key)) {
-      try {
-        await collection.createIndex({ "episode_data.summary": "text" });
-      } catch (error: any) {
-        console.error("Error creating index:", error.message);
-      }
-    }
+    const parsedUrl = parse(req.nextUrl.href, true);
+    const rawSearchTerm = parsedUrl.query.term;
+    const searchTerm = Array.isArray(rawSearchTerm)
+      ? rawSearchTerm[0]
+      : rawSearchTerm;
 
-    const { searchParams } = req.nextUrl;
-    const searchTerm = searchParams.get("term");
+    // const { searchParams } = req.nextUrl;
+    // const searchTerm = searchParams.get("term");
 
     if (!searchTerm) {
       return NextResponse.json({
