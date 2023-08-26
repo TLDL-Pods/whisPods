@@ -20,6 +20,8 @@ export async function GET(req: NextRequest) {
     const { searchParams } = req.nextUrl;
     const searchTerm = searchParams.get("term");
 
+    console.log("searchTerm: ", searchTerm);
+
     if (!searchTerm) {
       return NextResponse.json({
         status: 400,
@@ -52,23 +54,13 @@ export async function GET(req: NextRequest) {
         .map((matchedSegment: SegmentProps) => matchedSegment.segment_number);
     });
 
-    // // Identify the matching segment_title for each episode
-    // searchResults.forEach((episode) => {
-    //   console.log(episode._id, ": ", episode.episode_title);
-
-    //   episode.matchedSegments = episode.episode_data.filter(
-    //     (segment: SegmentProps) =>
-    //       segment.summary.toLowerCase().includes(searchTerm.toLowerCase())
-    //   );
-    // });
-
-    // console.log(searchResults);
-
-    return NextResponse.json({
+    const response = NextResponse.json({
       status: 200,
       message: "Success",
       data: searchResults,
     });
+    response.headers.set("Cache-Control", "no-store, max-age=0");
+    return response;
   } catch (error: any) {
     console.error(error);
     return NextResponse.json({ status: 500, message: error.message });
