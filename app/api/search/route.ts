@@ -14,13 +14,15 @@ export async function GET(req: NextRequest) {
     // Check if the index already exists
     const indexes = await collection.listIndexes().toArray();
     if (!indexes.some((index) => "episode_data.summary" in index.key)) {
-      await collection.createIndex({ "episode_data.summary": "text" });
+      try {
+        await collection.createIndex({ "episode_data.summary": "text" });
+      } catch (error: any) {
+        console.error("Error creating index:", error.message);
+      }
     }
 
     const { searchParams } = req.nextUrl;
     const searchTerm = searchParams.get("term");
-
-    console.log("searchTerm: ", searchTerm);
 
     if (!searchTerm) {
       return NextResponse.json({
