@@ -13,9 +13,15 @@ export async function GET(req: NextRequest) {
     const { db } = await getClientAndDb();
     const collection = db.collection("thedailygweiRecap");
 
-    const host = req.headers.get("host") || "tldl.media";
-    const fullUrl = `https://${host}${req.nextUrl.pathname}${req.nextUrl.search}`;
-    const url = new URL(fullUrl);
+    // const host = req.headers.get("host") || "tldl.media";
+    // const fullUrl = `https://${host}${req.nextUrl.pathname}${req.nextUrl.search}`;
+    // const url = new URL(fullUrl);
+    // const searchTerm = url.searchParams.get("term");
+
+    // console.log(req.nextUrl.url);
+    // const searchTerm = req.nextUrl.url.searchParams.get("term");
+
+    const url = new URL(req.nextUrl.href);
     const searchTerm = url.searchParams.get("term");
 
     if (!searchTerm) {
