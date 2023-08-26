@@ -2,6 +2,7 @@ import { NextResponse, NextRequest } from "next/server";
 import { getClientAndDb } from "@/app/api/mongo/db";
 import type { SegmentProps } from "@/types";
 import { parse } from "url";
+import { URL } from "url";
 
 export async function GET(req: NextRequest) {
   if (req.method !== "GET") {
@@ -12,14 +13,10 @@ export async function GET(req: NextRequest) {
     const { db } = await getClientAndDb();
     const collection = db.collection("thedailygweiRecap");
 
-    const parsedUrl = parse(req.nextUrl.href, true);
-    const rawSearchTerm = parsedUrl.query.term;
-    const searchTerm = Array.isArray(rawSearchTerm)
-      ? rawSearchTerm[0]
-      : rawSearchTerm;
-
-    // const { searchParams } = req.nextUrl;
-    // const searchTerm = searchParams.get("term");
+    const host = req.headers.get("host") || "tldl.media";
+    const fullUrl = `https://${host}${req.nextUrl.pathname}${req.nextUrl.search}`;
+    const url = new URL(fullUrl);
+    const searchTerm = url.searchParams.get("term");
 
     if (!searchTerm) {
       return NextResponse.json({
