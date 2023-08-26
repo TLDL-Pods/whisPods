@@ -11,6 +11,7 @@ interface SearchBarProps {
 export const SearchBar: FC<SearchBarProps> = ({ onEpisodesSearch }) => {
   const [inputValue, setInputValue] = useState("");
   const searchEpisodes = debounce(async (searchTerm) => {
+    console.log("Search Term:", searchTerm);
     try {
       const response = await fetch(`/api/search?term=${searchTerm}`);
       const data = await response.json();
@@ -24,6 +25,7 @@ export const SearchBar: FC<SearchBarProps> = ({ onEpisodesSearch }) => {
 
   const handleInputChange = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {
+      console.log("Input on Enter:", inputValue);
       searchEpisodes(inputValue);
     }
   };
