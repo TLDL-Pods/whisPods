@@ -1,13 +1,15 @@
 "use client";
-import { FC } from "react";
+import { FC, useState } from "react";
 import { EpisodeProps } from "@/types";
 import debounce from "lodash.debounce";
+import { IoSendSharp } from "react-icons/io5";
 
 interface SearchBarProps {
   onEpisodesSearch: (episodes: EpisodeProps[]) => void;
 }
 
 export const SearchBar: FC<SearchBarProps> = ({ onEpisodesSearch }) => {
+  const [inputValue, setInputValue] = useState("");
   const searchEpisodes = debounce(async (searchTerm) => {
     try {
       const response = await fetch(`/api/search?term=${searchTerm}`);
@@ -22,20 +24,31 @@ export const SearchBar: FC<SearchBarProps> = ({ onEpisodesSearch }) => {
 
   const handleInputChange = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === "Enter") {
-      const inputValue = (event.target as HTMLInputElement).value;
-      if (inputValue) {
-        searchEpisodes(inputValue);
-      }
+      searchEpisodes(inputValue);
     }
   };
 
   return (
-    <input
-      type="text"
-      placeholder="Search for episodes..."
-      className="w-1/2 mx-auto text-black rounded-lg"
-      onKeyDown={handleInputChange}
-    />
+    <div className="relative w-1/2 mx-auto">
+      <input
+        type="text"
+        placeholder="Search for episodes..."
+        className="w-full pl-4 pr-10 text-black"
+        value={inputValue}
+        onChange={(e) => setInputValue(e.target.value)}
+        onKeyDown={handleInputChange}
+      />
+      <button
+        className="absolute inset-y-0 right-0 flex items-center p-2 bg-stone-500"
+        onClick={() => {
+          if (inputValue) {
+            searchEpisodes(inputValue);
+          }
+        }}
+      >
+        <IoSendSharp />
+      </button>
+    </div>
   );
 };
 

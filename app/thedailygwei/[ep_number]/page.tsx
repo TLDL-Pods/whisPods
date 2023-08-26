@@ -1,5 +1,4 @@
 "use client";
-import IndividualSegment from "@/app/components/Segment";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
@@ -8,15 +7,13 @@ import { useState, useEffect, useRef, createRef, useContext } from "react";
 import {
   RiArrowUpCircleFill,
   RiArrowUpCircleLine,
-  RiArrowUpFill,
-  RiArrowUpSFill,
   RiMegaphoneLine,
   RiBookLine,
 } from "react-icons/ri";
 import { IoArrowBack } from "react-icons/io5";
-import sassalImage from "@/app/assets/sassal.webp";
-import creepySassalImage from "@/app/assets/creepySassal.webp";
+
 import moarImage from "@/app/assets/moar.webp";
+import Segment from "@/app/components/Segment";
 
 export default function EpisodePage({
   params,
@@ -34,9 +31,6 @@ export default function EpisodePage({
 
   const segmentRefs = useRef<Array<React.RefObject<HTMLDivElement>>>([]);
   const router = useRouter();
-  const handleMode = () => {
-    setIsELI5(!isELI5);
-  };
 
   const handleSummaryToggle = (index: number) => {
     if (showSummary === index) {
@@ -103,35 +97,6 @@ export default function EpisodePage({
     fetchData();
   }, [currentEpisode]);
 
-  function YouTubeEmbed({
-    youtubeUrl,
-    startTimeMs,
-  }: {
-    youtubeUrl: string;
-    startTimeMs: number;
-  }) {
-    // Convert start time from milliseconds to seconds
-    const startTimeSeconds = Math.floor(startTimeMs / 1000);
-
-    // Extract the video ID from the youtube URL
-    console.log("youtubeUrl", youtubeUrl);
-    const shortFormatMatch = youtubeUrl.match(/youtu.be\/([^&]+)/);
-    const videoId = shortFormatMatch ? shortFormatMatch[1] : null;
-    // Construct the embed URL
-    const embedUrl = `https://www.youtube.com/embed/${videoId}?start=${startTimeSeconds}`;
-
-    return (
-      <iframe
-        width="560"
-        height="315"
-        src={embedUrl}
-        title="YouTube video player"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-        allowFullScreen
-      ></iframe>
-    );
-  }
-
   if (!data) {
     return <div>Loading...</div>;
   }
@@ -188,7 +153,7 @@ export default function EpisodePage({
               >
                 <li
                   key={segment.segment_number}
-                  className={`flex w-full h-24 my-auto text-sm align-middle transition-all duration-500 cursor-pointer hover:bg-stone-800`}
+                  className="flex w-full h-24 my-auto text-sm align-middle transition-all duration-500 cursor-pointer hover:bg-stone-800"
                   onClick={() => {
                     setSelectedSegmentIndex(
                       selectedSegmentIndex === index ? null : index
@@ -200,8 +165,7 @@ export default function EpisodePage({
                   }}
                 >
                   <p className="mx-4 my-auto text-3xl font-semibold text-violet-400">
-                    {index + 1}
-                    {"."}
+                    {index + 1}.
                   </p>
                   <div className="w-4/5 p-2 my-auto">
                     <span className="text-lg">
@@ -222,7 +186,6 @@ export default function EpisodePage({
                       )}
                     </button>
                     {showSummary === index ? (
-                      // Display the summary when showSummary is equal to the current index
                       <>
                         <h3 className="text-lg font-bold text-violet-400">
                           TLDL:
@@ -232,70 +195,13 @@ export default function EpisodePage({
                         </div>
                       </>
                     ) : (
-                      // Otherwise, display the bullets
-                      <>
-                        <h3 className="text-lg font-bold text-violet-400">
-                          TLDL:
-                        </h3>
-                        <ul className="p-4 mt-2 w-fit bg-stone-950">
-                          {(isELI5
-                            ? segment.bullets_ELI5
-                            : segment.bullets
-                          ).map((bullet) => (
-                            <li key={bullet} className="flex">
-                              <div className="mt-1">
-                                <RiMegaphoneLine />
-                              </div>
-
-                              <p className="ml-2">{bullet}</p>
-                            </li>
-                          ))}
-                        </ul>
-                      </>
-                    )}
-                    <div
-                      style={{ display: "flex", justifyContent: "flex-end" }}
-                    >
-                      <button
-                        style={{ border: "none", background: "transparent" }}
-                        onClick={() => setShowVideo(!showVideo)}
-                      >
-                        <Image
-                          src={showVideo ? creepySassalImage : sassalImage}
-                          alt="Toggle Video"
-                          width={40}
-                          height={40}
-                        />
-                      </button>
-                    </div>
-
-                    {showVideo && (
-                      <YouTubeEmbed
-                        youtubeUrl={data.youtube_url}
-                        startTimeMs={segment.start_time_ms}
+                      <Segment
+                        segment={segment}
+                        showVideo={showVideo}
+                        setShowVideo={setShowVideo}
+                        youtube_url={data.youtube_url}
                       />
                     )}
-
-                    {/* Ssection for Story sources */}
-                    <div className="mt-4">
-                      <h4 className="text-lg font-bold text-violet-400">
-                        Sources:
-                      </h4>
-                      <ul>
-                        {segment.URL.map((url, idx) => (
-                          <li key={idx}>
-                            <a
-                              href={url}
-                              target="_blank"
-                              rel="noopener noreferrer"
-                              style={{ color: "blue" }}
-                            >
-                              {url}
-                            </a>
-                          </li>
-                        ))}
-                      </ul>
-                    </div>
                   </div>
                 )}
               </div>

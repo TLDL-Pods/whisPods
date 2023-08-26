@@ -1,5 +1,6 @@
 import { NextResponse, NextRequest } from "next/server";
-import { getClientAndDb } from "../mongo/db";
+import { getClientAndDb } from "@/app/api/mongo/db";
+import type { SegmentProps } from "@/types";
 
 export async function GET(req: NextRequest) {
   if (req.method !== "GET") {
@@ -27,12 +28,41 @@ export async function GET(req: NextRequest) {
     }
 
     const searchResults = await collection
-      .find({
-        $text: {
-          $search: searchTerm as string,
+      .find(
+        {
+          $text: {
+            $search: searchTerm as string,
+          },
         },
-      })
+        {
+          projection: {
+            score: { $meta: "textScore" },
+          },
+        }
+      )
+      .sort({ score: { $meta: "textScore" } })
       .toArray();
+
+    // Identify the matching segment_number for each episode
+    searchResults.forEach((episode) => {
+      episode.matchedSegmentNumbers = episode.episode_data
+        .filter((segment: SegmentProps) =>
+          segment.summary.toLowerCase().includes(searchTerm.toLowerCase())
+        )
+        .map((matchedSegment: SegmentProps) => matchedSegment.segment_number);
+    });
+
+    // // Identify the matching segment_title for each episode
+    // searchResults.forEach((episode) => {
+    //   console.log(episode._id, ": ", episode.episode_title);
+
+    //   episode.matchedSegments = episode.episode_data.filter(
+    //     (segment: SegmentProps) =>
+    //       segment.summary.toLowerCase().includes(searchTerm.toLowerCase())
+    //   );
+    // });
+
+    // console.log(searchResults);
 
     return NextResponse.json({
       status: 200,
