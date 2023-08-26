@@ -32,6 +32,7 @@ export interface EpisodeProps {
   release_date: string;
   youtube_url: string;
   _id: string;
+  matchedSegmentNumbers: number[];
 }
 
 export interface EpisodeContextType {
