@@ -8,8 +8,8 @@ export async function GET() {
     const { db } = await getClientAndDb();
     const collection = db.collection("thedailygweiRecap");
 
-    // Fetch all documents from the collection
-    const data = await collection.find().toArray();
+    // Fetch all documents from the collection sorted by episode_number
+    const data = await collection.find().sort({ episode_number: -1 }).toArray();
 
     return NextResponse.json({ status: 200, message: "Success", data: data });
   } catch (error: any) {

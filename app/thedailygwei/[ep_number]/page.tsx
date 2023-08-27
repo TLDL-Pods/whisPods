@@ -10,6 +10,7 @@ import {
   RiMegaphoneLine,
   RiBookLine,
 } from "react-icons/ri";
+import { AiFillCaretLeft, AiFillCaretRight } from "react-icons/ai";
 import { IoArrowBack } from "react-icons/io5";
 
 import moarImage from "@/app/assets/moar.webp";
@@ -21,7 +22,6 @@ export default function EpisodePage({
   params: { ep_number: string };
 }) {
   const [data, setData] = useState<EpisodeProps>();
-  const [isELI5, setIsELI5] = useState<boolean>(false);
   const [selectedSegmentIndex, setSelectedSegmentIndex] = useState<
     number | null
   >(null);
@@ -102,37 +102,32 @@ export default function EpisodePage({
   }
 
   return (
-    <div className="flex items-center justify-center h-screen">
-      <div className="h-screen overflow-y-auto w-3/8 bg-stone-950">
-        <div className="flex justify-between mb-4">
-          <button
-            onClick={() => {
-              setCurrentEpisode(previousEpisode);
-              setNextEpisode(currentEpisode);
-              setPreviousEpisode(previousEpisode - 1);
-            }}
-            disabled={currentEpisode <= 1} // Optional: Disabling if it's the first episode
-          >
-            <RiArrowUpCircleFill />
-          </button>
-          <button
-            onClick={() => {
-              setCurrentEpisode(nextEpisode);
-              setPreviousEpisode(currentEpisode);
-              setNextEpisode(nextEpisode + 1);
-            }}
-          >
-            <RiArrowUpCircleLine />
-          </button>
-        </div>
-        <button
-          type="button"
-          className="flex items-center"
-          onClick={() => router.push("/thedailygwei")}
-        >
-          <IoArrowBack className="mr-2" /> Episodes
-        </button>
+    <div className="flex items-center justify-between h-screen">
+      {/* Previous Button */}
+      <button
+        onClick={() => {
+          setCurrentEpisode(previousEpisode);
+          setNextEpisode(currentEpisode);
+          setPreviousEpisode(previousEpisode - 1);
+          router.push(`/thedailygwei/${previousEpisode}`);
+        }}
+        disabled={currentEpisode <= 1}
+        className="w-12 h-12 my-auto"
+      >
+        {/* <RiArrowUpCircleFill size={24} /> */}
+        <AiFillCaretLeft size={36} />
+      </button>
 
+      {/* Main Content */}
+      <div className="flex-grow h-screen overflow-y-auto w-3/8 bg-stone-950">
+        {/* Back to Episodes button */}
+        <button
+          onClick={() => router.push("/thedailygwei")}
+          className="px-4 py-2 mb-4 ml-4 font-bold text-white rounded bg-stone-900 hover:bg-blue-600"
+        >
+          <IoArrowBack size={24} className="inline-block mr-2" />
+          Back to Episodes
+        </button>
         <h3 className="mt-4 text-center text-violet-200">
           Episode {data.episode_number}
         </h3>
@@ -168,9 +163,7 @@ export default function EpisodePage({
                     {index + 1}.
                   </p>
                   <div className="w-4/5 p-2 my-auto">
-                    <span className="text-lg">
-                      {isELI5 ? segment.headline_ELI5 : segment.headline}
-                    </span>
+                    <span className="text-lg">{segment.headline}</span>
                   </div>
                 </li>
                 {index === selectedSegmentIndex && (
@@ -224,6 +217,19 @@ export default function EpisodePage({
           </div>
         )}
       </div>
+
+      {/* Next Button */}
+      <button
+        onClick={() => {
+          setCurrentEpisode(nextEpisode);
+          setPreviousEpisode(currentEpisode);
+          setNextEpisode(nextEpisode + 1);
+          router.push(`/thedailygwei/${nextEpisode}`);
+        }}
+        className="w-12 h-12 my-auto"
+      >
+        <AiFillCaretRight size={36} />
+      </button>
     </div>
   );
 }

@@ -10,18 +10,14 @@ interface PageSelectProps {
 
 export default function PageSelect({ episode }: PageSelectProps) {
   const topThreeSegments = episode.episode_data
-    .sort((a, b) => {
-      const lengthA = a.end_time_ms - a.start_time_ms;
-      const lengthB = b.end_time_ms - b.start_time_ms;
-      return lengthB - lengthA;
-    })
+    .sort((a, b) => b.segment_length_ms - a.segment_length_ms)
     .slice(0, 3);
 
   return (
     <Link href={`/thedailygwei/${episode.episode_number}`}>
-      <div className="flex justify-center w-full min-h-full mx-auto text-center transition-all duration-500 border-t h-96 border-violet-400 border-opacity-40 bg-stone-950 hover:bg-stone-800">
-        <div className="relative flex w-3/4 h-full my-auto">
-          <div className="relative w-64 h-64 my-auto">
+      <div className="flex items-center justify-center w-full min-h-full text-center transition-all duration-500 border-t h-96 border-violet-400 border-opacity-40 bg-stone-950 hover:bg-stone-800">
+        <div className="flex items-center w-3/4 h-full">
+          <div className="relative w-64 h-64">
             {/* Image container */}
             <Image
               src={TDG}
@@ -44,7 +40,7 @@ export default function PageSelect({ episode }: PageSelectProps) {
               </span>
             </div>
           </div>
-          <div className="flex flex-col justify-between w-3/5 p-12 mx-auto my-auto">
+          <div className="flex flex-col justify-center w-3/5 p-12 ml-6">
             <div className="mb-4">
               <div className="w-full text-2xl text-violet-100">
                 {episode.episode_title
