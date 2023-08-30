@@ -28,9 +28,14 @@ export default function EpisodePage({
   const [showSummary, setShowSummary] = useState<number | null>(null);
   const [showVideo, setShowVideo] = useState<boolean>(false);
   const [showAllStories, setShowAllStories] = useState<boolean>(false);
+  const [isOrganizedByLength, setIsOrganizedByLength] = useState<boolean>(true);
 
   const segmentRefs = useRef<Array<React.RefObject<HTMLDivElement>>>([]);
   const router = useRouter();
+
+  const toggleOrganization = () => {
+    setIsOrganizedByLength(!isOrganizedByLength);
+  };
 
   const handleSummaryToggle = (index: number) => {
     if (showSummary === index) {
@@ -119,7 +124,7 @@ export default function EpisodePage({
       </button>
 
       {/* Main Content */}
-      <div className="flex-grow h-screen overflow-y-auto w-3/8 bg-stone-950">
+      <div className="relative flex-grow h-screen overflow-y-auto w-3/8 bg-stone-950">
         {/* Back to Episodes button */}
         <button
           onClick={() => router.push("/thedailygwei")}
@@ -128,6 +133,10 @@ export default function EpisodePage({
           <IoArrowBack size={24} className="inline-block mr-2" />
           Back to Episodes
         </button>
+        <button onClick={toggleOrganization} className="absolute top-4 right-4">
+          {isOrganizedByLength ? "Sort by Segment Number" : "Sort by Length"}
+        </button>
+
         <h3 className="mt-4 text-center text-violet-200">
           Episode {data.episode_number}
         </h3>
@@ -140,6 +149,13 @@ export default function EpisodePage({
 
         <ul className="pt-2 pb-12">
           {data.episode_data
+            .sort(
+              isOrganizedByLength
+                ? (a: SegmentProps, b: SegmentProps) =>
+                    b.segment_length_ms - a.segment_length_ms
+                : (a: SegmentProps, b: SegmentProps) =>
+                    a.segment_number - b.segment_number
+            )
             .slice(0, showAllStories ? data.episode_data.length : 5)
             .map((segment, index) => (
               <div
