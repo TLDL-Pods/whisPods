@@ -2,6 +2,7 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { EpisodeProvider } from "./contexts/dataContext";
 import Navbar from "./Navbar";
+import { Analytics } from "@vercel/analytics/react";
 
 export const metadata: Metadata = {
   title: "TLDL",
@@ -19,6 +20,7 @@ export default function RootLayout({
         <EpisodeProvider>
           <Navbar>{children}</Navbar>
         </EpisodeProvider>
+        <Analytics />
       </body>
     </html>
   );

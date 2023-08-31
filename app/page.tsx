@@ -1,6 +1,5 @@
 "use client";
 
-import { Analytics } from "@vercel/analytics/react";
 import Link from "next/link";
 import Image from "next/image";
 import { useState, useEffect, useContext } from "react";
@@ -64,7 +63,6 @@ export default function Home() {
           </div>
         </Link>
       </div>
-      <Analytics />
     </div>
   );
 }
