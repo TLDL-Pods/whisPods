@@ -3,15 +3,13 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 import { EpisodeProps, SegmentProps } from "@/types";
-import { useState, useEffect, useRef, createRef, useContext } from "react";
-import {
-  RiArrowUpCircleFill,
-  RiArrowUpCircleLine,
-  RiMegaphoneLine,
-  RiBookLine,
-} from "react-icons/ri";
+import { useState, useEffect, useRef, createRef } from "react";
+import { RiMegaphoneLine, RiBookLine } from "react-icons/ri";
 import { AiFillCaretLeft, AiFillCaretRight } from "react-icons/ai";
 import { IoArrowBack } from "react-icons/io5";
+
+import { ImListNumbered } from "react-icons/im";
+import { BiSolidTimer } from "react-icons/bi";
 
 import moarImage from "@/app/assets/moar.webp";
 import Segment from "@/app/components/Segment";
@@ -134,7 +132,7 @@ export default function EpisodePage({
           Back to Episodes
         </button>
         <button onClick={toggleOrganization} className="absolute top-4 right-4">
-          {isOrganizedByLength ? "Sort by Segment Number" : "Sort by Length"}
+          {isOrganizedByLength ? <ImListNumbered /> : <BiSolidTimer />}
         </button>
 
         <h3 className="mt-4 text-center text-violet-200">
