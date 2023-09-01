@@ -6,20 +6,24 @@ import { EpisodeProps } from "@/types";
 import Segment from "@/app/components/Segment";
 import { FaWindowMinimize } from "react-icons/fa";
 
-const SearchPage: FC = () => {
+export default function SearchTermPage({
+  params,
+}: {
+  params: { searchTerm: string };
+}) {
   const [episodes, setEpisodes] = useState<EpisodeProps[]>([]);
   const [selectedEpisodeIndex, setSelectedEpisodeIndex] = useState<
     number | null
   >(null);
   const [showVideo, setShowVideo] = useState<boolean>(false);
-  const searchParams = useSearchParams();
 
-  // Get the searchTerm from the URL query parameters.
-  const searchTerm = searchParams.get("search");
+  const searchParams = useSearchParams();
+  const searchTerm = searchParams.get("searchTerm");
 
   const performSearch = async (term: string) => {
     try {
       console.log("term", term);
+      // const response = await fetch(`/api/search/${term}`);
       const response = await fetch(`/api/search/${encodeURIComponent(term)}`);
       const data = await response.json();
       if (data && Array.isArray(data.data)) {
@@ -32,7 +36,7 @@ const SearchPage: FC = () => {
 
   useEffect(() => {
     if (searchTerm) {
-      performSearch(searchTerm);
+      performSearch(searchTerm as string);
     }
   }, [searchTerm]);
 
@@ -113,6 +117,4 @@ const SearchPage: FC = () => {
       </div>
     </div>
   );
-};
-
-export default SearchPage;
+}

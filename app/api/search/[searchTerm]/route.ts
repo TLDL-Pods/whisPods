@@ -1,22 +1,31 @@
 import { NextResponse, NextRequest } from "next/server";
 import { getClientAndDb } from "@/app/api/mongo/db";
 import type { SegmentProps } from "@/types";
-import { parse } from "url";
 import { URL } from "url";
 
 export const dynamic = "force-dynamic";
 
 export async function GET(req: NextRequest) {
+  // export async function GET({ params }: { params: { searchTerm: string } }) {
   if (req.method !== "GET") {
     return NextResponse.json({ status: 405, message: "Method Not Allowed" });
   }
 
+  console.log("req.nextUrl", req.nextUrl);
+
+  // console.log("req.nextUrl", params.searchTerm);
+  // const searchTerm = params.searchTerm;
   try {
     const { db } = await getClientAndDb();
     const collection = db.collection("thedailygweiRecap");
 
-    const url = new URL(req.nextUrl.href);
-    const searchTerm = url.searchParams.get("term");
+    // const url = new URL(req.nextUrl.href);
+    // const searchTerm = url.searchParams.get("term");
+
+    const pathParts = req.nextUrl.pathname.split("/");
+    const searchTerm = pathParts[pathParts.length - 1];
+
+    console.log("searchTerm", searchTerm);
 
     if (!searchTerm) {
       return NextResponse.json({
@@ -58,6 +67,8 @@ export async function GET(req: NextRequest) {
     response.headers.set("Cache-Control", "no-store, max-age=0");
     return response;
   } catch (error: any) {
+    console.log("req.nextUrl", req.nextUrl);
+
     console.error(error);
     return NextResponse.json({ status: 500, message: error.message });
   }

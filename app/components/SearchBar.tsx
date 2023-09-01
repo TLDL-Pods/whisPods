@@ -3,28 +3,21 @@ import { FC, useState } from "react";
 import { EpisodeProps } from "@/types";
 import debounce from "lodash.debounce";
 import { IoSendSharp } from "react-icons/io5";
+import { useRouter } from "next/navigation";
 
 interface SearchBarProps {
-  onEpisodesSearch: (episodes: EpisodeProps[]) => void;
+  onSearch: (term: string) => void;
 }
 
-export const SearchBar: FC<SearchBarProps> = ({ onEpisodesSearch }) => {
+export const SearchBar: FC<SearchBarProps> = ({ onSearch }) => {
   const [inputValue, setInputValue] = useState("");
-  const searchEpisodes = debounce(async (searchTerm) => {
-    try {
-      const response = await fetch(`/api/search?term=${searchTerm}`);
-      const data = await response.json();
-      if (data && Array.isArray(data.data)) {
-        onEpisodesSearch(data.data);
-      }
-    } catch (error) {
-      console.error("Error fetching search results:", error);
-    }
-  }, 300);
+  const router = useRouter();
 
   const handleInputChange = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === "Enter") {
-      searchEpisodes(inputValue);
+    if (event.key === "Enter" && inputValue) {
+      onSearch(inputValue);
+      console.log("inputValue", inputValue);
+      router.push(`/thedailygwei/search/${encodeURIComponent(inputValue)}`);
     }
   };
 
@@ -43,7 +36,10 @@ export const SearchBar: FC<SearchBarProps> = ({ onEpisodesSearch }) => {
         className="absolute inset-y-0 right-0 flex items-center p-2 bg-stone-500"
         onClick={() => {
           if (inputValue) {
-            searchEpisodes(inputValue);
+            onSearch(inputValue);
+            router.push(
+              `/thedailygwei/search/${encodeURIComponent(inputValue)}`
+            );
           }
         }}
       >
