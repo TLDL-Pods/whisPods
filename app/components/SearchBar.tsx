@@ -17,7 +17,7 @@ export const SearchBar: FC<SearchBarProps> = ({ onSearch }) => {
     if (event.key === "Enter" && inputValue) {
       onSearch(inputValue);
       console.log("inputValue", inputValue);
-      router.push(`/thedailygwei/search/${encodeURIComponent(inputValue)}`);
+      // router.push(`/thedailygwei/search/${encodeURIComponent(inputValue)}`);
     }
   };
 

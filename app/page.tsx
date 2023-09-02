@@ -1,13 +1,30 @@
 "use client";
 
-import Link from "next/link";
-import Image from "next/image";
-import { useState, useEffect, useContext } from "react";
-import { EpisodeProps, SegmentProps } from "@/types";
-import TDG from "./assets/the-daily-gwei.jpg";
+import { useState, useEffect } from "react";
+import { EpisodeProps } from "@/types";
+import PageSelect from "@/app/components/PageSelect";
+import { useEpisodeContext } from "@/app/hooks/useEpisodeContext";
+import { SearchBar } from "@/app/components/SearchBar";
+import SearchResults from "@/app/components/SearchResults";
 
 export default function Home() {
   const [latestEpisode, setLatestEpisode] = useState<EpisodeProps>();
+  const [episodes, setEpisodes] = useState<EpisodeProps[]>([]);
+  const [hasSearched, setHasSearched] = useState(false);
+  const performSearch = async (term: string) => {
+    try {
+      console.log("term", term);
+      // const response = await fetch(`/api/search/${term}`);
+      const response = await fetch(`/api/search/${encodeURIComponent(term)}`);
+      const data = await response.json();
+      if (data && Array.isArray(data.data)) {
+        setEpisodes(data.data);
+      }
+      setHasSearched(true);
+    } catch (error) {
+      console.error("Error fetching search results:", error);
+    }
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -21,6 +38,8 @@ export default function Home() {
     console.log("data", latestEpisode);
   }, []);
 
+  const { data, setData } = useEpisodeContext();
+
   return (
     <div className="flex-col justify-center w-full p-4">
       {/* Header */}
@@ -28,40 +47,21 @@ export default function Home() {
         <h1 className="text-2xl font-bold">Too Long Didn't Listen</h1>
         <p className="mt-2">Summarize, trends, and references for Podcasts</p>
       </header>
+      <div className="w-full max-w-full">
+        {/* Search Bar */}
+        <div className="flex items-center pt-4 justify-left">
+          <SearchBar onSearch={performSearch} />
+        </div>
 
-      {/* Latest Story */}
-      <div className="flex items-center justify-center pt-4">
-        <Link href={`/thedailygwei/${latestEpisode?.episode_number}`}>
-          <div className="flex flex-col space-y-6">
-            <div className="flex items-center p-4 border rounded">
-              {/* Image on the left */}
-              <div className="mr-4">
-                {" "}
-                {/* Note the added mr-4 class for some spacing between the image and the text */}
-                <Image
-                  src={TDG}
-                  alt={"The Daily Gwei"}
-                  className="w-32 h-32"
-                  width={90}
-                  height={90}
-                />
-              </div>
-              {/* Info on the right */}
-              <div>
-                <h1 className="text-xl text-center text-violet-200">
-                  LATEST EPISODE
-                </h1>
-                <p className="text-center ">{latestEpisode?.release_date}</p>
-                <p className="text-center text-violet-400">
-                  #{latestEpisode?.episode_number}
-                </p>
-                <h2 className="text-center text-l">
-                  {latestEpisode?.episode_title}
-                </h2>
-              </div>
-            </div>
-          </div>
-        </Link>
+        <div className="pb-32">
+          {hasSearched ? (
+            <SearchResults episodes={episodes} />
+          ) : (
+            data.map((episode, index) => (
+              <PageSelect key={episode._id} episode={episode} />
+            ))
+          )}
+        </div>
       </div>
     </div>
   );
