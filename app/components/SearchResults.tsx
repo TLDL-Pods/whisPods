@@ -53,7 +53,9 @@ const SearchResults: React.FC<SearchResultsProps> = ({ episodes }) => {
 
               return (
                 <div key={segmentNumber}>
-                  <h3 className="text-lg font-bold text-violet-400">Title:</h3>
+                  <h3 className="text-lg font-bold text-violet-400">
+                    Segment:
+                  </h3>
 
                   <h2 className="pt-1 text-lg font-semibold ">
                     {matchedSegment?.headline}

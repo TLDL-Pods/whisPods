@@ -1,7 +1,5 @@
 "use client";
 import { FC, useState } from "react";
-import { EpisodeProps } from "@/types";
-import debounce from "lodash.debounce";
 import { IoSendSharp } from "react-icons/io5";
 import { useRouter } from "next/navigation";
 
@@ -37,9 +35,9 @@ export const SearchBar: FC<SearchBarProps> = ({ onSearch }) => {
         onClick={() => {
           if (inputValue) {
             onSearch(inputValue);
-            router.push(
-              `/thedailygwei/search/${encodeURIComponent(inputValue)}`
-            );
+            // router.push(
+            //   `/thedailygwei/search/${encodeURIComponent(inputValue)}`
+            // );
           }
         }}
       >

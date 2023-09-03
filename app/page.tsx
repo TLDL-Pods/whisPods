@@ -26,6 +26,11 @@ export default function Home() {
     }
   };
 
+  const clearSearchResults = () => {
+    setEpisodes([]);
+    setHasSearched(false);
+  };
+
   useEffect(() => {
     const fetchData = async () => {
       const res = await fetch(`/api/latest-episode`);
@@ -49,8 +54,18 @@ export default function Home() {
       </header>
       <div className="w-full max-w-full">
         {/* Search Bar */}
-        <div className="flex items-center pt-4 justify-left">
+        <div className="flex items-center justify-between pt-4">
+          {" "}
+          {/* changed justify-left to justify-between */}
           <SearchBar onSearch={performSearch} />
+          {hasSearched && (
+            <button
+              onClick={clearSearchResults}
+              className="px-4 py-2 ml-4 text-white bg-red-500 rounded hover:bg-red-600"
+            >
+              Clear Search
+            </button>
+          )}
         </div>
 
         <div className="pb-32">
