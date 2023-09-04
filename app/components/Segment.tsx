@@ -53,21 +53,21 @@ const Segment: FC<SegmentProps> = ({
       ></iframe>
     );
   }
-  const [copySuccess, setCopySuccess] = useState(false);
+  const [copySuccess, setCopySuccess] = useState<string | null>(null);
 
-  const handleCopy = useCallback(() => {
-    const fullURL = `${youtube_url}&t=${Math.floor(
-      segment.start_time_ms / 1000
-    )}`;
-    navigator.clipboard.writeText(fullURL);
-    setCopySuccess(true);
-  }, [youtube_url, segment.start_time_ms]);
+  const handleCopy = useCallback(
+    (textToCopy: string, type: "youtube" | "segment") => {
+      navigator.clipboard.writeText(textToCopy);
+      setCopySuccess(type);
+    },
+    []
+  );
 
   useEffect(() => {
     if (copySuccess) {
       const timer = setTimeout(() => {
-        setCopySuccess(false);
-      }, 400); // Revert back after 1 seconds
+        setCopySuccess(null);
+      }, 1000); // Revert back after 1 second
 
       return () => clearTimeout(timer); // Clean up the timer on unmount
     }
@@ -121,9 +121,14 @@ const Segment: FC<SegmentProps> = ({
             background: "transparent",
             marginLeft: "10px",
           }}
-          onClick={handleCopy}
+          onClick={() =>
+            handleCopy(
+              `${youtube_url}&t=${Math.floor(segment.start_time_ms / 1000)}`,
+              "youtube"
+            )
+          }
         >
-          {copySuccess ? <FaCheck /> : <FaRegCopy />}
+          {copySuccess === "youtube" ? <FaCheck /> : <FaRegCopy />}
         </button>
       </div>
 
@@ -146,6 +151,16 @@ const Segment: FC<SegmentProps> = ({
               >
                 {url}
               </a>
+              <button
+                style={{
+                  border: "none",
+                  background: "transparent",
+                  marginLeft: "10px",
+                }}
+                onClick={() => handleCopy(url, "segment")}
+              >
+                {copySuccess === "segment" ? <FaCheck /> : <FaRegCopy />}
+              </button>
             </li>
           ))}
         </ul>
