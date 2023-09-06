@@ -11,24 +11,16 @@ import sassano from "@/app/assets/sassano_400x400.jpg";
 
 export default function Home() {
   const { data, setData } = useEpisodeContext();
-  const [currentPage, setCurrentPage] = useState(1);
-  const [episodesPerPage] = useState(10);
-  const indexOfLastEpisode = currentPage * episodesPerPage;
-  const indexOfFirstEpisode = indexOfLastEpisode - episodesPerPage;
-
-  const latestEpisode = data[0];
 
   return (
-    <div className="w-full max-w-full">
-      {/* Podcast Card*/}
-      <div className="flex items-center pt-4 justify-left">
+    <div className="flex flex-col items-center w-full max-w-full">
+      <div className="flex flex-col space-y-6 ">
+        {/* Podcast Card*/}
         <Link href={`/thedailygwei`}>
           <div className="flex flex-col space-y-6">
             <div className="flex items-center p-4 border rounded">
               {/* Image on the left */}
               <div className="mr-4">
-                {" "}
-                {/* Note the added mr-4 class for some spacing between the image and the text */}
                 <Image
                   src={TDG}
                   alt={"The Daily Gwei"}
@@ -51,9 +43,7 @@ export default function Home() {
             </div>
           </div>
         </Link>
-      </div>
-      {/* Host Card*/}
-      <div className="flex items-center pt-4 justify-left">
+        {/* Host Card*/}
         <Link href={`/thedailygwei`}>
           <div className="flex flex-col space-y-6">
             <div className="flex items-center p-4 border rounded">
@@ -80,11 +70,8 @@ export default function Home() {
           </div>
         </Link>
       </div>
-      {/* Search Bar */}
-      {/* <div className="flex items-center pt-4 justify-left">
-        <SearchBar />
-      </div> */}
 
+      {/* Episodes */}
       <div className="pb-32">
         {data.map((episode: EpisodeProps, index: number) => (
           <PageSelect key={episode._id} episode={episode} />
