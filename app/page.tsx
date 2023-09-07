@@ -49,25 +49,26 @@ export default function Home() {
     <div className="flex-col justify-center w-full p-4">
       {/* Header */}
       <header className="p-4 text-white bg-gray-800">
-        <h1 className="text-2xl font-bold">Too Long Didn't Listen</h1>
-        <p className="mt-2">Summarize, trends, and references for Podcasts</p>
-      </header>
-      <div className="w-full max-w-full">
-        {/* Search Bar */}
-        <div className="flex items-center justify-between pt-4">
-          {" "}
-          {/* changed justify-left to justify-between */}
-          <SearchBar onSearch={performSearch} />
-          {hasSearched && (
-            <button
-              onClick={clearSearchResults}
-              className="px-4 py-2 ml-4 text-white bg-red-500 rounded hover:bg-red-600"
-            >
-              Clear Search
-            </button>
-          )}
+        <div className="flex items-center justify-between">
+          {/* Title */}
+          <div>
+            <h1 className="text-2xl font-bold">Too Long Didn't Listen</h1>
+            <p className="mt-2">
+              Summarize, trends, and references for Podcasts
+            </p>
+          </div>
+          {/* Search Content */}
+          <div className="flex items-center w-1/2">
+            <SearchBar
+              onSearch={performSearch}
+              hasSearched={hasSearched}
+              clearSearchResults={clearSearchResults}
+            />
+          </div>
         </div>
+      </header>
 
+      <div className="w-full max-w-full">
         <div className="pb-32">
           {hasSearched ? (
             <SearchResults episodes={episodes} />
