@@ -44,7 +44,7 @@ export default function SearchTermPage({
     <div className="container p-4 mx-auto">
       <h1 className="mb-4 text-xl font-bold">Search Episodes</h1>
 
-      <SearchBar onSearch={performSearch} />
+      {/* <SearchBar onSearch={performSearch} /> */}
 
       <div className="mt-8">
         {episodes.map((episode, index) => (
