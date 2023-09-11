@@ -49,16 +49,16 @@ export default function Home() {
     <div className="flex-col justify-center w-full p-4">
       {/* Header */}
       <header className="p-4 text-white bg-gray-800">
-        <div className="flex items-center justify-between">
+        <div className="flex flex-col md:flex-row items-start md:items-center justify-between">
           {/* Title */}
-          <div>
+          <div className="mb-4 md:mb-0">
             <h1 className="text-2xl font-bold">Too Long Didn't Listen</h1>
             <p className="mt-2">
               Summarize, trends, and references for Podcasts
             </p>
           </div>
           {/* Search Content */}
-          <div className="flex items-center w-1/2">
+          <div className="flex items-center w-full md:w-1/2">
             <SearchBar
               onSearch={performSearch}
               hasSearched={hasSearched}
@@ -67,7 +67,7 @@ export default function Home() {
           </div>
         </div>
       </header>
-
+  
       <div className="w-full max-w-full">
         <div className="pb-32">
           {hasSearched ? (
