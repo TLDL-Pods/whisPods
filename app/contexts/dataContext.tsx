@@ -19,7 +19,10 @@ export const EpisodeProvider: React.FC<{ children: ReactNode }> = ({
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await fetch(`/api/all-episodes`);
+      // revalidate at most every hour
+      const res = await fetch(`/api/all-episodes`, {
+        next: { revalidate: 3600 },
+      });
       const json = await res.json();
       setData(json["data"]);
     };
