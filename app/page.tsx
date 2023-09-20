@@ -33,7 +33,10 @@ export default function Home() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await fetch(`/api/latest-episode`);
+      // revalidate at most every hour
+      const res = await fetch(`/api/latest-episode`, {
+        next: { revalidate: 3600 },
+      });
       const json = await res.json();
       console.log(json);
       setLatestEpisode(json["data"]);
