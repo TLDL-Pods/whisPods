@@ -15,10 +15,10 @@ export default function PageSelect({ episode }: PageSelectProps) {
 
   return (
     <Link href={`/thedailygwei/${episode.episode_number}`}>
-      <div className="flex flex-col md:flex-row items-center justify-center w-full min-h-full text-center transition-all duration-500 border-t border-violet-400 border-opacity-40 bg-stone-950 hover:bg-stone-800">
+      <div className="flex flex-col items-center justify-center w-full min-h-full text-center transition-all duration-500 border-t md:flex-row border-violet-400 border-opacity-40 bg-stone-950 hover:bg-stone-800">
         {/* Image, Episode Number, and Date for mobile */}
-        <div className="flex items-center w-full md:w-auto md:hidden mb-3">
-          <div className="relative w-24 h-16 md:w-64 md:h-64 mr-1">
+        <div className="flex items-center w-full mb-3 md:w-auto md:hidden">
+          <div className="relative w-24 h-16 mr-1 md:w-64 md:h-64">
             {/* Image container */}
             <Image
               src={TDG}
@@ -27,15 +27,15 @@ export default function PageSelect({ episode }: PageSelectProps) {
             />
           </div>
 
-          <div className="flex mb-2 flex-col mr-2">
-            <span className="text-sm md:text-xl font-bold text-white md:text-black">
+          <div className="flex flex-col mb-2 mr-2">
+            <span className="text-sm font-bold text-white md:text-xl md:text-black">
               {episode.episode_number}
             </span>
-            <span className="text-sm md:text-xl font-bold text-white md:text-black">
+            <span className="text-sm font-bold text-white md:text-xl md:text-black">
               {episode.release_date}
             </span>
           </div>
-          <div className="mb-2 w-full">
+          <div className="w-full mb-2">
             <div className="text-base md:text-2xl text-violet-100">
               {episode.episode_title
                 ? episode.episode_title.toUpperCase()
@@ -45,8 +45,8 @@ export default function PageSelect({ episode }: PageSelectProps) {
         </div>
 
         {/* Image container for larger screens */}
-        <div className="md:flex items-center justify-center w-1/2 h-full">
-          <div className="hidden md:block relative w-64 h-64 mr-10">
+        <div className="items-center justify-center w-1/2 h-full md:flex">
+          <div className="relative hidden w-64 h-64 mr-10 md:block">
             <Image
               src={TDG}
               alt="Background"
@@ -71,7 +71,7 @@ export default function PageSelect({ episode }: PageSelectProps) {
         </div>
 
         <div className="flex flex-col justify-center w-1/2 md:ml-1">
-          <div className="hidden md:block mb-4 w-full">
+          <div className="hidden w-full mb-4 md:block">
             <div className="text-l md:text-2xl text-violet-100">
               {episode.episode_title
                 ? episode.episode_title.toUpperCase()
@@ -80,7 +80,7 @@ export default function PageSelect({ episode }: PageSelectProps) {
           </div>
 
           {/* Segments */}
-          <div className="hidden md:block pb-4 mx-auto mt-2 w-fit">
+          <div className="hidden pb-4 mx-auto mt-2 md:block w-fit">
             {topThreeSegments.map((segment, index) => (
               <div
                 key={segment.segment_number}
@@ -95,7 +95,7 @@ export default function PageSelect({ episode }: PageSelectProps) {
             ))}
           </div>
           {/* Keywords */}
-          <div className="hidden md:flex mx-auto text-xs">
+          <div className="hidden mx-auto text-xs md:flex">
             {episode.episode_keywords && episode.episode_keywords.length > 0
               ? episode.episode_keywords.map((keyword, index) => (
                   <div
