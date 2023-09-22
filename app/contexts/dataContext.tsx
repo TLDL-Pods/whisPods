@@ -19,10 +19,15 @@ export const EpisodeProvider: React.FC<{ children: ReactNode }> = ({
 
   useEffect(() => {
     const fetchData = async () => {
-      // revalidate at most every hour
+      // // revalidate at most every hour
+      // const res = await fetch(`/api/all-episodes`, {
+      //   next: { revalidate: 3600 },
+      // });
+      // Never store
       const res = await fetch(`/api/all-episodes`, {
-        next: { revalidate: 3600 },
+        cache: "no-store",
       });
+
       // Query will always force a revalidate
       // const res = await fetch(`/api/all-episodes?${Date.now()}`, {});
       const json = await res.json();
