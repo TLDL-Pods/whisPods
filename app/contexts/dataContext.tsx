@@ -19,24 +19,21 @@ export const EpisodeProvider: React.FC<{ children: ReactNode }> = ({
 
   useEffect(() => {
     const fetchData = async () => {
-      // // revalidate at most every hour
-      // const res = await fetch(`/api/all-episodes`, {
-      //   next: { revalidate: 3600 },
-      // });
-      // Never store
-      const res = await fetch(`/api/all-episodes`, {
-        cache: "no-store",
-      });
-
-      // Query will always force a revalidate
-      // const res = await fetch(`/api/all-episodes?${Date.now()}`, {});
-      const json = await res.json();
-      setData(json["data"]);
+      try {
+        const res = await fetch(`/api/all-episodes`, {
+          cache: "no-store",
+        });
+        const json = await res.json();
+        console.log("Fetched data:", json["data"]);
+        setData(json["data"]);
+      } catch (error) {
+        console.error("Error fetching data:", error);
+      }
     };
     fetchData();
 
     // refetch data
-    const id = setInterval(fetchData, 100000);
+    const id = setInterval(fetchData, 10000);
     return () => clearInterval(id);
   }, []);
 
