@@ -38,9 +38,7 @@ export default function Home() {
         next: { revalidate: 3600 },
       });
       const json = await res.json();
-      console.log(json);
       setLatestEpisode(json["data"]);
-      console.log(json);
     };
     fetchData();
     console.log("data", latestEpisode);
@@ -52,7 +50,7 @@ export default function Home() {
     <div className="flex-col justify-center w-full p-4">
       {/* Header */}
       <header className="p-4 text-white bg-gray-800">
-        <div className="flex flex-col md:flex-row items-start md:items-center justify-between">
+        <div className="flex flex-col items-start justify-between md:flex-row md:items-center">
           {/* Title */}
           <div className="mb-4 md:mb-0">
             <h1 className="text-2xl font-bold">Too Long Didn't Listen</h1>
@@ -70,7 +68,7 @@ export default function Home() {
           </div>
         </div>
       </header>
-  
+
       <div className="w-full max-w-full">
         <div className="pb-32">
           {hasSearched ? (
