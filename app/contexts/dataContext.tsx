@@ -24,7 +24,6 @@ export const EpisodeProvider: React.FC<{ children: ReactNode }> = ({
           cache: "no-store",
         });
         const json = await res.json();
-        console.log("Fetched data:", json["data"]);
         setData(json["data"]);
       } catch (error) {
         console.error("Error fetching data:", error);
