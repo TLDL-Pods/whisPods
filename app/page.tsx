@@ -8,7 +8,6 @@ import { SearchBar } from "@/app/components/SearchBar";
 import SearchResults from "@/app/components/SearchResults";
 
 export default function Home() {
-  const [latestEpisode, setLatestEpisode] = useState<EpisodeProps>();
   const [episodes, setEpisodes] = useState<EpisodeProps[]>([]);
   const [hasSearched, setHasSearched] = useState(false);
   const performSearch = async (term: string) => {
@@ -30,19 +29,6 @@ export default function Home() {
     setEpisodes([]);
     setHasSearched(false);
   };
-
-  useEffect(() => {
-    const fetchData = async () => {
-      // revalidate at most every hour
-      const res = await fetch(`/api/latest-episode`, {
-        next: { revalidate: 3600 },
-      });
-      const json = await res.json();
-      setLatestEpisode(json["data"]);
-    };
-    fetchData();
-    console.log("data", latestEpisode);
-  }, []);
 
   const { data, setData } = useEpisodeContext();
 
