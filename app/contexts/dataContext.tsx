@@ -23,11 +23,16 @@ export const EpisodeProvider: React.FC<{ children: ReactNode }> = ({
       const res = await fetch(`/api/all-episodes`, {
         next: { revalidate: 3600 },
       });
+      // Query will always force a revalidate
+      // const res = await fetch(`/api/all-episodes?${Date.now()}`, {});
       const json = await res.json();
       setData(json["data"]);
     };
     fetchData();
-    console.log(data);
+
+    // refetch data
+    const id = setInterval(fetchData, 100000);
+    return () => clearInterval(id);
   }, []);
 
   return (
