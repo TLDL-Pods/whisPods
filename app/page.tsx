@@ -13,7 +13,6 @@ export default function Home() {
   const performSearch = async (term: string) => {
     try {
       console.log("term", term);
-      // const response = await fetch(`/api/search/${term}`);
       const response = await fetch(`/api/search/${encodeURIComponent(term)}`);
       const data = await response.json();
       if (data && Array.isArray(data.data)) {
@@ -55,6 +54,7 @@ export default function Home() {
         </div>
       </header>
 
+      {/* Episodes or Search Results */}
       <div className="w-full max-w-full">
         <div className="pb-32">
           {hasSearched ? (
