@@ -55,7 +55,7 @@ export default function Home() {
       </header>
 
       {/* Episodes or Search Results */}
-      <div className="w-full max-w-full bg-stone-950">
+      <div className="w-full max-w-full">
         <div className="pb-32">
           {hasSearched ? (
             <SearchResults episodes={episodes} />
