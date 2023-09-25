@@ -13,7 +13,7 @@ export default function Home() {
   const { data, setData } = useEpisodeContext();
 
   return (
-    <div className="flex flex-col items-center w-full max-w-full">
+    <div className="flex flex-col items-center w-full max-w-full ">
       <div className="flex flex-col space-y-6 ">
         {/* Podcast Card*/}
         <Link href={`/thedailygwei`}>
