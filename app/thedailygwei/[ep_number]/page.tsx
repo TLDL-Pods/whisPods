@@ -105,32 +105,35 @@ export default function EpisodePage({
   }
 
   return (
-    <div className="flex items-center justify-between h-screen">
-      {/* Previous Button */}
-      <button
-        onClick={() => {
-          setCurrentEpisode(previousEpisode);
-          setNextEpisode(currentEpisode);
-          setPreviousEpisode(previousEpisode - 1);
-          router.push(`/thedailygwei/${previousEpisode}`);
-        }}
-        disabled={currentEpisode <= 1}
-        className="w-12 h-12 my-auto"
-      >
-        {/* <RiArrowUpCircleFill size={24} /> */}
-        <AiFillCaretLeft size={36} />
-      </button>
+    // <div className="flex items-center justify-between h-screen">
+    <div className="grid grid-cols-12 gap-0 ">
+      {/* Previous Episode Button */}
+      <div className="flex items-center justify-end col-span-1">
+        <button
+          onClick={() => {
+            setCurrentEpisode(previousEpisode);
+            setNextEpisode(currentEpisode);
+            setPreviousEpisode(previousEpisode - 1);
+            router.push(`/thedailygwei/${previousEpisode}`);
+          }}
+          disabled={currentEpisode <= 1}
+          className="w-12 h-12"
+        >
+          <AiFillCaretLeft size={36} />
+        </button>
+      </div>
 
       {/* Main Content */}
-      <div className="relative flex-grow h-screen overflow-y-auto w-3/8 bg-stone-950">
+      <div className="relative flex-grow h-screen col-span-10 w-3/8 ">
         {/* Back to Episodes button */}
         <button
-          onClick={() => router.push("/thedailygwei")}
+          onClick={() => router.push("/")}
           className="px-4 py-2 mb-4 ml-4 font-bold text-white rounded bg-stone-900 hover:bg-blue-600"
         >
           <IoArrowBack size={24} className="inline-block mr-2" />
           Back to Episodes
         </button>
+        {/* Oranize by time or order button */}
         <button onClick={toggleOrganization} className="absolute top-4 right-4">
           {isOrganizedByLength ? <ImListNumbered /> : <BiSolidTimer />}
         </button>
@@ -141,9 +144,7 @@ export default function EpisodePage({
         <h3 className="mt-1 text-center text-violet-200">
           {data.release_date}
         </h3>
-        <h4 className="text-2xl font-bold text-center text-violet-400">
-          Stories
-        </h4>
+        <h4 className="text-2xl font-bold text-center text-violet-400">News</h4>
 
         <ul className="pt-2 pb-12">
           {data.episode_data
@@ -174,7 +175,14 @@ export default function EpisodePage({
                   }}
                 >
                   <p className="mx-4 my-auto text-3xl font-semibold text-violet-400">
-                    {index + 1}.
+                    {isOrganizedByLength
+                      ? `${Math.floor(segment.segment_length_ms / 60000)}:${(
+                          (segment.segment_length_ms % 60000) /
+                          1000
+                        )
+                          .toFixed(0)
+                          .padStart(2, "0")}`
+                      : index + 1 + "."}
                   </p>
                   <div className="w-4/5 p-2 my-auto">
                     <span className="text-lg">{segment.headline}</span>
@@ -240,7 +248,8 @@ export default function EpisodePage({
           setNextEpisode(nextEpisode + 1);
           router.push(`/thedailygwei/${nextEpisode}`);
         }}
-        className="w-12 h-12 my-auto"
+        // className="w-12 h-12 my-auto"
+        className="col-span-1"
       >
         <AiFillCaretRight size={36} />
       </button>
