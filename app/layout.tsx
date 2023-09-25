@@ -19,7 +19,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <GoogleAnalytics GA_MEASUREMENT_ID="G-Z6WGLHLZXB" />
-      <body className="w-full min-h-screen text-white bg-stone-900">
+      <body className="min-h-screen bg-stone-950">
         <EpisodeProvider>
           <Navbar>{children}</Navbar>
           <CookieBanner />
