@@ -3,7 +3,7 @@ import { useState, useEffect, FC } from "react";
 import { useSearchParams } from "next/navigation";
 import { SearchBar } from "@/app/components/SearchBar";
 import { EpisodeProps } from "@/types";
-import Segment from "@/app/components/Segment";
+import SearchSegment from "@/app/components/SearchSegment";
 import { FaWindowMinimize } from "react-icons/fa";
 
 export default function SearchTermPage({
@@ -96,7 +96,7 @@ export default function SearchTermPage({
                       onClick={(event) => event.stopPropagation()}
                       className="pl-0 list-none"
                     >
-                      <Segment
+                      <SearchSegment
                         segment={matchedSegment}
                         showVideo={showVideo}
                         setShowVideo={setShowVideo}

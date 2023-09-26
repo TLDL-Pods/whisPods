@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { EpisodeProps } from "@/types";
 import { FaWindowMinimize } from "react-icons/fa";
-import Segment from "@/app/components/Segment";
+import SearchSegment from "@/app/components/SearchSegment";
 
 interface SearchResultsProps {
   episodes: EpisodeProps[];
@@ -67,7 +67,7 @@ const SearchResults: React.FC<SearchResultsProps> = ({ episodes }) => {
                       onClick={(event) => event.stopPropagation()}
                       className="pl-0 list-none"
                     >
-                      <Segment
+                      <SearchSegment
                         segment={matchedSegment}
                         showVideo={showVideo}
                         setShowVideo={setShowVideo}

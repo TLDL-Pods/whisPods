@@ -23,6 +23,7 @@ export default function EpisodePage({
   const [selectedSegmentIndex, setSelectedSegmentIndex] = useState<
     number | null
   >(null);
+  const [showSegmentIndex, setShowSegmentIndex] = useState<number | null>(null);
   const [showSummary, setShowSummary] = useState<number | null>(null);
   const [showVideo, setShowVideo] = useState<boolean>(false);
   const [showAllStories, setShowAllStories] = useState<boolean>(false);
@@ -72,10 +73,15 @@ export default function EpisodePage({
         createRef<HTMLDivElement>()
       );
       setData(sortedData);
-      console.log(sortedData);
     };
     fetchData();
   }, []);
+
+  // const handleSummaryToggle = (index: number) => {
+  //   setShowSummaryIndex((showSummaryIndex) =>
+  //     showSummaryIndex === index ? null : index
+  //   );
+  // };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -161,10 +167,18 @@ export default function EpisodePage({
                 key={segment.segment_number}
                 className="border-b border-violet-200 border-opacity-40"
               >
-                <li
-                  key={segment.segment_number}
-                  className="flex w-full h-24 my-auto text-sm align-middle transition-all duration-500 cursor-pointer hover:bg-stone-800"
-                  onClick={() => {
+                <Segment
+                  segment={segment}
+                  index={index}
+                  isOrganizedByLength={isOrganizedByLength}
+                  showVideo={showVideo}
+                  setShowVideo={setShowVideo}
+                  youtube_url={data.youtube_url}
+                  showSummary={showSummary}
+                  onSummaryToggle={handleSummaryToggle}
+                  showSegmentIndex={showSegmentIndex}
+                  setShowSegmentIndex={setShowSegmentIndex}
+                  onSegmentClick={(index) => {
                     setSelectedSegmentIndex(
                       selectedSegmentIndex === index ? null : index
                     );
@@ -173,52 +187,7 @@ export default function EpisodePage({
                       segmentRef.scrollIntoView();
                     }
                   }}
-                >
-                  <p className="mx-4 my-auto text-3xl font-semibold text-violet-400">
-                    {isOrganizedByLength
-                      ? `${Math.floor(segment.segment_length_ms / 60000)}:${(
-                          (segment.segment_length_ms % 60000) /
-                          1000
-                        )
-                          .toFixed(0)
-                          .padStart(2, "0")}`
-                      : index + 1 + "."}
-                  </p>
-                  <div className="w-4/5 p-2 my-auto">
-                    <span className="text-lg">{segment.headline}</span>
-                  </div>
-                </li>
-                {index === selectedSegmentIndex && (
-                  <div className="relative p-4">
-                    <button
-                      className="absolute top-0 right-0 p-2"
-                      onClick={() => handleSummaryToggle(index)}
-                    >
-                      {showSummary === index ? (
-                        <RiMegaphoneLine size={24} />
-                      ) : (
-                        <RiBookLine size={24} />
-                      )}
-                    </button>
-                    {showSummary === index ? (
-                      <>
-                        <h3 className="text-lg font-bold text-violet-400">
-                          TLDL:
-                        </h3>
-                        <div className="p-4 mt-4 rounded shadow-md bg-stone-950">
-                          {segment.summary}
-                        </div>
-                      </>
-                    ) : (
-                      <Segment
-                        segment={segment}
-                        showVideo={showVideo}
-                        setShowVideo={setShowVideo}
-                        youtube_url={data.youtube_url}
-                      />
-                    )}
-                  </div>
-                )}
+                />
               </div>
             ))}
         </ul>
