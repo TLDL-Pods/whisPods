@@ -83,7 +83,7 @@ export default function PageSelect({ episode }: PageSelectProps) {
                       <RiMegaphoneLine />
                     </div>
 
-                    <p className="ml-2 text-left">{segment.headline}</p>
+                    <p className="ml-2 text-left">{segment.segment_title}</p>
                   </div>
                 ))}
               </div>

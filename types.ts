@@ -13,6 +13,7 @@ export interface SegmentProps {
   summary: string;
   summary_ELI5: string;
   timestamp: string;
+  segment_title: string;
 }
 
 export interface EpisodeProps {
