@@ -7,18 +7,20 @@ import { FaRegCopy, FaCheck } from "react-icons/fa";
 
 import sassalImage from "@/app/assets/sassal.webp";
 import creepySassalImage from "@/app/assets/creepySassal.webp";
+import { SegmentProps } from "@/types";
 
 interface SegmentProps2 {
-  segment: {
-    headline: string;
-    bullets: string[];
-    bullets_ELI5: string[];
-    URL: string[];
-    start_time_ms: number;
-    summary: string;
-    segment_length_ms: number;
-    segment_number: number;
-  };
+  // segment: {
+  //   headline: string;
+  //   bullets: string[];
+  //   bullets_ELI5: string[];
+  //   URL: string[];
+  //   start_time_ms: number;
+  //   summary: string;
+  //   segment_length_ms: number;
+  //   segment_number: number;
+  // };
+  segment: SegmentProps;
   index: number;
   isOrganizedByLength: boolean;
   showVideo: boolean;
@@ -123,7 +125,7 @@ const Segment: FC<SegmentProps2> = ({
           </div>
           {/* HEADLINE*/}
           <div className="content-center text-2xl text-balance ">
-            <span>{segment.headline}</span>
+            <span>{segment.segment_title}</span>
           </div>
         </div>
       </li>
