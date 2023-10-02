@@ -77,12 +77,6 @@ export default function EpisodePage({
     fetchData();
   }, []);
 
-  // const handleSummaryToggle = (index: number) => {
-  //   setShowSummaryIndex((showSummaryIndex) =>
-  //     showSummaryIndex === index ? null : index
-  //   );
-  // };
-
   useEffect(() => {
     const fetchData = async () => {
       const res = await fetch(`/api/episode?episode_number=${currentEpisode}`);
