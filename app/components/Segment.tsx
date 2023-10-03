@@ -93,7 +93,7 @@ const Segment: FC<SegmentProps2> = ({
   };
 
   return (
-    <div className="">
+    <div className="items-center">
       <li
         key={segment.segment_number}
         className="p-2 align-middle transition-all duration-500 cursor-pointer hover:bg-stone-800"

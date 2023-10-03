@@ -105,10 +105,9 @@ export default function EpisodePage({
   }
 
   return (
-    // <div className="flex items-center justify-between h-screen">
-    <div className="grid grid-cols-12 gap-0 ">
+    <div className="grid  grid-cols-[1fr,10fr,1fr] gap-0 mx-auto lg:w-2/3">
       {/* Previous Episode Button */}
-      <div className="flex items-center justify-end col-span-1">
+      <div className="flex items-center justify-end ">
         <button
           onClick={() => {
             setCurrentEpisode(previousEpisode);
@@ -124,7 +123,7 @@ export default function EpisodePage({
       </div>
 
       {/* Main Content */}
-      <div className="relative flex-grow h-screen col-span-10 w-3/8 ">
+      <div className="">
         {/* Back to Episodes button */}
         <button
           onClick={() => router.push("/")}
@@ -132,10 +131,6 @@ export default function EpisodePage({
         >
           <IoArrowBack size={24} className="inline-block mr-2" />
           Back to Episodes
-        </button>
-        {/* Oranize by time or order button */}
-        <button onClick={toggleOrganization} className="absolute top-4 right-4">
-          {isOrganizedByLength ? <ImListNumbered /> : <BiSolidTimer />}
         </button>
 
         <h3 className="mt-4 text-center text-violet-200">
@@ -145,6 +140,13 @@ export default function EpisodePage({
           {data.release_date}
         </h3>
         <h4 className="text-2xl font-bold text-center text-violet-400">News</h4>
+
+        {/* Oranize by time or order button */}
+        <div className="text-right">
+          <button onClick={toggleOrganization} className="">
+            {isOrganizedByLength ? <ImListNumbered /> : <BiSolidTimer />}
+          </button>
+        </div>
 
         <ul className="pt-2 pb-12">
           {data.episode_data
@@ -159,7 +161,7 @@ export default function EpisodePage({
             .map((segment, index) => (
               <div
                 key={segment.segment_number}
-                className="border-b border-violet-200 border-opacity-40"
+                className="border-b border-violet-100 border-opacity-40"
               >
                 <Segment
                   segment={segment}
@@ -189,7 +191,7 @@ export default function EpisodePage({
           <div className="flex justify-center mt-4">
             <button
               onClick={() => setShowAllStories(true)}
-              className="px-6 py-2 font-bold text-white bg-blue-500 rounded hover:bg-blue-600"
+              className="px-6 py-2 font-bold text-white rounded bg-violet-500 hover:bg-blue-600"
             >
               Moar
               <Image
@@ -204,18 +206,18 @@ export default function EpisodePage({
       </div>
 
       {/* Next Button */}
-      <button
-        onClick={() => {
-          setCurrentEpisode(nextEpisode);
-          setPreviousEpisode(currentEpisode);
-          setNextEpisode(nextEpisode + 1);
-          router.push(`/thedailygwei/${nextEpisode}`);
-        }}
-        // className="w-12 h-12 my-auto"
-        className="col-span-1"
-      >
-        <AiFillCaretRight size={36} />
-      </button>
+      <div className="flex items-center justify-start">
+        <button
+          onClick={() => {
+            setCurrentEpisode(nextEpisode);
+            setPreviousEpisode(currentEpisode);
+            setNextEpisode(nextEpisode + 1);
+            router.push(`/thedailygwei/${nextEpisode}`);
+          }}
+        >
+          <AiFillCaretRight size={36} />
+        </button>
+      </div>
     </div>
   );
 }
