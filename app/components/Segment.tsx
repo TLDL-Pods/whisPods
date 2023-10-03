@@ -10,16 +10,6 @@ import creepySassalImage from "@/app/assets/creepySassal.webp";
 import { SegmentProps } from "@/types";
 
 interface SegmentProps2 {
-  // segment: {
-  //   headline: string;
-  //   bullets: string[];
-  //   bullets_ELI5: string[];
-  //   URL: string[];
-  //   start_time_ms: number;
-  //   summary: string;
-  //   segment_length_ms: number;
-  //   segment_number: number;
-  // };
   segment: SegmentProps;
   index: number;
   isOrganizedByLength: boolean;
