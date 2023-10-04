@@ -4,7 +4,6 @@ import { useRouter } from "next/navigation";
 
 import { EpisodeProps, SegmentProps } from "@/types";
 import { useState, useEffect, useRef, createRef } from "react";
-import { AiFillCaretLeft, AiFillCaretRight } from "react-icons/ai";
 import { IoArrowBack } from "react-icons/io5";
 
 import { ImListNumbered } from "react-icons/im";
@@ -104,9 +103,9 @@ export default function EpisodePage({
   }
 
   return (
-    <div className="grid  grid-cols-[1fr,10fr,1fr] gap-0 mx-auto lg:w-3/5">
+    <div className="lg:grid  lg:grid-cols-[1fr,2fr,1fr] gap-0 lg:w-3/5">
       {/* Previous Episode Button */}
-      <div className="flex items-center justify-end ">
+      {/* <div className="flex items-center justify-end ">
         <button
           onClick={() => {
             setCurrentEpisode(previousEpisode);
@@ -119,7 +118,7 @@ export default function EpisodePage({
         >
           <AiFillCaretLeft size={36} />
         </button>
-      </div>
+      </div> */}
 
       {/* Main Content */}
       <div className="">
@@ -140,14 +139,14 @@ export default function EpisodePage({
         </h3>
         <h4 className="text-2xl font-bold text-center text-violet-400">News</h4>
 
-        {/* Oranize by time or order button */}
+        {/* Organize by time or order button */}
         <div className="text-right">
           <button onClick={toggleOrganization} className="">
             {isOrganizedByLength ? <ImListNumbered /> : <BiSolidTimer />}
           </button>
         </div>
 
-        <ul className="pt-2 pb-12">
+        <ul className="pt-2">
           {data.episode_data
             .sort(
               isOrganizedByLength
@@ -187,10 +186,10 @@ export default function EpisodePage({
             ))}
         </ul>
         {!showAllStories && (
-          <div className="flex justify-center mt-4">
+          <div className="flex justify-center mt-12">
             <button
               onClick={() => setShowAllStories(true)}
-              className="px-6 py-2 font-bold text-white rounded bg-violet-500 hover:bg-blue-600"
+              className="px-5 py-1 font-bold text-white rounded bg-violet-500 hover:bg-blue-600"
             >
               Moar
               <Image
@@ -205,7 +204,7 @@ export default function EpisodePage({
       </div>
 
       {/* Next Button */}
-      <div className="flex items-center justify-start">
+      {/* <div className="flex items-center justify-start">
         <button
           onClick={() => {
             setCurrentEpisode(nextEpisode);
@@ -216,7 +215,7 @@ export default function EpisodePage({
         >
           <AiFillCaretRight size={36} />
         </button>
-      </div>
+      </div> */}
     </div>
   );
 }

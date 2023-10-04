@@ -1,13 +1,9 @@
 "use client";
 import React, { FC, useCallback, useState, useEffect, useRef } from "react";
 import { RiMegaphoneLine, RiBookLine } from "react-icons/ri";
-
-import Image from "next/image";
 import { FaRegCopy, FaCheck } from "react-icons/fa";
-
-import sassalImage from "@/app/assets/sassal.webp";
-import creepySassalImage from "@/app/assets/creepySassal.webp";
 import { SegmentProps } from "@/types";
+import YouTubeEmbed from "@/app/components/YoutubeEmbed";
 
 interface SegmentProps2 {
   segment: SegmentProps;
@@ -33,34 +29,6 @@ const Segment: FC<SegmentProps2> = ({
   showSegmentIndex,
   setShowSegmentIndex,
 }) => {
-  function YouTubeEmbed({
-    youtubeUrl,
-    startTimeMs,
-  }: {
-    youtubeUrl: string;
-    startTimeMs: number;
-  }) {
-    // Convert start time from milliseconds to seconds
-    const startTimeSeconds = Math.floor(startTimeMs / 1000);
-
-    // Extract the video ID from the youtube URL
-    console.log("youtubeUrl", youtubeUrl);
-    const shortFormatMatch = youtubeUrl.match(/youtu.be\/([^&]+)/);
-    const videoId = shortFormatMatch ? shortFormatMatch[1] : null;
-    // Construct the embed URL
-    const embedUrl = `https://www.youtube.com/embed/${videoId}?start=${startTimeSeconds}`;
-
-    return (
-      <iframe
-        width="560"
-        height="315"
-        src={embedUrl}
-        title="YouTube video player"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-        allowFullScreen
-      ></iframe>
-    );
-  }
   const [copySuccess, setCopySuccess] = useState<string | null>(null);
   const [showSummary, setShowSummary] = useState<boolean>(false);
   const handleCopy = useCallback(
@@ -99,9 +67,9 @@ const Segment: FC<SegmentProps2> = ({
         className="p-2 align-middle transition-all duration-500 cursor-pointer hover:bg-stone-800"
         onClick={() => handleSegmentToggle(index)}
       >
-        <div className="grid  grid-cols-[1fr,10fr] gap-0 ">
+        <div className="md:grid md:grid-cols-[1fr,10fr] md:gap-2 ">
           {/* INDEX */}
-          <div className="content-center text-3xl font-semibold text-center text-violet-400">
+          <div className="content-center font-semibold text-center md-text-3xl text-violet-400">
             <p>
               {isOrganizedByLength
                 ? `${Math.floor(segment.segment_length_ms / 60000)}:${(
@@ -114,46 +82,50 @@ const Segment: FC<SegmentProps2> = ({
             </p>
           </div>
           {/* HEADLINE*/}
-          <div className="content-center text-2xl text-balance ">
+          <div className="content-center md-text-3xl text-violet-200 text-balance">
             <span>{segment.segment_title}</span>
           </div>
         </div>
       </li>
-      <div className="grid grid-cols-[1fr,10fr] gap-0 ">
+      <div className="md:grid md:grid-cols-[1fr,10fr] md:gap-2 ">
         {/* Blank BELOW */}
         <div className=""></div>
         {/* CONTENT */}
         <div className="">
           {showSegmentIndex === index && (
+            // Bullets or summary
             <div className="relative p">
-              <button
-                className="absolute top-0 right-0 p-2"
-                onClick={handleSummaryToggle}
-              >
+              <div className="flex flex-row text-violet-100 ">
                 {showSummary ? (
-                  <RiMegaphoneLine size={24} />
+                  <div className="text-justify rounded shadow-md text-balance bg-stone-950">
+                    {segment.summary}
+                  </div>
                 ) : (
-                  <RiBookLine size={24} />
+                  <>
+                    <ul className="grow bg-stone-950">
+                      {segment.bullets.map((bullet) => (
+                        <li key={bullet} className="flex">
+                          <div className="mt-1">
+                            <RiMegaphoneLine />
+                          </div>
+                          <p className="ml-2 text-balance">{bullet}</p>
+                        </li>
+                      ))}
+                    </ul>
+                  </>
                 )}
-              </button>
-              {showSummary ? (
-                <div className="rounded shadow-md text-balance bg-stone-950">
-                  {segment.summary}
-                </div>
-              ) : (
-                <>
-                  <ul className=" bg-stone-950">
-                    {segment.bullets.map((bullet) => (
-                      <li key={bullet} className="flex">
-                        <div className="mt-1">
-                          <RiMegaphoneLine />
-                        </div>
-                        <p className="ml-2 text-balance">{bullet}</p>
-                      </li>
-                    ))}
-                  </ul>
-                </>
-              )}
+                <button
+                  className="self-start pl-2 text-end text-violet-400"
+                  onClick={handleSummaryToggle}
+                >
+                  {showSummary ? (
+                    <RiMegaphoneLine size={24} />
+                  ) : (
+                    <RiBookLine size={24} />
+                  )}
+                </button>
+              </div>
+
               <div className="pt-3 pl-0">
                 <YouTubeEmbed
                   youtubeUrl={youtube_url}
@@ -195,7 +167,7 @@ const Segment: FC<SegmentProps2> = ({
                   </h4>
                   <ul>
                     {segment.URL.map((url, idx) => (
-                      <li key={idx} className="flex items-center">
+                      <li key={idx} className="items-center truncate ">
                         <a
                           href={url}
                           target="_blank"
