@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@tailwindcss/aspect-ratio": "^0.4.2",
     "@types/mongodb": "^4.0.7",
     "@types/node": "20.4.4",
     "@types/react": "18.2.16",
