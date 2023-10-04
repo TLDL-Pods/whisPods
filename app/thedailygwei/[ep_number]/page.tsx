@@ -4,7 +4,6 @@ import { useRouter } from "next/navigation";
 
 import { EpisodeProps, SegmentProps } from "@/types";
 import { useState, useEffect, useRef, createRef } from "react";
-import { RiMegaphoneLine, RiBookLine } from "react-icons/ri";
 import { AiFillCaretLeft, AiFillCaretRight } from "react-icons/ai";
 import { IoArrowBack } from "react-icons/io5";
 
@@ -105,7 +104,7 @@ export default function EpisodePage({
   }
 
   return (
-    <div className="grid  grid-cols-[1fr,10fr,1fr] gap-0 mx-auto lg:w-2/3">
+    <div className="grid  grid-cols-[1fr,10fr,1fr] gap-0 mx-auto lg:w-3/5">
       {/* Previous Episode Button */}
       <div className="flex items-center justify-end ">
         <button

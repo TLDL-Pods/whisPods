@@ -125,7 +125,7 @@ const Segment: FC<SegmentProps2> = ({
         {/* CONTENT */}
         <div className="">
           {showSegmentIndex === index && (
-            <div className="relative ">
+            <div className="relative p">
               <button
                 className="absolute top-0 right-0 p-2"
                 onClick={handleSummaryToggle}
@@ -154,84 +154,58 @@ const Segment: FC<SegmentProps2> = ({
                   </ul>
                 </>
               )}
-              <>
-                <h3 className="text-lg font-bold text-violet-400">Video:</h3>
+              <div className="pt-3 pl-0">
+                <YouTubeEmbed
+                  youtubeUrl={youtube_url}
+                  startTimeMs={segment.start_time_ms}
+                />
+                <a
+                  href={`${youtube_url}&t=${Math.floor(
+                    segment.start_time_ms / 1000
+                  )}`}
+                  className="text-blue-500 underline "
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setShowVideo(!showVideo);
+                  }}
+                >
+                  {youtube_url}&t={Math.floor(segment.start_time_ms / 1000)}
+                </a>
 
-                <div style={{ display: "flex", alignItems: "center" }}>
-                  <button
-                    style={{ border: "none", background: "transparent" }}
-                    onClick={() => setShowVideo(!showVideo)}
-                  >
-                    <Image
-                      src={showVideo ? creepySassalImage : sassalImage}
-                      alt="Toggle Video"
-                      width={40}
-                      height={40}
-                    />
-                  </button>
-                  <a
-                    href={`${youtube_url}&t=${Math.floor(
-                      segment.start_time_ms / 1000
-                    )}`}
-                    style={{
-                      marginLeft: "10px",
-                      color: "blue",
-                      textDecoration: "underline",
-                    }}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      setShowVideo(!showVideo);
-                    }}
-                  >
-                    {youtube_url}&t={Math.floor(segment.start_time_ms / 1000)}
-                  </a>
-
-                  <button
-                    style={{
-                      border: "none",
-                      background: "transparent",
-                      marginLeft: "10px",
-                    }}
-                    onClick={() =>
-                      handleCopy(
-                        `${youtube_url}&t=${Math.floor(
-                          segment.start_time_ms / 1000
-                        )}`,
-                        "youtube"
-                      )
-                    }
-                  >
-                    {copySuccess === "youtube" ? <FaCheck /> : <FaRegCopy />}
-                  </button>
-                </div>
-
-                {showVideo && (
-                  <YouTubeEmbed
-                    youtubeUrl={youtube_url}
-                    startTimeMs={segment.start_time_ms}
-                  />
-                )}
+                <button
+                  style={{
+                    border: "none",
+                    background: "transparent",
+                    marginLeft: "10px",
+                  }}
+                  onClick={() =>
+                    handleCopy(
+                      `${youtube_url}&t=${Math.floor(
+                        segment.start_time_ms / 1000
+                      )}`,
+                      "youtube"
+                    )
+                  }
+                >
+                  {copySuccess === "youtube" ? <FaCheck /> : <FaRegCopy />}
+                </button>
                 <div className="mt-4">
                   <h4 className="text-lg font-bold text-violet-400">
                     Sources:
                   </h4>
                   <ul>
                     {segment.URL.map((url, idx) => (
-                      <li key={idx}>
+                      <li key={idx} className="flex items-center">
                         <a
                           href={url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          style={{ color: "blue" }}
+                          className="text-blue-500"
                         >
                           {url}
                         </a>
                         <button
-                          style={{
-                            border: "none",
-                            background: "transparent",
-                            marginLeft: "10px",
-                          }}
+                          className="ml-4 bg-transparent border-none"
                           onClick={() => handleCopy(url, "segment")}
                         >
                           {copySuccess === "segment" ? (
@@ -244,7 +218,7 @@ const Segment: FC<SegmentProps2> = ({
                     ))}
                   </ul>
                 </div>
-              </>
+              </div>
             </div>
           )}
         </div>
