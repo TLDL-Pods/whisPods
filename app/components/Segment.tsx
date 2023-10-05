@@ -67,9 +67,9 @@ const Segment: FC<SegmentProps2> = ({
         className="p-2 align-middle transition-all duration-500 cursor-pointer hover:bg-stone-800"
         onClick={() => handleSegmentToggle(index)}
       >
-        <div className="md:grid md:grid-cols-[1fr,10fr] md:gap-2 ">
+        <div className="flex md:grid md:grid-cols-[1fr,10fr] gap-2 ">
           {/* INDEX */}
-          <div className="content-center font-semibold text-center md-text-3xl text-violet-400">
+          <div className="content-center font-semibold text-center grow-0 md-text-3xl text-violet-400">
             <p>
               {isOrganizedByLength
                 ? `${Math.floor(segment.segment_length_ms / 60000)}:${(
@@ -82,40 +82,40 @@ const Segment: FC<SegmentProps2> = ({
             </p>
           </div>
           {/* HEADLINE*/}
-          <div className="content-center md-text-3xl text-violet-200 text-balance">
+          <div className="content-center grow md-text-3xl text-violet-200 text-balance">
             <span>{segment.segment_title}</span>
           </div>
         </div>
       </li>
-      <div className="md:grid md:grid-cols-[1fr,10fr] md:gap-2 ">
+      <div className=" md:grid md:grid-cols-[1fr,10fr] md:gap-2 ">
         {/* Blank BELOW */}
-        <div className=""></div>
+        <div className="grow-0"></div>
         {/* CONTENT */}
         <div className="">
           {showSegmentIndex === index && (
             // Bullets or summary
-            <div className="relative p">
-              <div className="flex flex-row text-violet-100 ">
+            <div className="">
+              <div className="flex pl-12 md:flex ms:flex-row text-violet-100 ">
                 {showSummary ? (
-                  <div className="text-justify rounded shadow-md text-balance bg-stone-950">
+                  <div className="text-justify text-balance">
                     {segment.summary}
                   </div>
                 ) : (
                   <>
-                    <ul className="grow bg-stone-950">
+                    <ul className="flex-grow md:grow ">
                       {segment.bullets.map((bullet) => (
                         <li key={bullet} className="flex">
-                          <div className="mt-1">
+                          <div className="mt-1 grow-0">
                             <RiMegaphoneLine />
                           </div>
-                          <p className="ml-2 text-balance">{bullet}</p>
+                          <p className="ml-2 text-balance ">{bullet}</p>
                         </li>
                       ))}
                     </ul>
                   </>
                 )}
                 <button
-                  className="self-start pl-2 text-end text-violet-400"
+                  className="self-start pr-2 text-end text-violet-400"
                   onClick={handleSummaryToggle}
                 >
                   {showSummary ? (

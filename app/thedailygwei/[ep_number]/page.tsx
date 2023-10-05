@@ -103,7 +103,7 @@ export default function EpisodePage({
   }
 
   return (
-    <div className="lg:grid  lg:grid-cols-[1fr,2fr,1fr] gap-0 lg:w-3/5">
+    <div className="md:grid  md:grid-cols-[1fr,2fr,1fr] gap-0 md:w-3/5">
       {/* Previous Episode Button */}
       {/* <div className="flex items-center justify-end ">
         <button
@@ -140,7 +140,7 @@ export default function EpisodePage({
         <h4 className="text-2xl font-bold text-center text-violet-400">News</h4>
 
         {/* Organize by time or order button */}
-        <div className="text-right">
+        <div className="pr-3 text-right">
           <button onClick={toggleOrganization} className="">
             {isOrganizedByLength ? <ImListNumbered /> : <BiSolidTimer />}
           </button>
