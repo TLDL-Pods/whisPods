@@ -126,7 +126,7 @@ const Segment: FC<SegmentProps2> = ({
                 </button>
               </div>
 
-              <div className="pt-3 pl-0">
+              <div className="pt-4 pl-12 pr-4">
                 <YouTubeEmbed
                   youtubeUrl={youtube_url}
                   startTimeMs={segment.start_time_ms}
@@ -135,21 +135,17 @@ const Segment: FC<SegmentProps2> = ({
                   href={`${youtube_url}&t=${Math.floor(
                     segment.start_time_ms / 1000
                   )}`}
-                  className="text-blue-500 underline "
+                  className="pr-2 text-blue-500 underline"
                   onClick={(e) => {
                     e.preventDefault();
                     setShowVideo(!showVideo);
                   }}
                 >
-                  {youtube_url}&t={Math.floor(segment.start_time_ms / 1000)}
+                  YouTube Segment
                 </a>
 
                 <button
-                  style={{
-                    border: "none",
-                    background: "transparent",
-                    marginLeft: "10px",
-                  }}
+                  title="Copy YouTube Segment Link"
                   onClick={() =>
                     handleCopy(
                       `${youtube_url}&t=${Math.floor(
@@ -161,6 +157,7 @@ const Segment: FC<SegmentProps2> = ({
                 >
                   {copySuccess === "youtube" ? <FaCheck /> : <FaRegCopy />}
                 </button>
+
                 <div className="mt-4">
                   <h4 className="text-lg font-bold text-violet-400">
                     Sources:

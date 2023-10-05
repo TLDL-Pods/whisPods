@@ -28,7 +28,7 @@ function YouTubeEmbed({
   const embedUrl = `https://www.youtube.com/embed/${videoId}?start=${startTimeSeconds}`;
 
   return (
-    <div className="max-w-full mx-auto aspect-w-16 aspect-h-9">
+    <div className="max-w-full mx-auto border aspect-w-16 aspect-h-9">
       <iframe
         className="aspect-content"
         src={embedUrl}
