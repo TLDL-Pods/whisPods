@@ -4,9 +4,11 @@ import "tailwindcss/tailwind.css";
 function YouTubeEmbed({
   youtubeUrl,
   startTimeMs,
+  maxWidth,
 }: {
   youtubeUrl: string;
   startTimeMs: number;
+  maxWidth: string;
 }) {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
@@ -28,7 +30,11 @@ function YouTubeEmbed({
   const embedUrl = `https://www.youtube.com/embed/${videoId}?start=${startTimeSeconds}`;
 
   return (
-    <div className="max-w-full mx-auto border aspect-w-16 aspect-h-9">
+    <div
+      className={`mx-auto border aspect-w-16 aspect-h-9 ${
+        maxWidth && `max-w-${maxWidth}`
+      }`}
+    >
       <iframe
         className="aspect-content"
         src={embedUrl}

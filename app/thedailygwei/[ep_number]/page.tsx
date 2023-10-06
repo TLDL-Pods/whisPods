@@ -103,32 +103,15 @@ export default function EpisodePage({
   }
 
   return (
-    <div className="md:grid  md:grid-cols-[1fr,2fr,1fr] gap-0 md:w-3/5">
-      {/* Previous Episode Button */}
-      {/* <div className="flex items-center justify-end ">
-        <button
-          onClick={() => {
-            setCurrentEpisode(previousEpisode);
-            setNextEpisode(currentEpisode);
-            setPreviousEpisode(previousEpisode - 1);
-            router.push(`/thedailygwei/${previousEpisode}`);
-          }}
-          disabled={currentEpisode <= 1}
-          className="w-12 h-12"
-        >
-          <AiFillCaretLeft size={36} />
-        </button>
-      </div> */}
-
+    <div className="flex justify-center min-h-screen ">
       {/* Main Content */}
       <div className="">
         {/* Back to Episodes button */}
         <button
           onClick={() => router.push("/")}
-          className="px-4 py-2 mb-4 ml-4 font-bold text-white rounded bg-stone-900 hover:bg-blue-600"
+          className="p-1 font-bold text-white rounded hover:bg-stone-900"
         >
-          <IoArrowBack size={24} className="inline-block mr-2" />
-          Back to Episodes
+          <IoArrowBack size={24} className="inline-block" />
         </button>
 
         <h3 className="mt-4 text-center text-violet-200">
@@ -140,13 +123,17 @@ export default function EpisodePage({
         <h4 className="text-2xl font-bold text-center text-violet-400">News</h4>
 
         {/* Organize by time or order button */}
-        <div className="pr-3 text-right">
-          <button onClick={toggleOrganization} className="">
+        <div className="pr-3 text-right ">
+          <button
+            onClick={toggleOrganization}
+            className="hover:bg-stone-900"
+            title="Presentation order or longest first"
+          >
             {isOrganizedByLength ? <ImListNumbered /> : <BiSolidTimer />}
           </button>
         </div>
 
-        <ul className="pt-2">
+        <ul className="pt-2 ">
           {data.episode_data
             .sort(
               isOrganizedByLength
@@ -202,20 +189,6 @@ export default function EpisodePage({
           </div>
         )}
       </div>
-
-      {/* Next Button */}
-      {/* <div className="flex items-center justify-start">
-        <button
-          onClick={() => {
-            setCurrentEpisode(nextEpisode);
-            setPreviousEpisode(currentEpisode);
-            setNextEpisode(nextEpisode + 1);
-            router.push(`/thedailygwei/${nextEpisode}`);
-          }}
-        >
-          <AiFillCaretRight size={36} />
-        </button>
-      </div> */}
     </div>
   );
 }

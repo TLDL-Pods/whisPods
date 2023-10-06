@@ -61,15 +61,15 @@ const Segment: FC<SegmentProps2> = ({
   };
 
   return (
-    <div className="">
-      <li
-        key={segment.segment_number}
-        className="p-2 align-middle transition-all duration-500 cursor-pointer hover:bg-stone-800"
-        onClick={() => handleSegmentToggle(index)}
-      >
-        <div className="flex md:grid md:grid-cols-[1fr,10fr] gap-2 ">
+    <div className="align-middle ">
+      <li key={segment.segment_number} className="cursor-pointer ">
+        {/* ROW 1: Index & Title */}
+        <div
+          className="flex gap-2 p-2 md:text-xl lg:text-2xl hover:bg-stone-800"
+          onClick={() => handleSegmentToggle(index)}
+        >
           {/* INDEX */}
-          <div className="content-center font-semibold text-center grow-0 md-text-3xl text-violet-400">
+          <div className="font-semibold text-center grow-0 text-violet-400">
             <p>
               {isOrganizedByLength
                 ? `${Math.floor(segment.segment_length_ms / 60000)}:${(
@@ -82,116 +82,133 @@ const Segment: FC<SegmentProps2> = ({
             </p>
           </div>
           {/* HEADLINE*/}
-          <div className="content-center grow md-text-3xl text-violet-200 text-balance">
+          <div className="content-center flex-grow text-violet-200 text-balance">
             <span>{segment.segment_title}</span>
           </div>
         </div>
-      </li>
-      <div className=" md:grid md:grid-cols-[1fr,10fr] md:gap-2 ">
-        {/* Blank BELOW */}
-        <div className="grow-0"></div>
-        {/* CONTENT */}
-        <div className="">
+        {/* ROW 2: Blank & Content */}
+        <div className="flex gap-2 p-2 md:text-l lg:text-xl">
           {showSegmentIndex === index && (
-            // Bullets or summary
-            <div className="">
-              <div className="flex pl-12 md:flex ms:flex-row text-violet-100 ">
-                {showSummary ? (
-                  <div className="text-justify text-balance">
-                    {segment.summary}
-                  </div>
-                ) : (
-                  <>
-                    <ul className="flex-grow md:grow ">
-                      {segment.bullets.map((bullet) => (
-                        <li key={bullet} className="flex">
-                          <div className="mt-1 grow-0">
-                            <RiMegaphoneLine />
-                          </div>
-                          <p className="ml-2 text-balance ">{bullet}</p>
-                        </li>
-                      ))}
-                    </ul>
-                  </>
-                )}
-                <button
-                  className="self-start pr-2 text-end text-violet-400"
-                  onClick={handleSummaryToggle}
-                >
-                  {showSummary ? (
-                    <RiMegaphoneLine size={24} />
-                  ) : (
-                    <RiBookLine size={24} />
-                  )}
-                </button>
+            <div className="flex">
+              {/* Blank */}
+              <div className="content-center flex-none invisible font-semibold text-center grow-0 text-violet-400 md:text-xl lg:text-2xl">
+                <p>
+                  {isOrganizedByLength
+                    ? `${Math.floor(segment.segment_length_ms / 60000)}:${(
+                        (segment.segment_length_ms % 60000) /
+                        1000
+                      )
+                        .toFixed(0)
+                        .padStart(2, "0")}`
+                    : index + 1 + "."}
+                </p>
               </div>
+              {/* CONTENT */}
+              <div className="flex-col content-center flex-grow md-text-l text-violet-200">
+                {/* Bullets or Summary */}
+                <div className="flex flex-row text-violet-100">
+                  {showSummary ? (
+                    <div className="text-justify ">{segment.summary}</div>
+                  ) : (
+                    <>
+                      <ul className="flex-grow ">
+                        {segment.bullets.map((bullet) => (
+                          <li key={bullet} className="flex pb-2 pl-0.5">
+                            <div className="mt-1 grow-0">
+                              <RiMegaphoneLine />
+                            </div>
+                            <p className="ml-2 ">{bullet}</p>
+                          </li>
+                        ))}
+                      </ul>
+                    </>
+                  )}
+                  <button
+                    className="self-start pr-2 text-end text-violet-400"
+                    onClick={handleSummaryToggle}
+                  >
+                    {showSummary ? (
+                      <RiMegaphoneLine size={24} />
+                    ) : (
+                      <RiBookLine size={24} />
+                    )}
+                  </button>
+                </div>
 
-              <div className="pt-4 pl-12 pr-4">
-                <YouTubeEmbed
-                  youtubeUrl={youtube_url}
-                  startTimeMs={segment.start_time_ms}
-                />
-                <a
-                  href={`${youtube_url}&t=${Math.floor(
-                    segment.start_time_ms / 1000
-                  )}`}
-                  className="pr-2 text-blue-500 underline"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setShowVideo(!showVideo);
-                  }}
-                >
-                  YouTube Segment
-                </a>
+                {/* YouTube Embed */}
+                <div className="pt-4 pr-4 ">
+                  <YouTubeEmbed
+                    youtubeUrl={youtube_url}
+                    startTimeMs={segment.start_time_ms}
+                    maxWidth="screen-sm"
+                  />
+                  <a
+                    href={`${youtube_url}&t=${Math.floor(
+                      segment.start_time_ms / 1000
+                    )}`}
+                    className="pr-2 text-blue-500 underline"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setShowVideo(!showVideo);
+                    }}
+                  >
+                    YouTube Segment
+                  </a>
 
-                <button
-                  title="Copy YouTube Segment Link"
-                  onClick={() =>
-                    handleCopy(
-                      `${youtube_url}&t=${Math.floor(
-                        segment.start_time_ms / 1000
-                      )}`,
-                      "youtube"
-                    )
-                  }
-                >
-                  {copySuccess === "youtube" ? <FaCheck /> : <FaRegCopy />}
-                </button>
+                  <button
+                    title="Copy YouTube Segment Link"
+                    onClick={() =>
+                      handleCopy(
+                        `${youtube_url}&t=${Math.floor(
+                          segment.start_time_ms / 1000
+                        )}`,
+                        "youtube"
+                      )
+                    }
+                  >
+                    {copySuccess === "youtube" ? <FaCheck /> : <FaRegCopy />}
+                  </button>
+                </div>
 
-                <div className="mt-4">
+                {/* Sources */}
+                <div className="mt-4 ">
                   <h4 className="text-lg font-bold text-violet-400">
                     Sources:
                   </h4>
-                  <ul>
-                    {segment.URL.map((url, idx) => (
-                      <li key={idx} className="items-center truncate ">
-                        <a
-                          href={url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-blue-500"
-                        >
-                          {url}
-                        </a>
-                        <button
-                          className="ml-4 bg-transparent border-none"
-                          onClick={() => handleCopy(url, "segment")}
-                        >
-                          {copySuccess === "segment" ? (
-                            <FaCheck />
-                          ) : (
-                            <FaRegCopy />
-                          )}
-                        </button>
-                      </li>
-                    ))}
-                  </ul>
+                  <div className="">
+                    <ul className="">
+                      {segment.URL.map((url, idx) => (
+                        <li key={idx} className="flex items-center truncate">
+                          <a
+                            href={url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-blue-500 truncate "
+                          >
+                            {url.length > 50
+                              ? url.substring(0, 35) + "..."
+                              : url}
+                          </a>
+                          <button
+                            className="ml-4 bg-transparent border-none"
+                            onClick={() => handleCopy(url, "segment")}
+                          >
+                            {copySuccess === "segment" ? (
+                              <FaCheck />
+                            ) : (
+                              <FaRegCopy />
+                            )}
+                          </button>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
                 </div>
               </div>
             </div>
           )}
         </div>
-      </div>
+      </li>
     </div>
   );
 };
