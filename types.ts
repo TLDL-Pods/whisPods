@@ -14,6 +14,7 @@ export interface SegmentProps {
   summary_ELI5: string;
   timestamp: string;
   segment_title: string;
+  tweet_embed?: string[];
 }
 
 export interface EpisodeProps {

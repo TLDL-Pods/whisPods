@@ -4,6 +4,8 @@ import { RiMegaphoneLine, RiBookLine } from "react-icons/ri";
 import { FaRegCopy, FaCheck } from "react-icons/fa";
 import { SegmentProps } from "@/types";
 import YouTubeEmbed from "@/app/components/YoutubeEmbed";
+import TweetEmbed from "./TweetEmbed";
+import TwitterTweetEmbed from "react-twitter-embed";
 
 interface SegmentProps2 {
   segment: SegmentProps;
@@ -59,6 +61,17 @@ const Segment: FC<SegmentProps2> = ({
   const handleSummaryToggle = () => {
     setShowSummary(!showSummary);
   };
+
+  function loadTwitterScript() {
+    const script = document.createElement("script");
+    script.src = "https://platform.twitter.com/widgets.js";
+    script.async = true;
+    document.body.appendChild(script);
+  }
+
+  useEffect(() => {
+    loadTwitterScript();
+  }, []);
 
   return (
     <div className="align-middle ">
@@ -134,7 +147,6 @@ const Segment: FC<SegmentProps2> = ({
                     )}
                   </button>
                 </div>
-
                 {/* YouTube Embed */}
                 <div className="pt-4 pr-4 ">
                   <YouTubeEmbed
@@ -169,7 +181,6 @@ const Segment: FC<SegmentProps2> = ({
                     {copySuccess === "youtube" ? <FaCheck /> : <FaRegCopy />}
                   </button>
                 </div>
-
                 {/* Sources */}
                 <div className="mt-4 ">
                   <h4 className="text-lg font-bold text-violet-400">
@@ -185,7 +196,7 @@ const Segment: FC<SegmentProps2> = ({
                             rel="noopener noreferrer"
                             className="text-blue-500 truncate "
                           >
-                            {url.length > 50
+                            {url.length > 40
                               ? url.substring(0, 35) + "..."
                               : url}
                           </a>
@@ -204,6 +215,11 @@ const Segment: FC<SegmentProps2> = ({
                     </ul>
                   </div>
                 </div>
+                {/* Embed Tweet */}
+                {segment.URL &&
+                  segment.URL.map((url, index) => (
+                    <TweetEmbed key={index} url={url} />
+                  ))}
               </div>
             </div>
           )}
