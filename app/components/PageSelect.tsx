@@ -12,7 +12,6 @@ export default function PageSelect({ episode }: PageSelectProps) {
   const topThreeSegments = episode.episode_data
     .sort((a, b) => b.segment_length_ms - a.segment_length_ms)
     .slice(0, 3);
-  // bg-stone-950
   return (
     <Link href={`/thedailygwei/${episode.episode_number}`}>
       <div className="flex flex-col flex-grow w-full min-h-full text-center transition-all duration-500 border-t bg-stone-950 border-violet-400 border-opacity-40 hover:bg-stone-800">

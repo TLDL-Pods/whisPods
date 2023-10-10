@@ -1,5 +1,4 @@
 "use client";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 import { EpisodeProps, SegmentProps } from "@/types";
@@ -23,7 +22,6 @@ export default function EpisodePage({
   const [showSegmentIndex, setShowSegmentIndex] = useState<number | null>(null);
   const [showSummary, setShowSummary] = useState<number | null>(null);
   const [showVideo, setShowVideo] = useState<boolean>(false);
-  const [showAllStories, setShowAllStories] = useState<boolean>(true);
   const [isOrganizedByLength, setIsOrganizedByLength] = useState<boolean>(true);
 
   const segmentRefs = useRef<Array<React.RefObject<HTMLDivElement>>>([]);

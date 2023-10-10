@@ -54,13 +54,11 @@ const Segment: FC<SegmentProps2> = ({
     if (copySuccess) {
       const timer = setTimeout(() => {
         setCopySuccess(null);
-      }, 1000); // Revert back after 1 second
+      }, 1000);
 
-      return () => clearTimeout(timer); // Clean up the timer on unmount
+      return () => clearTimeout(timer);
     }
   }, [copySuccess]);
-
-  const segmentRefs = useRef<Array<React.RefObject<HTMLDivElement>>>([]);
 
   const handleSummaryToggle = () => {
     setShowSummary(!showSummary);
@@ -82,8 +80,12 @@ const Segment: FC<SegmentProps2> = ({
   };
 
   return (
-    <div id={`segment-${segment.segment_number}`} className="align-middle ">
-      <li key={segment.segment_number} className="cursor-pointer ">
+    <div
+      id={`${segment.segment_number}`}
+      className="align-middle "
+      key={segment.segment_number}
+    >
+      <li className="cursor-pointer ">
         {/* ROW 1: Index & Title */}
         <div
           className="flex gap-2 p-2 md:text-xl lg:text-2xl hover:bg-stone-800"
@@ -126,6 +128,13 @@ const Segment: FC<SegmentProps2> = ({
                 </p>
               </div>
               {/* CONTENT */}
+              {/* Copy BUtton */}
+              {/* <button
+                className="text-right"
+                onClick={() => handleCopyLink(segmentNumber, episodeNumber)}
+              >
+                <AiOutlineShareAlt />
+              </button> */}
               <div className="flex-col content-center flex-grow md-text-l text-violet-200">
                 {/* Bullets or Summary */}
                 <div className="flex flex-row text-violet-100">
@@ -205,14 +214,11 @@ const Segment: FC<SegmentProps2> = ({
                     {/* Embed Tweet */}
                     {segment.URL &&
                       segment.URL.map((url, index) => (
-                        <TweetEmbed key={index} url={url} />
+                        <TweetEmbed key={url} url={url} />
                       ))}
                     <ul className="">
                       {segment.URL.map((url, idx) => (
-                        <li
-                          key={`${idx}-link`}
-                          className="flex items-center truncate"
-                        >
+                        <li key={url} className="flex items-center truncate">
                           <a
                             href={url}
                             target="_blank"
