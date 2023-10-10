@@ -5,25 +5,27 @@ import { FaRegCopy, FaCheck } from "react-icons/fa";
 import { SegmentProps } from "@/types";
 import YouTubeEmbed from "@/app/components/YoutubeEmbed";
 import TweetEmbed from "./TweetEmbed";
-import TwitterTweetEmbed from "react-twitter-embed";
+import { AiOutlineShareAlt } from "react-icons/ai";
 
 interface SegmentProps2 {
+  episodeNumber: number;
   segment: SegmentProps;
-  index: number;
+  segmentNumber: number;
   isOrganizedByLength: boolean;
   showVideo: boolean;
   setShowVideo: (value: boolean) => void;
   youtube_url: string;
-  onSegmentClick: (index: number) => void;
+  onSegmentClick: (segmentNumber: number) => void;
   showSummary: number | null;
-  onSummaryToggle: (index: number) => void;
+  onSummaryToggle: (segmentNumber: number) => void;
   showSegmentIndex: number | null;
   setShowSegmentIndex: (value: number | null) => void;
 }
 
 const Segment: FC<SegmentProps2> = ({
+  episodeNumber,
   segment,
-  index,
+  segmentNumber,
   isOrganizedByLength,
   showVideo,
   setShowVideo,
@@ -42,8 +44,10 @@ const Segment: FC<SegmentProps2> = ({
   );
 
   // Toggle segment detail view
-  const handleSegmentToggle = (index: number) => {
-    setShowSegmentIndex(showSegmentIndex === index ? null : index);
+  const handleSegmentToggle = () => {
+    setShowSegmentIndex(
+      showSegmentIndex === segmentNumber ? null : segmentNumber
+    );
   };
 
   useEffect(() => {
@@ -62,24 +66,28 @@ const Segment: FC<SegmentProps2> = ({
     setShowSummary(!showSummary);
   };
 
-  function loadTwitterScript() {
-    const script = document.createElement("script");
-    script.src = "https://platform.twitter.com/widgets.js";
-    script.async = true;
-    document.body.appendChild(script);
-  }
-
   useEffect(() => {
-    loadTwitterScript();
-  }, []);
+    const hash = window.location.hash;
+    if (hash) {
+      const segmentNumFromURL = parseInt(hash.substring(1), 10);
+      if (!isNaN(segmentNumFromURL) && segmentNumFromURL === segmentNumber) {
+        setShowSegmentIndex(segmentNumber);
+      }
+    }
+  }, [segmentNumber]);
+
+  const handleCopyLink = (segmentNumber: Number, episodeNumber: Number) => {
+    const url = `${window.location.origin}/thedailygwei/${episodeNumber}#${segmentNumber}`;
+    navigator.clipboard.writeText(url);
+  };
 
   return (
-    <div className="align-middle ">
+    <div id={`segment-${segment.segment_number}`} className="align-middle ">
       <li key={segment.segment_number} className="cursor-pointer ">
         {/* ROW 1: Index & Title */}
         <div
           className="flex gap-2 p-2 md:text-xl lg:text-2xl hover:bg-stone-800"
-          onClick={() => handleSegmentToggle(index)}
+          onClick={() => handleSegmentToggle()}
         >
           {/* INDEX */}
           <div className="font-semibold text-center grow-0 text-violet-400">
@@ -91,7 +99,7 @@ const Segment: FC<SegmentProps2> = ({
                   )
                     .toFixed(0)
                     .padStart(2, "0")}`
-                : index + 1 + "."}
+                : segmentNumber + 1 + "."}
             </p>
           </div>
           {/* HEADLINE*/}
@@ -99,9 +107,10 @@ const Segment: FC<SegmentProps2> = ({
             <span>{segment.segment_title}</span>
           </div>
         </div>
+
         {/* ROW 2: Blank & Content */}
         <div className="flex gap-2 p-2 md:text-l lg:text-xl">
-          {showSegmentIndex === index && (
+          {showSegmentIndex === segmentNumber && (
             <div className="flex">
               {/* Blank */}
               <div className="content-center flex-none invisible font-semibold text-center grow-0 text-violet-400 md:text-xl lg:text-2xl">
@@ -113,7 +122,7 @@ const Segment: FC<SegmentProps2> = ({
                       )
                         .toFixed(0)
                         .padStart(2, "0")}`
-                    : index + 1 + "."}
+                    : segmentNumber + 1 + "."}
                 </p>
               </div>
               {/* CONTENT */}
@@ -158,13 +167,19 @@ const Segment: FC<SegmentProps2> = ({
                     href={`${youtube_url}&t=${Math.floor(
                       segment.start_time_ms / 1000
                     )}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="pr-2 text-blue-500 underline"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      setShowVideo(!showVideo);
-                    }}
                   >
-                    YouTube Segment
+                    {`${youtube_url}&t=${Math.floor(
+                      segment.start_time_ms / 1000
+                    )}`.length > 40
+                      ? `${youtube_url}&t=${Math.floor(
+                          segment.start_time_ms / 1000
+                        )}`.substring(0, 35) + "..."
+                      : `${youtube_url}&t=${Math.floor(
+                          segment.start_time_ms / 1000
+                        )}`}
                   </a>
 
                   <button
@@ -187,9 +202,17 @@ const Segment: FC<SegmentProps2> = ({
                     Sources:
                   </h4>
                   <div className="">
+                    {/* Embed Tweet */}
+                    {segment.URL &&
+                      segment.URL.map((url, index) => (
+                        <TweetEmbed key={index} url={url} />
+                      ))}
                     <ul className="">
                       {segment.URL.map((url, idx) => (
-                        <li key={idx} className="flex items-center truncate">
+                        <li
+                          key={`${idx}-link`}
+                          className="flex items-center truncate"
+                        >
                           <a
                             href={url}
                             target="_blank"
@@ -215,11 +238,6 @@ const Segment: FC<SegmentProps2> = ({
                     </ul>
                   </div>
                 </div>
-                {/* Embed Tweet */}
-                {segment.URL &&
-                  segment.URL.map((url, index) => (
-                    <TweetEmbed key={index} url={url} />
-                  ))}
               </div>
             </div>
           )}

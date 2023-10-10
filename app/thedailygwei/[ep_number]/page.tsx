@@ -9,7 +9,6 @@ import { IoArrowBack } from "react-icons/io5";
 import { ImListNumbered } from "react-icons/im";
 import { BiSolidTimer } from "react-icons/bi";
 
-import moarImage from "@/app/assets/moar.webp";
 import Segment from "@/app/components/Segment";
 
 export default function EpisodePage({
@@ -24,7 +23,7 @@ export default function EpisodePage({
   const [showSegmentIndex, setShowSegmentIndex] = useState<number | null>(null);
   const [showSummary, setShowSummary] = useState<number | null>(null);
   const [showVideo, setShowVideo] = useState<boolean>(false);
-  const [showAllStories, setShowAllStories] = useState<boolean>(false);
+  const [showAllStories, setShowAllStories] = useState<boolean>(true);
   const [isOrganizedByLength, setIsOrganizedByLength] = useState<boolean>(true);
 
   const segmentRefs = useRef<Array<React.RefObject<HTMLDivElement>>>([]);
@@ -44,12 +43,6 @@ export default function EpisodePage({
 
   const [currentEpisode, setCurrentEpisode] = useState<number>(
     parseInt(params.ep_number, 10)
-  );
-  const [nextEpisode, setNextEpisode] = useState<number>(
-    parseInt(params.ep_number, 10) + 1
-  );
-  const [previousEpisode, setPreviousEpisode] = useState<number>(
-    parseInt(params.ep_number, 10) - 1
   );
 
   useEffect(() => {
@@ -142,15 +135,15 @@ export default function EpisodePage({
                 : (a: SegmentProps, b: SegmentProps) =>
                     a.segment_number - b.segment_number
             )
-            .slice(0, showAllStories ? data.episode_data.length : 5)
             .map((segment, index) => (
               <div
                 key={segment.segment_number}
                 className="border-b border-violet-100 border-opacity-40"
               >
                 <Segment
+                  episodeNumber={data.episode_number}
                   segment={segment}
-                  index={index}
+                  segmentNumber={index}
                   isOrganizedByLength={isOrganizedByLength}
                   showVideo={showVideo}
                   setShowVideo={setShowVideo}
@@ -160,6 +153,7 @@ export default function EpisodePage({
                   showSegmentIndex={showSegmentIndex}
                   setShowSegmentIndex={setShowSegmentIndex}
                   onSegmentClick={(index) => {
+                    history.pushState(null, "", `#segment-${index}`);
                     setSelectedSegmentIndex(
                       selectedSegmentIndex === index ? null : index
                     );
@@ -172,22 +166,6 @@ export default function EpisodePage({
               </div>
             ))}
         </ul>
-        {!showAllStories && (
-          <div className="flex justify-center mt-12">
-            <button
-              onClick={() => setShowAllStories(true)}
-              className="px-5 py-1 font-bold text-white rounded bg-violet-500 hover:bg-blue-600"
-            >
-              Moar
-              <Image
-                src={moarImage}
-                alt="Toggle Video"
-                width={40}
-                height={40}
-              />
-            </button>
-          </div>
-        )}
       </div>
     </div>
   );
