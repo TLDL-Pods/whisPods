@@ -82,7 +82,7 @@ const Segment: FC<SegmentProps2> = ({
   return (
     <div
       id={`${segment.segment_number}`}
-      className="align-middle "
+      className="align-middle md:max-w-[768px]"
       key={segment.segment_number}
     >
       <li className="cursor-pointer ">
