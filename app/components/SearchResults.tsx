@@ -1,7 +1,12 @@
 import { useState } from "react";
 import { EpisodeProps } from "@/types";
 import { FaWindowMinimize } from "react-icons/fa";
-import SearchSegment from "@/app/components/SearchSegment";
+import Image from "next/image";
+import Link from "next/link";
+import TDG from "../assets/the-daily-gwei.jpg";
+import YouTubeEmbed from "./YoutubeEmbed";
+import TweetEmbed from "./TweetEmbed";
+import { getTweetIdFromUrl } from "@/app/utils/utils";
 
 interface SearchResultsProps {
   episodes: EpisodeProps[];
@@ -11,8 +16,8 @@ const SearchResults: React.FC<SearchResultsProps> = ({ episodes }) => {
   const [selectedEpisodeIndex, setSelectedEpisodeIndex] = useState<
     number | null
   >(null);
-  const [showVideo, setShowVideo] = useState<boolean>(false);
 
+  console.log("episodes", episodes);
   return (
     <div className="container p-4 mx-auto">
       <div className="mt-8">
@@ -39,11 +44,23 @@ const SearchResults: React.FC<SearchResultsProps> = ({ episodes }) => {
               </button>
             )}
 
-            <div className="p-2 bg-gray-800 rounded">
-              <h1 className="text-xl font-semibold">
-                {episode.episode_number}: {episode.episode_title}
-              </h1>
-              <h3 className="font-semibold text-m">{episode.release_date}</h3>
+            <div className="flex items-center p-2 bg-gray-800 rounded">
+              <Image
+                src={TDG}
+                alt="The Daily Gwei"
+                width={40}
+                height={40}
+                className="mr-3"
+              />
+
+              <div>
+                <h1 className="text-xl font-semibold">
+                  <Link href={`/thedailygwei/${episode.episode_number}`}>
+                    The Daily Gwei Refuel: {episode.episode_number}
+                  </Link>
+                </h1>
+                <h3 className="font-semibold text-m">{episode.release_date}</h3>
+              </div>
             </div>
 
             {episode.matchedSegmentNumbers.map((segmentNumber) => {
@@ -54,12 +71,12 @@ const SearchResults: React.FC<SearchResultsProps> = ({ episodes }) => {
               return (
                 <div key={segmentNumber}>
                   <h3 className="text-lg font-bold text-violet-400">
-                    Segment:
+                    {matchedSegment?.headline}
                   </h3>
 
-                  <h2 className="pt-1 text-lg font-semibold ">
-                    {matchedSegment?.headline}
-                  </h2>
+                  <p className="line-clamp-3 text-md ">
+                    {matchedSegment?.summary}
+                  </p>
 
                   {/* Render expanded segment details if episode is selected */}
                   {selectedEpisodeIndex === index && matchedSegment && (
@@ -67,11 +84,25 @@ const SearchResults: React.FC<SearchResultsProps> = ({ episodes }) => {
                       onClick={(event) => event.stopPropagation()}
                       className="pl-0 list-none"
                     >
-                      <SearchSegment
-                        segment={matchedSegment}
-                        showVideo={showVideo}
-                        setShowVideo={setShowVideo}
-                        youtube_url={episode.youtube_url}
+                      {/* Sources */}
+                      <div className="mt-4 ">
+                        <div className="">
+                          {/* Embed Tweet */}
+                          {matchedSegment.URL &&
+                            matchedSegment.URL.map((url) => {
+                              const tweetId = getTweetIdFromUrl(url);
+                              if (tweetId) {
+                                return <TweetEmbed key={url} url={url} />;
+                              }
+                              return null; // Show nothing for non-Twitter URLs
+                            })}
+                        </div>
+                      </div>
+
+                      <YouTubeEmbed
+                        youtubeUrl={episode.youtube_url}
+                        startTimeMs={matchedSegment.start_time_ms}
+                        maxWidth="screen-sm"
                       />
                     </li>
                   )}

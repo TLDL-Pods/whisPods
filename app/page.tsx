@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { EpisodeProps } from "@/types";
 import PageSelect from "@/app/components/PageSelect";
 import { useEpisodeContext } from "@/app/hooks/useEpisodeContext";

@@ -50,3 +50,10 @@ next-env.d.ts
 **/.vscode/
 python-backend/podcast/
 **/playground/**
+app/assets/DALL·E 2023-10-30 22.42.03 - Photo of a sleek modern logo that reads 'TLDL' in bold letters. Below the acronym, there's a tagline that says 'Too Long Didn't Listen'. The design in.png
+.gitignore
+.gitignore
+app/assets/TLDL.png
+app/assets/DALL·E 2023-10-30 23.26.30 - Illustration of a contemporary banner for a website. The upper section is draped in a deep, almost black hue, where the 'TLDL' acronym stands out in b.png
+app/assets/DALL·E 2023-10-30 23.00.31 - Illustration of a chic website banner. The centerpiece is the striking 'TLDL' logo, complemented below by the tagline 'Too Long Didn't Listen'. A mode.png
+app/assets/DALL·E 2023-10-30 23.01.04 - Illustration of a modern website banner. The 'TLDL' logo is prominently displayed in the center with the tagline 'Too Long Didn't Listen' directly bel.png
