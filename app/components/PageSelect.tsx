@@ -1,6 +1,6 @@
-import { EpisodeProps } from "@/types";
 import Link from "next/link";
 import Image from "next/image";
+import { EpisodeProps } from "@/types";
 import { RiMegaphoneLine } from "react-icons/ri";
 import TDG from "../assets/the-daily-gwei.jpg";
 
