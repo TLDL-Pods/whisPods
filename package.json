@@ -29,12 +29,15 @@
     "react-dom": "18.2.0",
     "react-icons": "^4.10.1",
     "react-select": "^5.7.4",
+    "react-slick": "^0.29.0",
     "react-twitter-embed": "^4.0.4",
+    "slick-carousel": "^1.8.1",
     "tailwindcss": "3.3.3",
     "typescript": "5.1.6"
   },
   "devDependencies": {
     "@types/gtag.js": "^0.0.13",
-    "@types/lodash.debounce": "^4.0.7"
+    "@types/lodash.debounce": "^4.0.7",
+    "@types/react-slick": "^0.23.11"
   }
 }

@@ -1,14 +1,14 @@
-"use client";
-import { useRouter } from "next/navigation";
+'use client';
+import { useRouter } from 'next/navigation';
 
-import { EpisodeProps, SegmentProps } from "@/types";
-import { useState, useEffect, useRef, createRef } from "react";
-import { IoArrowBack } from "react-icons/io5";
+import { EpisodeProps, SegmentProps } from '@/types';
+import { useState, useEffect, useRef, createRef } from 'react';
+import { IoArrowBack } from 'react-icons/io5';
 
-import { ImListNumbered } from "react-icons/im";
-import { BiSolidTimer } from "react-icons/bi";
+import { ImListNumbered } from 'react-icons/im';
+import { BiSolidTimer, BiXCircle } from 'react-icons/bi';
 
-import Segment from "@/app/components/Segment";
+import Segment from '@/app/components/Segment';
 
 export default function EpisodePage({
   params,
@@ -21,6 +21,7 @@ export default function EpisodePage({
   >(null);
   const [showSegmentIndex, setShowSegmentIndex] = useState<number | null>(null);
   const [showSummary, setShowSummary] = useState<number | null>(null);
+  const [summary, setSummary] = useState<string | null>(null);
   const [showVideo, setShowVideo] = useState<boolean>(false);
   const [isOrganizedByLength, setIsOrganizedByLength] = useState<boolean>(true);
 
@@ -34,13 +35,16 @@ export default function EpisodePage({
   const handleSummaryToggle = (index: number) => {
     if (showSummary === index) {
       setShowSummary(null);
+      console.log(showSummary);
     } else {
       setShowSummary(index);
+      setSummary(data?.episode_data[index].summary || null);
+      console.log(showSummary);
     }
   };
 
   const [currentEpisode, setCurrentEpisode] = useState<number>(
-    parseInt(params.ep_number, 10)
+    parseInt(params.ep_number, 10),
   );
 
   useEffect(() => {
@@ -48,18 +52,18 @@ export default function EpisodePage({
       const episodeNumber = parseInt(params.ep_number, 10);
       const res = await fetch(`/api/episode?episode_number=${episodeNumber}`);
       const json = await res.json();
-      const filteredSegments = json["data"].episode_data.filter(
-        (segment: SegmentProps) => segment.segment_number !== 0
+      const filteredSegments = json['data'].episode_data.filter(
+        (segment: SegmentProps) => segment.segment_number !== 0,
       );
       const sortedData = {
-        ...json["data"],
+        ...json['data'],
         episode_data: filteredSegments.sort(
           (a: SegmentProps, b: SegmentProps) =>
-            b.segment_length_ms - a.segment_length_ms
+            b.segment_length_ms - a.segment_length_ms,
         ),
       };
       segmentRefs.current = sortedData.episode_data.map(() =>
-        createRef<HTMLDivElement>()
+        createRef<HTMLDivElement>(),
       );
       setData(sortedData);
     };
@@ -70,18 +74,18 @@ export default function EpisodePage({
     const fetchData = async () => {
       const res = await fetch(`/api/episode?episode_number=${currentEpisode}`);
       const json = await res.json();
-      const filteredSegments = json["data"].episode_data.filter(
-        (segment: SegmentProps) => segment.segment_number !== 0
+      const filteredSegments = json['data'].episode_data.filter(
+        (segment: SegmentProps) => segment.segment_number !== 0,
       );
       const sortedData = {
-        ...json["data"],
+        ...json['data'],
         episode_data: filteredSegments.sort(
           (a: SegmentProps, b: SegmentProps) =>
-            b.segment_length_ms - a.segment_length_ms
+            b.segment_length_ms - a.segment_length_ms,
         ),
       };
       segmentRefs.current = sortedData.episode_data.map(() =>
-        createRef<HTMLDivElement>()
+        createRef<HTMLDivElement>(),
       );
       setData(sortedData);
       console.log(sortedData);
@@ -94,49 +98,56 @@ export default function EpisodePage({
   }
 
   return (
-    <div className="flex justify-center min-h-screen ">
-      {/* Main Content */}
-      <div className="">
-        {/* Back to Episodes button */}
-        <button
-          onClick={() => router.push("/")}
-          className="p-1 font-bold text-white rounded hover:bg-stone-900"
-        >
-          <IoArrowBack size={24} className="inline-block" />
-        </button>
+    <div className="flex flex-col justify-center h-full min-w-screen relative">
+      <div className="w-full max-w-screen">
+        {/* Main Content */}
+        <div className="">
+          {/* !!!Replace with podcast title from data */}
+          <div className="text-center text-lg font-semibold">
+            The Daily Gwei
+          </div>
 
-        <h3 className="mt-4 text-center text-violet-200">
-          Episode {data.episode_number}
-        </h3>
-        <h3 className="mt-1 text-center text-violet-200">
-          {data.release_date}
-        </h3>
-        <h4 className="text-2xl font-bold text-center text-violet-400">News</h4>
-
-        {/* Organize by time or order button */}
-        <div className="pr-3 text-right ">
-          <button
-            onClick={toggleOrganization}
-            className="hover:bg-stone-900"
-            title="Presentation order or longest first"
-          >
-            {isOrganizedByLength ? <ImListNumbered /> : <BiSolidTimer />}
-          </button>
+          <div className="pt-1">
+            <h3 className="font-semibold text-center text-violet-200">
+              Episode {data.episode_number}
+            </h3>
+            <h3 className="text-center text-violet-200">{data.release_date}</h3>
+          </div>
         </div>
-
-        <ul className="pt-2 ">
+        <div className="">
+          <div className="flex justify-between mx-4">
+            {/* Back to Episodes button */}
+            <button
+              onClick={() => router.push('/')}
+              className="font-bold text-white rounded hover:bg-stone-900"
+            >
+              <IoArrowBack size={24} className="inline-block" />
+            </button>
+            {/* Organize by time or order button */}
+            <button
+              onClick={toggleOrganization}
+              className="hover:bg-stone-900"
+              title="Presentation order or longest first"
+            >
+              {isOrganizedByLength ? <ImListNumbered /> : <BiSolidTimer />}
+            </button>
+          </div>
+        </div>
+      </div>
+      <div className="mt-4 h-fit w-full">
+        <ul>
           {data.episode_data
             .sort(
               isOrganizedByLength
                 ? (a: SegmentProps, b: SegmentProps) =>
                     b.segment_length_ms - a.segment_length_ms
                 : (a: SegmentProps, b: SegmentProps) =>
-                    a.segment_number - b.segment_number
+                    a.segment_number - b.segment_number,
             )
             .map((segment, index) => (
               <div
                 key={segment.segment_number}
-                className="border-b border-violet-100 border-opacity-40"
+                className="border-y border-violet-100 border-opacity-60 bg-neutral-950"
               >
                 <Segment
                   episodeNumber={data.episode_number}
@@ -150,10 +161,11 @@ export default function EpisodePage({
                   onSummaryToggle={handleSummaryToggle}
                   showSegmentIndex={showSegmentIndex}
                   setShowSegmentIndex={setShowSegmentIndex}
+                  handleSummaryToggle={handleSummaryToggle}
                   onSegmentClick={(index) => {
-                    history.pushState(null, "", `#segment-${index}`);
+                    history.pushState(null, '', `#segment-${index}`);
                     setSelectedSegmentIndex(
-                      selectedSegmentIndex === index ? null : index
+                      selectedSegmentIndex === index ? null : index,
                     );
                     const segmentRef = segmentRefs.current[index]?.current;
                     if (segmentRef) {

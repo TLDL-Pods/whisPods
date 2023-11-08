@@ -1,13 +1,13 @@
-import "./globals.css";
-import type { Metadata } from "next";
-import { EpisodeProvider } from "./contexts/dataContext";
-import Navbar from "./Navbar";
-import { Analytics } from "@vercel/analytics/react";
-import GoogleAnalytics from "./components/GoogleAnalyics";
-import CookieBanner from "@/app/components/CookieBanner";
+import './globals.css';
+import type { Metadata } from 'next';
+import { EpisodeProvider } from './contexts/dataContext';
+import Navbar from './Navbar';
+import { Analytics } from '@vercel/analytics/react';
+import GoogleAnalytics from './components/GoogleAnalyics';
+import CookieBanner from '@/app/components/CookieBanner';
 
 export const metadata: Metadata = {
-  title: "TLDL",
+  title: 'TLDL',
   description: "Too Long Didn't Listen",
 };
 
