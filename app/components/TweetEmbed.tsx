@@ -1,17 +1,17 @@
 import React from "react";
 import { TwitterTweetEmbed } from "react-twitter-embed";
+import { getTweetIdFromUrl } from "@/app/utils/utils";
 
 interface TweetEmbedProps {
   url: string;
 }
 
 const TweetEmbed: React.FC<TweetEmbedProps> = ({ url }) => {
-  const isTwitterUrl = url.includes("twitter.com");
-  const tweetId = isTwitterUrl ? url.split("/").pop() : null;
+  const tweetId = getTweetIdFromUrl(url);
 
   return (
     <div>
-      {isTwitterUrl && tweetId ? (
+      {tweetId ? (
         <TwitterTweetEmbed tweetId={tweetId} options={{ theme: "dark" }} />
       ) : (
         <a href={url} target="_blank" rel="noopener noreferrer">
