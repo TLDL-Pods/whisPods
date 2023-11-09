@@ -1,19 +1,14 @@
-'use client';
-import React, { FC, useCallback, useState, useEffect, useRef } from 'react';
-import {
-  RiMegaphoneLine,
-  RiBookLine,
-  RiArrowUpLine,
-  RiArrowUpSLine,
-} from 'react-icons/ri';
-import { FaRegCopy, FaCheck, FaArrowUp } from 'react-icons/fa';
-import { SegmentProps } from '@/types';
-import YouTubeEmbed from '@/app/components/YoutubeEmbed';
-import TweetEmbed from './TweetEmbed';
+"use client";
+import React, { FC, useCallback, useState, useEffect } from "react";
+import { RiMegaphoneLine } from "react-icons/ri";
+import { FaRegCopy, FaCheck } from "react-icons/fa";
+import { SegmentProps } from "@/types";
+import YouTubeEmbed from "@/app/components/YoutubeEmbed";
+import TweetEmbed from "./TweetEmbed";
 
-import Slider from 'react-slick';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 interface SegmentProps2 {
   episodeNumber: number;
@@ -56,17 +51,17 @@ const Segment: FC<SegmentProps2> = ({
   const contentArray = [...segment.bullets, segment.summary];
 
   const handleCopy = useCallback(
-    (textToCopy: string, type: 'youtube' | 'segment') => {
+    (textToCopy: string, type: "youtube" | "segment") => {
       navigator.clipboard.writeText(textToCopy);
       setCopySuccess(type);
     },
-    [],
+    []
   );
 
   // Toggle segment detail view
   const handleSegmentToggle = () => {
     setShowSegmentIndex(
-      showSegmentIndex === segmentNumber ? null : segmentNumber,
+      showSegmentIndex === segmentNumber ? null : segmentNumber
     );
   };
 
@@ -99,11 +94,11 @@ const Segment: FC<SegmentProps2> = ({
       <li className="cursor-pointer">
         {/* ROW 1: Index & Title */}
         <div
-          className="flex gap-2 p-2 md:text-xl lg:text-2xl w-full h-20 bg-gradient-to-b to-neutral-950 from-neutral-900 items-center"
+          className="flex items-center w-full h-20 gap-2 p-2 md:text-xl lg:text-2xl bg-gradient-to-b to-neutral-950 from-neutral-900"
           onClick={() => handleSegmentToggle()}
         >
           {/* INDEX */}
-          <div className="font-semibold text-center grow-0 text-violet-400 px-1">
+          <div className="px-1 font-semibold text-center grow-0 text-violet-400">
             <p>
               {isOrganizedByLength
                 ? `${Math.floor(segment.segment_length_ms / 60000)}:${(
@@ -111,12 +106,12 @@ const Segment: FC<SegmentProps2> = ({
                     1000
                   )
                     .toFixed(0)
-                    .padStart(2, '0')}`
-                : segmentNumber + 1 + '.'}
+                    .padStart(2, "0")}`
+                : segmentNumber + 1 + "."}
             </p>
           </div>
           {/* HEADLINE*/}
-          <div className="content-center my-auto flex-grow font-semibold text-white text-balance">
+          <div className="content-center flex-grow my-auto font-semibold text-white text-balance">
             <span>{segment.segment_title}</span>
           </div>
         </div>
@@ -124,22 +119,22 @@ const Segment: FC<SegmentProps2> = ({
         {/* ROW 2: Blank & Content */}
         {showSegmentIndex === segmentNumber && (
           <div className="">
-            <div className="flex-col w-full shadow-inner shadow-black md-text-l text-violet-200 bg-gradient-to-b to-neutral-900 from-neutral-800 max-w-full pb-4 ">
+            <div className="flex-col w-full max-w-full pb-4 shadow-inner shadow-black md-text-l text-violet-200 bg-gradient-to-b to-neutral-900 from-neutral-800 ">
               {/* Bullets or Summary */}
 
-              <div className="flex w-full p-3 flex-col shadow-inner shadow-black text-violet-100 mx-auto">
+              <div className="flex flex-col w-full p-3 mx-auto shadow-inner shadow-black text-violet-100">
                 <Slider
                   {...settings}
-                  className="max-w-xl w-80 max-h-fit h-88 mx-auto"
+                  className="max-w-xl mx-auto w-80 max-h-fit h-88"
                 >
                   <div className="flex flex-col justify-between w-full">
-                    <p className="text-xl text-violet-400 text-center font-semibold mb-2">
+                    <p className="mb-2 text-xl font-semibold text-center text-violet-400">
                       TLDL
                     </p>
                     <div className="flex flex-col space-y-4">
                       {contentArray.slice(0, -1).map((bullet, idx) => (
-                        <div key={idx} className="flex bg-zinc-950 p-2 my-auto">
-                          <div className="flex my-auto text-violet-400 text-lg">
+                        <div key={idx} className="flex p-2 my-auto bg-zinc-950">
+                          <div className="flex my-auto text-lg text-violet-400">
                             <RiMegaphoneLine />
                           </div>
                           <p className="ml-4">{bullet}</p>
@@ -148,10 +143,10 @@ const Segment: FC<SegmentProps2> = ({
                     </div>
                   </div>
                   <div className="">
-                    <p className="text-xl text-center font-semibold mb-2 text-violet-400">
+                    <p className="mb-2 text-xl font-semibold text-center text-violet-400">
                       SUMMARY
                     </p>
-                    <p className="bg-zinc-950 p-4 overflow-y-auto h-80">
+                    <p className="p-4 overflow-y-auto bg-zinc-950 h-80">
                       {contentArray[contentArray.length - 1]}
                     </p>
                   </div>
@@ -161,7 +156,7 @@ const Segment: FC<SegmentProps2> = ({
               {/* YouTube Embed */}
 
               {/* Sources */}
-              <div className="mt-4 text-center w-full px-3">
+              <div className="w-full px-3 mt-4 text-center">
                 <div className="">
                   {/* Embed Tweet */}
                   {segment.URL &&
@@ -172,7 +167,7 @@ const Segment: FC<SegmentProps2> = ({
                     {segment.URL.map((url, idx) => (
                       <li
                         key={url}
-                        className="flex justify-center items-center"
+                        className="flex items-center justify-center"
                       >
                         {/* Button styled link */}
 
@@ -180,15 +175,15 @@ const Segment: FC<SegmentProps2> = ({
                           href={url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="bg-blue-500 text-white px-4 py-2 rounded-lg transition hover:bg-blue-600"
+                          className="px-4 py-2 text-white transition bg-blue-500 rounded-lg hover:bg-blue-600"
                         >
                           Open on Twitter
                         </a>
                         <button
-                          className="ml-2 py-2 rounded-lg transition"
-                          onClick={() => handleCopy(url, 'segment')}
+                          className="py-2 ml-2 transition rounded-lg"
+                          onClick={() => handleCopy(url, "segment")}
                         >
-                          {copySuccess === 'segment' ? (
+                          {copySuccess === "segment" ? (
                             <FaCheck />
                           ) : (
                             <FaRegCopy />
@@ -199,9 +194,9 @@ const Segment: FC<SegmentProps2> = ({
                   </ul>
                 </div>
               </div>
-              <div className="border-b border-violet-300 opacity-40 w-3/5 mx-auto mt-4"></div>
+              <div className="w-3/5 mx-auto mt-4 border-b border-violet-300 opacity-40"></div>
 
-              <div className="pt-4 px-4 text-center w-full">
+              <div className="w-full px-4 pt-4 text-center">
                 <YouTubeEmbed
                   youtubeUrl={youtube_url}
                   startTimeMs={segment.start_time_ms}
