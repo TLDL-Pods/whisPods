@@ -94,7 +94,7 @@ const Segment: FC<SegmentProps2> = ({
       <li className="cursor-pointer">
         {/* ROW 1: Index & Title */}
         <div
-          className="flex items-center w-full h-20 gap-2 p-2 md:text-xl lg:text-2xl bg-gradient-to-b to-neutral-950 from-neutral-900"
+          className="flex items-center w-full h-20 gap-2 p-2 px-4 md:text-xl lg:text-2xl bg-gradient-to-b to-neutral-950 from-neutral-900"
           onClick={() => handleSegmentToggle()}
         >
           {/* INDEX */}
