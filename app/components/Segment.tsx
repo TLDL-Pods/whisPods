@@ -124,11 +124,7 @@ const Segment: FC<SegmentProps2> = ({
               {/* Bullets or Summary */}
 
               <div className="flex flex-col w-full p-3 mx-auto shadow-inner shadow-black text-violet-100">
-                <Slider
-                  {...settings}
-                  className="mx-auto w-80 md:w-4/5"
-                  // className="max-w-xl mx-auto w-80 max-h-fit h-88 md:w-4/5 md:max-w-none md:h-1/2 sm:max-h-fit md:h-88"
-                >
+                <Slider {...settings} className="mx-auto w-80 md:w-4/5">
                   <div className="flex flex-col justify-between w-full">
                     <p className="mb-2 text-xl font-semibold text-center">
                       TLDL
