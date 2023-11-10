@@ -97,7 +97,7 @@ const Segment: FC<SegmentProps2> = ({
     const startTimeInSeconds = Math.floor(segment.start_time_ms / 1000);
     const youtubeLinkWithTimestamp = `${youtube_url}&t=${startTimeInSeconds}s`;
 
-    const shareText = `TLDL:\n${bulletsText}\n\nTwitter Links:\n${twitterLinks}\n\nYouTube Link:\n${youtubeLinkWithTimestamp}`;
+    const shareText = `TLDL:\n${bulletsText}\n\nSources:\n${twitterLinks}\n\nYouTube:\n${youtubeLinkWithTimestamp}`;
 
     navigator.clipboard.writeText(shareText).then(
       () => {
