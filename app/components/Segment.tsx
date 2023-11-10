@@ -1,11 +1,14 @@
 "use client";
-import React, { FC, useCallback, useState, useEffect, useRef } from "react";
-import { RiMegaphoneLine, RiBookLine } from "react-icons/ri";
+import React, { FC, useCallback, useState, useEffect } from "react";
+import { RiMegaphoneLine } from "react-icons/ri";
 import { FaRegCopy, FaCheck } from "react-icons/fa";
 import { SegmentProps } from "@/types";
 import YouTubeEmbed from "@/app/components/YoutubeEmbed";
 import TweetEmbed from "./TweetEmbed";
-import { AiOutlineShareAlt } from "react-icons/ai";
+
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 
 interface SegmentProps2 {
   episodeNumber: number;
@@ -20,6 +23,7 @@ interface SegmentProps2 {
   onSummaryToggle: (segmentNumber: number) => void;
   showSegmentIndex: number | null;
   setShowSegmentIndex: (value: number | null) => void;
+  handleSummaryToggle: (index: number) => void;
 }
 
 const Segment: FC<SegmentProps2> = ({
@@ -32,9 +36,21 @@ const Segment: FC<SegmentProps2> = ({
   youtube_url,
   showSegmentIndex,
   setShowSegmentIndex,
+  handleSummaryToggle,
 }) => {
   const [copySuccess, setCopySuccess] = useState<string | null>(null);
-  const [showSummary, setShowSummary] = useState<boolean>(false);
+
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    adaptiveHeight: true,
+  };
+
+  const contentArray = [...segment.bullets, segment.summary];
+
   const handleCopy = useCallback(
     (textToCopy: string, type: "youtube" | "segment") => {
       navigator.clipboard.writeText(textToCopy);
@@ -60,10 +76,6 @@ const Segment: FC<SegmentProps2> = ({
     }
   }, [copySuccess]);
 
-  const handleSummaryToggle = () => {
-    setShowSummary(!showSummary);
-  };
-
   useEffect(() => {
     const hash = window.location.hash;
     if (hash) {
@@ -74,25 +86,20 @@ const Segment: FC<SegmentProps2> = ({
     }
   }, [segmentNumber]);
 
-  const handleCopyLink = (segmentNumber: Number, episodeNumber: Number) => {
-    const url = `${window.location.origin}/thedailygwei/${episodeNumber}#${segmentNumber}`;
-    navigator.clipboard.writeText(url);
-  };
-
   return (
     <div
       id={`${segment.segment_number}`}
-      className="align-middle md:max-w-[768px]"
+      className="align-middle md:max-w-[768px] relative shadow-inner shadow-black"
       key={segment.segment_number}
     >
       <li className="cursor-pointer ">
         {/* ROW 1: Index & Title */}
         <div
-          className="flex gap-2 p-2 md:text-xl lg:text-2xl hover:bg-stone-800"
+          className="flex items-center w-full h-20 gap-2 p-2 px-4 md:text-xl lg:text-2xl bg-gradient-to-b to-neutral-950 from-neutral-900"
           onClick={() => handleSegmentToggle()}
         >
           {/* INDEX */}
-          <div className="font-semibold text-center grow-0 text-violet-400">
+          <div className="px-1 font-semibold text-center grow-0 text-violet-400">
             <p>
               {isOrganizedByLength
                 ? `${Math.floor(segment.segment_length_ms / 60000)}:${(
@@ -105,149 +112,134 @@ const Segment: FC<SegmentProps2> = ({
             </p>
           </div>
           {/* HEADLINE*/}
-          <div className="content-center flex-grow text-violet-200 text-balance">
+          <div className="content-center flex-grow my-auto font-semibold text-white text-balance">
             <span>{segment.segment_title}</span>
           </div>
         </div>
 
         {/* ROW 2: Blank & Content */}
-        <div className="flex gap-2 p-2 md:text-l lg:text-xl">
-          {showSegmentIndex === segmentNumber && (
-            <div className="flex">
-              {/* Blank */}
-              <div className="content-center flex-none invisible font-semibold text-center grow-0 text-violet-400 md:text-xl lg:text-2xl">
-                <p>
-                  {isOrganizedByLength
-                    ? `${Math.floor(segment.segment_length_ms / 60000)}:${(
-                        (segment.segment_length_ms % 60000) /
-                        1000
-                      )
-                        .toFixed(0)
-                        .padStart(2, "0")}`
-                    : segmentNumber + 1 + "."}
-                </p>
-              </div>
-              {/* CONTENT */}
-              {/* Copy BUtton */}
-              {/* <button
-                className="text-right"
-                onClick={() => handleCopyLink(segmentNumber, episodeNumber)}
-              >
-                <AiOutlineShareAlt />
-              </button> */}
-              <div className="flex-col content-center flex-grow md-text-l text-violet-200">
-                {/* Bullets or Summary */}
-                <div className="flex flex-row text-violet-100">
-                  {showSummary ? (
-                    <div className="text-justify ">{segment.summary}</div>
-                  ) : (
-                    <>
-                      <ul className="flex-grow ">
-                        {segment.bullets.map((bullet) => (
-                          <li key={bullet} className="flex pb-2 pl-0.5">
-                            <div className="mt-1 grow-0">
-                              <RiMegaphoneLine />
-                            </div>
-                            <p className="ml-2 ">{bullet}</p>
-                          </li>
-                        ))}
-                      </ul>
-                    </>
-                  )}
-                  <button
-                    className="self-start pr-2 text-end text-violet-400"
-                    onClick={handleSummaryToggle}
-                  >
-                    {showSummary ? (
-                      <RiMegaphoneLine size={24} />
-                    ) : (
-                      <RiBookLine size={24} />
-                    )}
-                  </button>
-                </div>
-                {/* YouTube Embed */}
-                <div className="pt-4 pr-4 ">
-                  <YouTubeEmbed
-                    youtubeUrl={youtube_url}
-                    startTimeMs={segment.start_time_ms}
-                    maxWidth="screen-sm"
-                  />
-                  <a
-                    href={`${youtube_url}&t=${Math.floor(
-                      segment.start_time_ms / 1000
-                    )}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="pr-2 text-blue-500 underline"
-                  >
-                    {`${youtube_url}&t=${Math.floor(
-                      segment.start_time_ms / 1000
-                    )}`.length > 40
-                      ? `${youtube_url}&t=${Math.floor(
-                          segment.start_time_ms / 1000
-                        )}`.substring(0, 35) + "..."
-                      : `${youtube_url}&t=${Math.floor(
-                          segment.start_time_ms / 1000
-                        )}`}
-                  </a>
+        {showSegmentIndex === segmentNumber && (
+          <div className="">
+            <div className="flex-col w-full max-w-full pb-4 shadow-inner shadow-black md-text-l text-violet-200 bg-gradient-to-b to-neutral-900 from-neutral-800 ">
+              {/* Bullets or Summary */}
 
-                  <button
-                    title="Copy YouTube Segment Link"
-                    onClick={() =>
-                      handleCopy(
-                        `${youtube_url}&t=${Math.floor(
-                          segment.start_time_ms / 1000
-                        )}`,
-                        "youtube"
-                      )
-                    }
-                  >
-                    {copySuccess === "youtube" ? <FaCheck /> : <FaRegCopy />}
-                  </button>
-                </div>
-                {/* Sources */}
-                <div className="mt-4 ">
-                  <h4 className="text-lg font-bold text-violet-400">
-                    Sources:
-                  </h4>
-                  <div className="">
-                    {/* Embed Tweet */}
-                    {segment.URL &&
-                      segment.URL.map((url, index) => (
-                        <TweetEmbed key={url} url={url} />
+              <div className="flex flex-col w-full p-3 mx-auto shadow-inner shadow-black text-violet-100">
+                <Slider
+                  {...settings}
+                  className="mx-auto w-80 md:w-4/5"
+                  // className="max-w-xl mx-auto w-80 max-h-fit h-88 md:w-4/5 md:max-w-none md:h-1/2 sm:max-h-fit md:h-88"
+                >
+                  <div className="flex flex-col justify-between w-full">
+                    <p className="mb-2 text-xl font-semibold text-center">
+                      TLDL
+                    </p>
+                    <div className="flex flex-col space-y-1">
+                      {contentArray.slice(0, -1).map((bullet, idx) => (
+                        <div
+                          key={idx}
+                          className="flex p-2 my-auto border-y border-violet-100 border-opacity-60 bg-zinc-950"
+                        >
+                          <div className="flex my-auto text-lg text-violet-400">
+                            <RiMegaphoneLine />
+                          </div>
+                          <p className="ml-4">{bullet}</p>
+                        </div>
                       ))}
-                    <ul className="">
-                      {segment.URL.map((url, idx) => (
-                        <li key={url} className="flex items-center truncate">
-                          <a
-                            href={url}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-blue-500 truncate "
-                          >
-                            {url.length > 40
-                              ? url.substring(0, 35) + "..."
-                              : url}
-                          </a>
-                          <button
-                            className="ml-4 bg-transparent border-none"
-                            onClick={() => handleCopy(url, "segment")}
-                          >
-                            {copySuccess === "segment" ? (
-                              <FaCheck />
-                            ) : (
-                              <FaRegCopy />
-                            )}
-                          </button>
-                        </li>
-                      ))}
-                    </ul>
+                    </div>
                   </div>
+                  <div className="">
+                    <p className="mb-2 text-xl font-semibold text-center text-violet-400">
+                      SUMMARY
+                    </p>
+                    <p className="p-4 overflow-y-auto bg-zinc-950 h-80">
+                      {contentArray[contentArray.length - 1]}
+                    </p>
+                  </div>
+                </Slider>
+              </div>
+
+              {/* Sources */}
+              <div className="w-full px-3 mt-4 text-center">
+                <div className="">
+                  {/* Embed Tweet */}
+                  {segment.URL &&
+                    segment.URL.map((url, index) => (
+                      <TweetEmbed key={url} url={url} />
+                    ))}
+                  <ul className="flex flex-col items-center justify-center">
+                    {segment.URL.map((url, idx) => (
+                      <li
+                        key={url}
+                        className="flex items-center justify-center w-full text-center truncate"
+                      >
+                        <a
+                          href={url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-center text-blue-500 truncate"
+                        >
+                          {url.length > 40 ? url.substring(0, 35) + "..." : url}
+                        </a>
+                        <button
+                          className="ml-4 bg-transparent border-none"
+                          onClick={() => handleCopy(url, "segment")}
+                        >
+                          {copySuccess === "segment" ? (
+                            <FaCheck />
+                          ) : (
+                            <FaRegCopy />
+                          )}
+                        </button>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
+              </div>
+              <div className="w-3/5 mx-auto mt-4 border-b border-violet-300 opacity-40"></div>
+
+              {/* YouTube Embed */}
+              <div className="w-full px-4 pt-4 text-center">
+                <YouTubeEmbed
+                  youtubeUrl={youtube_url}
+                  startTimeMs={segment.start_time_ms}
+                  maxWidth="screen-sm"
+                />
+                <a
+                  href={`${youtube_url}&t=${Math.floor(
+                    segment.start_time_ms / 1000
+                  )}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="pr-2 text-blue-500 underline"
+                >
+                  {`${youtube_url}&t=${Math.floor(
+                    segment.start_time_ms / 1000
+                  )}`.length > 40
+                    ? `${youtube_url}&t=${Math.floor(
+                        segment.start_time_ms / 1000
+                      )}`.substring(0, 35) + "..."
+                    : `${youtube_url}&t=${Math.floor(
+                        segment.start_time_ms / 1000
+                      )}`}
+                </a>
+
+                <button
+                  title="Copy YouTube Segment Link"
+                  onClick={() =>
+                    handleCopy(
+                      `${youtube_url}&t=${Math.floor(
+                        segment.start_time_ms / 1000
+                      )}`,
+                      "youtube"
+                    )
+                  }
+                >
+                  {copySuccess === "youtube" ? <FaCheck /> : <FaRegCopy />}
+                </button>
               </div>
             </div>
-          )}
-        </div>
+          </div>
+        )}
       </li>
     </div>
   );

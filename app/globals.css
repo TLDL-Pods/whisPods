@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 5px;
 }
 
 ::-webkit-scrollbar-track {
@@ -53,4 +53,17 @@
   animation: slideOutToRight 6s forwards;
   opacity: 1;
   overflow: hidden;
+}
+
+.slick-dots li.slick-active button:before {
+  opacity: 1;
+  color: rgb(214, 177, 255) !important;
+}
+
+.slick-dots li button:before {
+  color: lightgray !important;
+}
+
+.slick-slide > div {
+  padding: 0 10px !important;
 }

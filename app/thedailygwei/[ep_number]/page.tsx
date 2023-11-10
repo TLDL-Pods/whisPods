@@ -6,7 +6,7 @@ import { useState, useEffect, useRef, createRef } from "react";
 import { IoArrowBack } from "react-icons/io5";
 
 import { ImListNumbered } from "react-icons/im";
-import { BiSolidTimer } from "react-icons/bi";
+import { BiSolidTimer, BiXCircle } from "react-icons/bi";
 
 import Segment from "@/app/components/Segment";
 
@@ -21,6 +21,7 @@ export default function EpisodePage({
   >(null);
   const [showSegmentIndex, setShowSegmentIndex] = useState<number | null>(null);
   const [showSummary, setShowSummary] = useState<number | null>(null);
+  const [summary, setSummary] = useState<string | null>(null);
   const [showVideo, setShowVideo] = useState<boolean>(false);
   const [isOrganizedByLength, setIsOrganizedByLength] = useState<boolean>(true);
 
@@ -34,8 +35,11 @@ export default function EpisodePage({
   const handleSummaryToggle = (index: number) => {
     if (showSummary === index) {
       setShowSummary(null);
+      console.log(showSummary);
     } else {
       setShowSummary(index);
+      setSummary(data?.episode_data[index].summary || null);
+      console.log(showSummary);
     }
   };
 
@@ -94,37 +98,47 @@ export default function EpisodePage({
   }
 
   return (
-    <div className="flex justify-center min-h-screen ">
-      {/* Main Content */}
-      <div className="">
-        {/* Back to Episodes button */}
-        <button
-          onClick={() => router.push("/")}
-          className="p-1 font-bold text-white rounded hover:bg-stone-900"
-        >
-          <IoArrowBack size={24} className="inline-block" />
-        </button>
+    <div className="relative flex flex-col justify-center h-full min-w-screen">
+      {/* Segment Header */}
+      <div className="w-full max-w-screen">
+        <div className="">
+          <div className="text-lg font-semibold text-center text-violet-400">
+            The Daily Gwei Refuel
+          </div>
+          <div className="text-lg text-center text-violet-400">
+            {data.episode_title}
+          </div>
 
-        <h3 className="mt-4 text-center text-violet-200">
-          Episode {data.episode_number}
-        </h3>
-        <h3 className="mt-1 text-center text-violet-200">
-          {data.release_date}
-        </h3>
-        <h4 className="text-2xl font-bold text-center text-violet-400">News</h4>
-
-        {/* Organize by time or order button */}
-        <div className="pr-3 text-right ">
-          <button
-            onClick={toggleOrganization}
-            className="hover:bg-stone-900"
-            title="Presentation order or longest first"
-          >
-            {isOrganizedByLength ? <ImListNumbered /> : <BiSolidTimer />}
-          </button>
+          <div className="pt-1">
+            <h3 className="font-semibold text-center text-violet-300">
+              Episode {data.episode_number}
+            </h3>
+            <h3 className="text-center text-violet-300">{data.release_date}</h3>
+          </div>
         </div>
-
-        <ul className="pt-2 ">
+        <div className="">
+          <div className="flex justify-between mx-4">
+            {/* Back to Episodes button */}
+            <button
+              onClick={() => router.push("/")}
+              className="font-bold text-white rounded hover:bg-stone-900"
+            >
+              <IoArrowBack size={24} className="inline-block" />
+            </button>
+            {/* Organize by time or order button */}
+            <button
+              onClick={toggleOrganization}
+              className="hover:bg-stone-900"
+              title="Presentation order or longest first"
+            >
+              {isOrganizedByLength ? <ImListNumbered /> : <BiSolidTimer />}
+            </button>
+          </div>
+        </div>
+      </div>
+      {/* Segments */}
+      <div className="flex justify-center w-full mt-4">
+        <ul className="list-none">
           {data.episode_data
             .sort(
               isOrganizedByLength
@@ -136,7 +150,7 @@ export default function EpisodePage({
             .map((segment, index) => (
               <div
                 key={segment.segment_number}
-                className="border-b border-violet-100 border-opacity-40"
+                className=" border-y border-violet-100 border-opacity-60 bg-neutral-950"
               >
                 <Segment
                   episodeNumber={data.episode_number}
@@ -150,6 +164,7 @@ export default function EpisodePage({
                   onSummaryToggle={handleSummaryToggle}
                   showSegmentIndex={showSegmentIndex}
                   setShowSegmentIndex={setShowSegmentIndex}
+                  handleSummaryToggle={handleSummaryToggle}
                   onSegmentClick={(index) => {
                     history.pushState(null, "", `#segment-${index}`);
                     setSelectedSegmentIndex(
