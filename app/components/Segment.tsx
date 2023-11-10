@@ -9,6 +9,7 @@ import TweetEmbed from "./TweetEmbed";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { FiShare } from "react-icons/fi";
 
 interface SegmentProps2 {
   episodeNumber: number;
@@ -86,6 +87,28 @@ const Segment: FC<SegmentProps2> = ({
     }
   }, [segmentNumber]);
 
+  const handleShare = () => {
+    const bulletsText = segment.bullets
+      .map((bullet) => `- ${bullet}`)
+      .join("\n");
+    const twitterLinks = segment.URL ? segment.URL.join("\n") : "";
+
+    // Calculate the start time in seconds and append it to the YouTube URL
+    const startTimeInSeconds = Math.floor(segment.start_time_ms / 1000);
+    const youtubeLinkWithTimestamp = `${youtube_url}&t=${startTimeInSeconds}s`;
+
+    const shareText = `TLDL:\n${bulletsText}\n\nTwitter Links:\n${twitterLinks}\n\nYouTube Link:\n${youtubeLinkWithTimestamp}`;
+
+    navigator.clipboard.writeText(shareText).then(
+      () => {
+        setCopySuccess("share");
+      },
+      (err) => {
+        console.error("Could not copy text: ", err);
+      }
+    );
+  };
+
   return (
     <div
       id={`${segment.segment_number}`}
@@ -114,6 +137,7 @@ const Segment: FC<SegmentProps2> = ({
           {/* HEADLINE*/}
           <div className="content-center flex-grow my-auto font-semibold text-white text-balance">
             <span>{segment.segment_title}</span>
+            {/* Share Button */}
           </div>
         </div>
 
@@ -121,8 +145,18 @@ const Segment: FC<SegmentProps2> = ({
         {showSegmentIndex === segmentNumber && (
           <div className="">
             <div className="flex-col w-full max-w-full pb-4 shadow-inner shadow-black md-text-l text-violet-200 bg-gradient-to-b to-neutral-900 from-neutral-800 ">
-              {/* Bullets or Summary */}
+              <button
+                className="absolute flex items-center justify-center px-4 py-2 font-bold text-white rounded top-7 right-2 hover:bg-zinc-700"
+                onClick={handleShare}
+              >
+                {copySuccess === "share" ? (
+                  <FaCheck size={20} />
+                ) : (
+                  <FiShare size={20} />
+                )}
+              </button>
 
+              {/* Bullets or Summary */}
               <div className="flex flex-col w-full p-3 mx-auto shadow-inner shadow-black text-violet-100">
                 <Slider {...settings} className="mx-auto w-80 md:w-4/5">
                   <div className="flex flex-col justify-between w-full">
@@ -162,7 +196,7 @@ const Segment: FC<SegmentProps2> = ({
                     segment.URL.map((url, index) => (
                       <TweetEmbed key={url} url={url} />
                     ))}
-                  <ul className="flex flex-col items-center justify-center">
+                  {/* <ul className="flex flex-col items-center justify-center">
                     {segment.URL.map((url, idx) => (
                       <li
                         key={url}
@@ -188,7 +222,7 @@ const Segment: FC<SegmentProps2> = ({
                         </button>
                       </li>
                     ))}
-                  </ul>
+                  </ul> */}
                 </div>
               </div>
               <div className="w-3/5 mx-auto mt-4 border-b border-violet-300 opacity-40"></div>
@@ -200,7 +234,7 @@ const Segment: FC<SegmentProps2> = ({
                   startTimeMs={segment.start_time_ms}
                   maxWidth="screen-sm"
                 />
-                <a
+                {/* <a
                   href={`${youtube_url}&t=${Math.floor(
                     segment.start_time_ms / 1000
                   )}`}
@@ -231,7 +265,7 @@ const Segment: FC<SegmentProps2> = ({
                   }
                 >
                   {copySuccess === "youtube" ? <FaCheck /> : <FaRegCopy />}
-                </button>
+                </button> */}
               </div>
             </div>
           </div>
