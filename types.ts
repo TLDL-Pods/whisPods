@@ -42,3 +42,9 @@ export interface EpisodeContextType {
   data: EpisodeProps[];
   setData: (data: EpisodeProps[]) => void;
 }
+
+export interface AppState {
+  isVideoModalOpen: boolean;
+  youtubeURL: string | undefined;
+  youtubeStartTimeMS: number | null;
+}

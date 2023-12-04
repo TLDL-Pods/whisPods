@@ -11,6 +11,7 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import { FiShare } from 'react-icons/fi';
+import { useApp } from '../hooks/useApp';
 
 interface SegmentProps2 {
   episodeNumber: number;
@@ -40,6 +41,8 @@ const Segment: FC<SegmentProps2> = ({
   setShowSegmentIndex,
   handleSummaryToggle,
 }) => {
+  const { state, setState } = useApp();
+
   const [copySuccess, setCopySuccess] = useState<string | null>(null);
 
   const settings = {
@@ -116,6 +119,16 @@ const Segment: FC<SegmentProps2> = ({
         console.error('Could not copy text: ', err);
       },
     );
+  };
+
+  const openVideoDrawer = () => {
+    setState((prevState) => ({
+      ...prevState,
+      youtubeURL: youtube_url,
+      youtubeStartTimeMS: segment.start_time_ms,
+      isVideoModalOpen: !state.isVideoModalOpen,
+    }));
+    console.log(youtube_url, state.isVideoModalOpen);
   };
 
   return (
@@ -237,13 +250,8 @@ const Segment: FC<SegmentProps2> = ({
               <div className="w-3/5 mx-auto mt-4 border-b border-violet-300 opacity-40"></div>
 
               {/* YouTube Embed */}
-              <div className="w-full px-4 pt-4 text-center">
-                <YouTubeEmbed
-                  youtubeUrl={youtube_url}
-                  startTimeMs={segment.start_time_ms}
-                  maxWidth="screen-sm"
-                />
-                <button onClick={handlePlayClick}>TOGGLE YT</button>
+              <div className=" px-4 pt-4 text-center">
+                <button onClick={openVideoDrawer}>TOGGLE YT</button>
                 {/* <a
                   href={`${youtube_url}&t=${Math.floor(
                     segment.start_time_ms / 1000
