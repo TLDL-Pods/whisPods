@@ -5,6 +5,7 @@ import { FaRegCopy, FaCheck } from 'react-icons/fa';
 import { SegmentProps } from '@/types';
 import YouTubeEmbed from '@/app/components/YoutubeEmbed';
 import TweetEmbed from './TweetEmbed';
+import { useDrawer } from '@/app/contexts/drawerContext';
 
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
@@ -48,6 +49,14 @@ const Segment: FC<SegmentProps2> = ({
     slidesToShow: 1,
     slidesToScroll: 1,
     adaptiveHeight: true,
+  };
+
+  const { toggleDrawer, setYoutubeUrl } = useDrawer();
+
+  const handlePlayClick = () => {
+    console.log('Play button clicked');
+    setYoutubeUrl(youtube_url, segment.start_time_ms);
+    toggleDrawer(true);
   };
 
   const contentArray = [...segment.bullets, segment.summary];
@@ -234,6 +243,7 @@ const Segment: FC<SegmentProps2> = ({
                   startTimeMs={segment.start_time_ms}
                   maxWidth="screen-sm"
                 />
+                <button onClick={handlePlayClick}>TOGGLE YT</button>
                 {/* <a
                   href={`${youtube_url}&t=${Math.floor(
                     segment.start_time_ms / 1000
