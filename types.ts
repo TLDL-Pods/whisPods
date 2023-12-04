@@ -15,6 +15,7 @@ export interface SegmentProps {
   timestamp: string;
   segment_title: string;
   tweet_embed?: string[];
+  keywords?: string[];
 }
 
 export interface EpisodeProps {

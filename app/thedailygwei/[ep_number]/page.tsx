@@ -98,20 +98,32 @@ export default function EpisodePage({
   }
 
   return (
-    <div className="flex flex-col justify-center h-full min-w-screen relative">
+    <div className="relative flex flex-col justify-center h-full min-w-screen">
+      {/* Segment Header */}
       <div className="w-full max-w-screen">
-        {/* Main Content */}
         <div className="">
-          {/* !!!Replace with podcast title from data */}
-          <div className="text-center text-lg font-semibold">
-            The Daily Gwei
+          <div className="text-lg font-semibold text-center md:text-xl lg:text-2xl text-violet-400">
+            {' '}
+            {/* Font size increases to text-xl on md screens and to text-2xl on lg screens */}
+            The Daily Gwei Refuel
+          </div>
+          <div className="text-lg text-center md:text-xl lg:text-2xl text-violet-400">
+            {' '}
+            {/* Font size increases to text-xl on md screens and to text-2xl on lg screens */}
+            {data.episode_title}
           </div>
 
           <div className="pt-1">
-            <h3 className="font-semibold text-center text-violet-200">
+            <h3 className="font-semibold text-center md:text-lg lg:text-xl text-violet-300">
+              {' '}
+              {/* Font size increases to text-lg on md screens and to text-xl on lg screens */}
               Episode {data.episode_number}
             </h3>
-            <h3 className="text-center text-violet-200">{data.release_date}</h3>
+            <h3 className="text-center md:text-lg lg:text-xl text-violet-300">
+              {' '}
+              {/* Font size increases to text-lg on md screens and to text-xl on lg screens */}
+              {data.release_date}
+            </h3>
           </div>
         </div>
         <div className="">
@@ -134,8 +146,10 @@ export default function EpisodePage({
           </div>
         </div>
       </div>
-      <div className="mt-4 h-fit w-full">
-        <ul>
+
+      {/* Segments */}
+      <div className="flex justify-center w-full mt-4">
+        <ul className="list-none">
           {data.episode_data
             .sort(
               isOrganizedByLength
@@ -147,7 +161,7 @@ export default function EpisodePage({
             .map((segment, index) => (
               <div
                 key={segment.segment_number}
-                className="border-y border-violet-100 border-opacity-60 bg-neutral-950"
+                className=" border-y border-violet-100 border-opacity-60 bg-neutral-950"
               >
                 <Segment
                   episodeNumber={data.episode_number}

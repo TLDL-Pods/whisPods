@@ -1,6 +1,6 @@
 "use client";
 import React, { FC, useCallback, useState, useEffect } from "react";
-import { RiMegaphoneLine } from "react-icons/ri"; // Assuming you are using react-icons library
+import { RiMegaphoneLine } from "react-icons/ri";
 import Image from "next/image";
 import { FaRegCopy, FaCheck } from "react-icons/fa";
 
