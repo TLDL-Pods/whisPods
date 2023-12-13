@@ -12,17 +12,23 @@ function YouTubeEmbed({
   startTimeMs: number;
   maxWidth: string;
 }) {
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  // Initialize state with undefined during server rendering
+  const [windowWidth, setWindowWidth] = useState(
+    typeof window !== "undefined" ? window.innerWidth : undefined
+  );
 
   useEffect(() => {
     function handleResize() {
       setWindowWidth(window.innerWidth);
     }
 
-    window.addEventListener("resize", handleResize);
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
+    // Only add event listener if window is available
+    if (window) {
+      window.addEventListener("resize", handleResize);
+      return () => {
+        window.removeEventListener("resize", handleResize);
+      };
+    }
   }, []);
 
   // Convert start time from milliseconds to seconds
