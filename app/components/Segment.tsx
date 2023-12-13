@@ -1,17 +1,17 @@
-'use client';
-import React, { FC, useCallback, useState, useEffect } from 'react';
-import { RiMegaphoneLine } from 'react-icons/ri';
-import { FaRegCopy, FaCheck } from 'react-icons/fa';
-import { SegmentProps } from '@/types';
-import YouTubeEmbed from '@/app/components/YoutubeEmbed';
-import TweetEmbed from './TweetEmbed';
-import { useDrawer } from '@/app/contexts/drawerContext';
+"use client";
+import React, { FC, useCallback, useState, useEffect } from "react";
+import { RiMegaphoneLine } from "react-icons/ri";
+import { FaRegCopy, FaCheck } from "react-icons/fa";
+import { SegmentProps } from "@/types";
+import YouTubeEmbed from "@/app/components/YoutubeEmbed";
+import TweetEmbed from "./TweetEmbed";
+import { useDrawer } from "@/app/contexts/drawerContext";
 
-import Slider from 'react-slick';
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
-import { FiShare } from 'react-icons/fi';
-import { useApp } from '../hooks/useApp';
+import Slider from "react-slick";
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import { FiShare } from "react-icons/fi";
+import { useApp } from "../hooks/useApp";
 
 interface SegmentProps2 {
   episodeNumber: number;
@@ -57,7 +57,7 @@ const Segment: FC<SegmentProps2> = ({
   const { toggleDrawer, setYoutubeUrl } = useDrawer();
 
   const handlePlayClick = () => {
-    console.log('Play button clicked');
+    console.log("Play button clicked");
     setYoutubeUrl(youtube_url, segment.start_time_ms);
     toggleDrawer(true);
   };
@@ -65,17 +65,17 @@ const Segment: FC<SegmentProps2> = ({
   const contentArray = [...segment.bullets, segment.summary];
 
   const handleCopy = useCallback(
-    (textToCopy: string, type: 'youtube' | 'segment') => {
+    (textToCopy: string, type: "youtube" | "segment") => {
       navigator.clipboard.writeText(textToCopy);
       setCopySuccess(type);
     },
-    [],
+    []
   );
 
   // Toggle segment detail view
   const handleSegmentToggle = () => {
     setShowSegmentIndex(
-      showSegmentIndex === segmentNumber ? null : segmentNumber,
+      showSegmentIndex === segmentNumber ? null : segmentNumber
     );
   };
 
@@ -102,8 +102,8 @@ const Segment: FC<SegmentProps2> = ({
   const handleShare = () => {
     const bulletsText = segment.bullets
       .map((bullet) => `- ${bullet}`)
-      .join('\n');
-    const twitterLinks = segment.URL ? segment.URL.join('\n') : '';
+      .join("\n");
+    const twitterLinks = segment.URL ? segment.URL.join("\n") : "";
 
     // Calculate the start time in seconds and append it to the YouTube URL
     const startTimeInSeconds = Math.floor(segment.start_time_ms / 1000);
@@ -113,11 +113,11 @@ const Segment: FC<SegmentProps2> = ({
 
     navigator.clipboard.writeText(shareText).then(
       () => {
-        setCopySuccess('share');
+        setCopySuccess("share");
       },
       (err) => {
-        console.error('Could not copy text: ', err);
-      },
+        console.error("Could not copy text: ", err);
+      }
     );
   };
 
@@ -152,8 +152,8 @@ const Segment: FC<SegmentProps2> = ({
                     1000
                   )
                     .toFixed(0)
-                    .padStart(2, '0')}`
-                : segmentNumber + 1 + '.'}
+                    .padStart(2, "0")}`
+                : segmentNumber + 1 + "."}
             </p>
           </div>
           {/* HEADLINE*/}
@@ -171,7 +171,7 @@ const Segment: FC<SegmentProps2> = ({
                 className="absolute flex items-center justify-center px-4 py-2 font-bold text-white rounded top-7 right-2 hover:bg-zinc-700"
                 onClick={handleShare}
               >
-                {copySuccess === 'share' ? (
+                {copySuccess === "share" ? (
                   <FaCheck size={20} />
                 ) : (
                   <FiShare size={20} />
@@ -218,72 +218,13 @@ const Segment: FC<SegmentProps2> = ({
                     segment.URL.map((url, index) => (
                       <TweetEmbed key={url} url={url} />
                     ))}
-                  {/* <ul className="flex flex-col items-center justify-center">
-                    {segment.URL.map((url, idx) => (
-                      <li
-                        key={url}
-                        className="flex items-center justify-center w-full text-center truncate"
-                      >
-                        <a
-                          href={url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-center text-blue-500 truncate"
-                        >
-                          {url.length > 40 ? url.substring(0, 35) + "..." : url}
-                        </a>
-                        <button
-                          className="ml-4 bg-transparent border-none"
-                          onClick={() => handleCopy(url, "segment")}
-                        >
-                          {copySuccess === "segment" ? (
-                            <FaCheck />
-                          ) : (
-                            <FaRegCopy />
-                          )}
-                        </button>
-                      </li>
-                    ))}
-                  </ul> */}
                 </div>
               </div>
               <div className="w-3/5 mx-auto mt-4 border-b border-violet-300 opacity-40"></div>
 
               {/* YouTube Embed */}
-              <div className=" px-4 pt-4 text-center">
+              <div className="px-4 pt-4 text-center ">
                 <button onClick={openVideoDrawer}>TOGGLE YT</button>
-                {/* <a
-                  href={`${youtube_url}&t=${Math.floor(
-                    segment.start_time_ms / 1000
-                  )}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="pr-2 text-blue-500 underline"
-                >
-                  {`${youtube_url}&t=${Math.floor(
-                    segment.start_time_ms / 1000
-                  )}`.length > 40
-                    ? `${youtube_url}&t=${Math.floor(
-                        segment.start_time_ms / 1000
-                      )}`.substring(0, 35) + "..."
-                    : `${youtube_url}&t=${Math.floor(
-                        segment.start_time_ms / 1000
-                      )}`}
-                </a>
-
-                <button
-                  title="Copy YouTube Segment Link"
-                  onClick={() =>
-                    handleCopy(
-                      `${youtube_url}&t=${Math.floor(
-                        segment.start_time_ms / 1000
-                      )}`,
-                      "youtube"
-                    )
-                  }
-                >
-                  {copySuccess === "youtube" ? <FaCheck /> : <FaRegCopy />}
-                </button> */}
               </div>
             </div>
           </div>
