@@ -187,16 +187,6 @@ const Segment: FC<SegmentProps2> = ({
                       TLDL
                     </p>
 
-                    {/* Play Button */}
-                    <div className="my-2 text-center">
-                      <button
-                        className="text-4xl text-violet-400 hover:text-violet-300"
-                        onClick={openVideoDrawer}
-                      >
-                        <FaPlayCircle />
-                      </button>
-                    </div>
-
                     <div className="flex flex-col space-y-1">
                       {contentArray.slice(0, -1).map((bullet, idx) => (
                         <div
@@ -222,6 +212,17 @@ const Segment: FC<SegmentProps2> = ({
                 </Slider>
               </div>
 
+              {/* Play Button */}
+              <div className="pt-4 my-2 text-center">
+                <button
+                  className="text-4xl text-violet-400 hover:text-violet-300"
+                  onClick={openVideoDrawer}
+                >
+                  <FaPlayCircle />
+                </button>
+                <div>Play Segment</div>
+              </div>
+
               {/* Sources */}
               <div className="w-full px-3 mt-4 text-center">
                 <div className="">
@@ -231,12 +232,6 @@ const Segment: FC<SegmentProps2> = ({
                       <TweetEmbed key={url} url={url} />
                     ))}
                 </div>
-              </div>
-              <div className="w-3/5 mx-auto mt-4 border-b border-violet-300 opacity-40"></div>
-
-              {/* YouTube Embed */}
-              <div className="px-4 pt-4 text-center ">
-                <button onClick={openVideoDrawer}>TOGGLE YT</button>
               </div>
             </div>
           </div>
