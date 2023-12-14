@@ -11,6 +11,7 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { FiShare } from "react-icons/fi";
+import { FaPlayCircle } from "react-icons/fa";
 import { useApp } from "../hooks/useApp";
 
 interface SegmentProps2 {
@@ -185,6 +186,17 @@ const Segment: FC<SegmentProps2> = ({
                     <p className="mb-2 text-xl font-semibold text-center">
                       TLDL
                     </p>
+
+                    {/* Play Button */}
+                    <div className="my-2 text-center">
+                      <button
+                        className="text-4xl text-violet-400 hover:text-violet-300"
+                        onClick={openVideoDrawer}
+                      >
+                        <FaPlayCircle />
+                      </button>
+                    </div>
+
                     <div className="flex flex-col space-y-1">
                       {contentArray.slice(0, -1).map((bullet, idx) => (
                         <div
