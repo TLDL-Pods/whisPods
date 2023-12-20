@@ -3,12 +3,10 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import { EpisodeProvider } from "./contexts/dataContext";
-import { DrawerProvider } from "./contexts/drawerContext";
 import Navbar from "./Navbar";
 import { Analytics } from "@vercel/analytics/react";
 import GoogleAnalytics from "./components/GoogleAnalyics";
 import CookieBanner from "@/app/components/CookieBanner";
-import CustomDrawer from "@/app/components/CustomDrawer";
 import { AppStateProvider } from "./contexts/StateContext";
 
 export const metadata: Metadata = {
@@ -25,15 +23,12 @@ export default function RootLayout({
     <html lang="en">
       <GoogleAnalytics GA_MEASUREMENT_ID="G-Z6WGLHLZXB" />
       <body className="min-h-screen bg-stone-950">
-        <DrawerProvider>
-          <EpisodeProvider>
-            <AppStateProvider>
-              <Navbar>{children}</Navbar>
-            </AppStateProvider>
-            <CookieBanner />
-          </EpisodeProvider>
-          <CustomDrawer />
-        </DrawerProvider>
+        <EpisodeProvider>
+          <AppStateProvider>
+            <Navbar>{children}</Navbar>
+          </AppStateProvider>
+          <CookieBanner />
+        </EpisodeProvider>
         <Analytics />
       </body>
     </html>
