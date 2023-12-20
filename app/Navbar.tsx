@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { GiSoundWaves } from "react-icons/gi";
-import YouTubeEmbed from "./components/YoutubeEmbed";
 import YoutubeVideo from "./components/YoutubeVideo";
 import { useApp } from "./hooks/useApp";
 

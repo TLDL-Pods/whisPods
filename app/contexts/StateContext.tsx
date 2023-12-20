@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import { AppState } from '../types';
-import React, { createContext, useState, ReactNode } from 'react';
+import { AppState } from "../../types";
+import React, { createContext, useState, ReactNode } from "react";
 
-const initialState: AppState = {
+export const initialState: AppState = {
   isVideoModalOpen: false,
-  youtubeURL: '',
+  youtubeURL: "",
   youtubeStartTimeMS: null,
 };
 

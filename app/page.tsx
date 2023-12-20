@@ -6,7 +6,6 @@ import PageSelect from "@/app/components/PageSelect";
 import { useEpisodeContext } from "@/app/hooks/useEpisodeContext";
 import { SearchBar } from "@/app/components/SearchBar";
 import SearchResults from "@/app/components/SearchResults";
-import CustomDrawer from "./components/CustomDrawer";
 
 export default function Home() {
   const [episodes, setEpisodes] = useState<EpisodeProps[]>([]);
@@ -33,7 +32,7 @@ export default function Home() {
   const { data, setData } = useEpisodeContext();
 
   return (
-    <div className="flex-col justify-center h-full w-full p-4 ">
+    <div className="flex-col justify-center w-full h-full p-4 ">
       {/* Header */}
       <header className="p-4 text-white bg-gray-800">
         <div className="flex flex-col items-start justify-between md:flex-row md:items-center">
@@ -68,7 +67,6 @@ export default function Home() {
           )}
         </div>
       </div>
-      <CustomDrawer />
     </div>
   );
 }

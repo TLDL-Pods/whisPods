@@ -1,11 +1,9 @@
 "use client";
 import React, { FC, useCallback, useState, useEffect } from "react";
 import { RiMegaphoneLine } from "react-icons/ri";
-import { FaRegCopy, FaCheck } from "react-icons/fa";
+import { FaCheck } from "react-icons/fa";
 import { SegmentProps } from "@/types";
-import YouTubeEmbed from "@/app/components/YoutubeEmbed";
 import TweetEmbed from "./TweetEmbed";
-import { useDrawer } from "@/app/contexts/drawerContext";
 
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -55,23 +53,7 @@ const Segment: FC<SegmentProps2> = ({
     adaptiveHeight: true,
   };
 
-  const { toggleDrawer, setYoutubeUrl } = useDrawer();
-
-  const handlePlayClick = () => {
-    console.log("Play button clicked");
-    setYoutubeUrl(youtube_url, segment.start_time_ms);
-    toggleDrawer(true);
-  };
-
   const contentArray = [...segment.bullets, segment.summary];
-
-  const handleCopy = useCallback(
-    (textToCopy: string, type: "youtube" | "segment") => {
-      navigator.clipboard.writeText(textToCopy);
-      setCopySuccess(type);
-    },
-    []
-  );
 
   // Toggle segment detail view
   const handleSegmentToggle = () => {
@@ -123,13 +105,12 @@ const Segment: FC<SegmentProps2> = ({
   };
 
   const openVideoDrawer = () => {
-    setState((prevState) => ({
-      ...prevState,
+    setState(() => ({
       youtubeURL: youtube_url,
       youtubeStartTimeMS: segment.start_time_ms,
       isVideoModalOpen: !state.isVideoModalOpen,
     }));
-    console.log(youtube_url, state.isVideoModalOpen);
+    console.log(youtube_url, segment.start_time_ms, state.isVideoModalOpen);
   };
 
   return (

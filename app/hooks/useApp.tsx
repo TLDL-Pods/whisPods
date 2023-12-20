@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import { useContext } from 'react';
-import { AppStateContext } from '../StateContext';
+import { useContext } from "react";
+import { AppStateContext } from "../contexts/StateContext";
 
 export function useApp() {
   const { state, setState } = useContext(AppStateContext);

@@ -31,8 +31,13 @@ export const DrawerProvider: React.FC<{ children: ReactNode }> = ({
   const [startTimeMs, setStartTimeMs] = useState(0);
 
   const toggleDrawer = (isOpen: boolean) => {
-    console.log("isOpen", isOpen);
     setIsDrawerOpen(isOpen);
+
+    // Reset the YouTube URL and start time when closing the drawer
+    if (!isOpen) {
+      setYoutubeUrl("");
+      setStartTimeMs(0);
+    }
   };
 
   const updateYoutubeUrl = (url: string, startTime: number) => {
