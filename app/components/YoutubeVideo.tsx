@@ -1,3 +1,5 @@
+`use client`;
+
 import React from "react";
 import { useApp } from "../hooks/useApp";
 import { initialState } from "../contexts/StateContext";
@@ -12,7 +14,7 @@ const YoutubeVideo: React.FC = () => {
     ? state.youtubeURL.match(/youtu.be\/([^&]+)/)
     : "";
   const videoId = shortFormatMatch ? shortFormatMatch[1] : null;
-  const embedUrl = `https://www.youtube.com/embed/${videoId}?start=${startTimeSeconds}`;
+  const embedUrl = `https://www.youtube.com/embed/${videoId}?start=${startTimeSeconds}?autoplay=1?rel=0`;
 
   return (
     <div className="relative flex justify-between w-full h-full">
@@ -34,14 +36,15 @@ const YoutubeVideo: React.FC = () => {
         </div>
         <div className="h-full"></div>
       </div>
-      <div
+      <button
         className="absolute px-2 text-xl text-red-600 border border-red-400 right-4 top-2"
         onClick={() => {
           setState(initialState);
         }}
+        aria-label="Close Video"
       >
         X
-      </div>
+      </button>
     </div>
   );
 };

@@ -48,3 +48,9 @@ export interface AppState {
   youtubeURL: string | undefined;
   youtubeStartTimeMS: number | null;
 }
+
+export interface YouTubePlayerEvent {
+  target: {
+    playVideo: () => void;
+  };
+}
