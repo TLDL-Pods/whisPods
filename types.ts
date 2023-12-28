@@ -47,6 +47,8 @@ export interface AppState {
   isVideoModalOpen: boolean;
   youtubeURL: string | undefined;
   youtubeStartTimeMS: number | null;
+  searchResultEpisodes: EpisodeProps[] | null;
+  latestEpisodes: EpisodeProps[] | null;
 }
 
 export interface YouTubePlayerEvent {

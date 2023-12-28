@@ -1,16 +1,16 @@
-"use client";
-import React, { FC, useCallback, useState, useEffect } from "react";
-import { RiMegaphoneLine } from "react-icons/ri";
-import { FaCheck } from "react-icons/fa";
-import { SegmentProps } from "@/types";
-import TweetEmbed from "./TweetEmbed";
+'use client';
+import React, { FC, useCallback, useState, useEffect } from 'react';
+import { RiMegaphoneLine } from 'react-icons/ri';
+import { FaCheck } from 'react-icons/fa';
+import { SegmentProps } from '@/types';
+import TweetEmbed from './TweetEmbed';
 
-import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-import { FiShare } from "react-icons/fi";
-import { FaPlayCircle } from "react-icons/fa";
-import { useApp } from "../hooks/useApp";
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
+import { FiShare } from 'react-icons/fi';
+import { FaPlayCircle } from 'react-icons/fa';
+import { useApp } from '../hooks/useApp';
 
 interface SegmentProps2 {
   episodeNumber: number;
@@ -58,7 +58,7 @@ const Segment: FC<SegmentProps2> = ({
   // Toggle segment detail view
   const handleSegmentToggle = () => {
     setShowSegmentIndex(
-      showSegmentIndex === segmentNumber ? null : segmentNumber
+      showSegmentIndex === segmentNumber ? null : segmentNumber,
     );
   };
 
@@ -85,8 +85,8 @@ const Segment: FC<SegmentProps2> = ({
   const handleShare = () => {
     const bulletsText = segment.bullets
       .map((bullet) => `- ${bullet}`)
-      .join("\n");
-    const twitterLinks = segment.URL ? segment.URL.join("\n") : "";
+      .join('\n');
+    const twitterLinks = segment.URL ? segment.URL.join('\n') : '';
 
     // Calculate the start time in seconds and append it to the YouTube URL
     const startTimeInSeconds = Math.floor(segment.start_time_ms / 1000);
@@ -96,16 +96,17 @@ const Segment: FC<SegmentProps2> = ({
 
     navigator.clipboard.writeText(shareText).then(
       () => {
-        setCopySuccess("share");
+        setCopySuccess('share');
       },
       (err) => {
-        console.error("Could not copy text: ", err);
-      }
+        console.error('Could not copy text: ', err);
+      },
     );
   };
 
   const openVideoDrawer = () => {
     setState(() => ({
+      ...state,
       youtubeURL: youtube_url,
       youtubeStartTimeMS: segment.start_time_ms,
       isVideoModalOpen: !state.isVideoModalOpen,
@@ -134,8 +135,8 @@ const Segment: FC<SegmentProps2> = ({
                     1000
                   )
                     .toFixed(0)
-                    .padStart(2, "0")}`
-                : segmentNumber + 1 + "."}
+                    .padStart(2, '0')}`
+                : segmentNumber + 1 + '.'}
             </p>
           </div>
           {/* HEADLINE*/}
@@ -153,7 +154,7 @@ const Segment: FC<SegmentProps2> = ({
                 className="absolute flex items-center justify-center px-4 py-2 font-bold text-white rounded top-7 right-2 hover:bg-zinc-700"
                 onClick={handleShare}
               >
-                {copySuccess === "share" ? (
+                {copySuccess === 'share' ? (
                   <FaCheck size={20} />
                 ) : (
                   <FiShare size={20} />

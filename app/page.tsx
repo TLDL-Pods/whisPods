@@ -1,35 +1,62 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { EpisodeProps } from "@/types";
-import PageSelect from "@/app/components/PageSelect";
-import { useEpisodeContext } from "@/app/hooks/useEpisodeContext";
-import { SearchBar } from "@/app/components/SearchBar";
-import SearchResults from "@/app/components/SearchResults";
+import { useEffect, useState } from 'react';
+import { EpisodeProps } from '@/types';
+import PageSelect from '@/app/components/PageSelect';
+import { SearchBar } from '@/app/components/SearchBar';
+import SearchResults from '@/app/components/SearchResults';
+import { useApp } from './hooks/useApp';
 
 export default function Home() {
-  const [episodes, setEpisodes] = useState<EpisodeProps[]>([]);
+  const { state, setState } = useApp();
   const [hasSearched, setHasSearched] = useState(false);
   const performSearch = async (term: string) => {
     try {
-      console.log("term", term);
+      console.log('term', term);
       const response = await fetch(`/api/search/${encodeURIComponent(term)}`);
       const data = await response.json();
       if (data && Array.isArray(data.data)) {
-        setEpisodes(data.data);
+        setState(() => ({
+          ...state,
+          searchResultEpisodes: data.data,
+        }));
       }
       setHasSearched(true);
     } catch (error) {
-      console.error("Error fetching search results:", error);
+      console.error('Error fetching search results:', error);
     }
   };
 
   const clearSearchResults = () => {
-    setEpisodes([]);
+    setState(() => ({
+      ...state,
+      searchResultEpisodes: [],
+    }));
     setHasSearched(false);
   };
 
-  const { data, setData } = useEpisodeContext();
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await fetch(`/api/all-episodes`, {
+          cache: 'no-store',
+        });
+        const json = await res.json();
+        setState(() => ({
+          ...state,
+          latestEpisodes: json['data'],
+        }));
+        console.log('latest', json['data']);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+    fetchData();
+
+    // refetch data
+    const id = setInterval(fetchData, 10000);
+    return () => clearInterval(id);
+  }, []);
 
   return (
     <div className="flex-col justify-center w-full h-full p-4 ">
@@ -59,9 +86,10 @@ export default function Home() {
         {/* <div className="pb-32"> */}
         <div className="">
           {hasSearched ? (
-            <SearchResults episodes={episodes} />
+            <SearchResults episodes={state.searchResultEpisodes} />
           ) : (
-            data.map((episode, index) => (
+            state.latestEpisodes &&
+            state.latestEpisodes.map((episode) => (
               <PageSelect key={episode._id} episode={episode} />
             ))
           )}
