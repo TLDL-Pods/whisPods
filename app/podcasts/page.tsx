@@ -2,15 +2,14 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { useState } from 'react';
 import PageSelect from '@/app/components/episodeSelect/EpisodeSelect';
-import { EpisodeProps, SegmentProps } from '@/types';
+import { EpisodeProps } from '@/types';
 import TDG from '@/app/assets/the-daily-gwei.jpg';
 import sassano from '@/app/assets/sassano_400x400.jpg';
 import { useApp } from '../hooks/useApp';
 
 export default function Home() {
-  const { state, setState } = useApp();
+  const { state } = useApp();
 
   return (
     <div className="flex flex-col items-center w-full max-w-full ">

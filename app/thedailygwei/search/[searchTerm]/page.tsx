@@ -1,16 +1,19 @@
-"use client";
-import { useState, useEffect, FC } from "react";
-import { useSearchParams } from "next/navigation";
-import { SearchBar } from "@/app/components/SearchBar";
-import { EpisodeProps } from "@/types";
-import SearchSegment from "@/app/components/SearchSegment";
-import { FaWindowMinimize } from "react-icons/fa";
+'use client';
+import { useState, useEffect, FC } from 'react';
+import { useSearchParams } from 'next/navigation';
+import { SearchBar } from '@/app/components/SearchBar';
+import { EpisodeProps } from '@/types';
+import SearchSegment from '@/app/components/SearchSegment';
+import { FaWindowMinimize } from 'react-icons/fa';
+import { useSearch } from '@/app/hooks/useSearch';
 
 export default function SearchTermPage({
   params,
 }: {
   params: { searchTerm: string };
 }) {
+  const { performSearch } = useSearch();
+
   const [episodes, setEpisodes] = useState<EpisodeProps[]>([]);
   const [selectedEpisodeIndex, setSelectedEpisodeIndex] = useState<
     number | null
@@ -18,21 +21,7 @@ export default function SearchTermPage({
   const [showVideo, setShowVideo] = useState<boolean>(false);
 
   const searchParams = useSearchParams();
-  const searchTerm = searchParams.get("searchTerm");
-
-  const performSearch = async (term: string) => {
-    try {
-      console.log("term", term);
-      // const response = await fetch(`/api/search/${term}`);
-      const response = await fetch(`/api/search/${encodeURIComponent(term)}`);
-      const data = await response.json();
-      if (data && Array.isArray(data.data)) {
-        setEpisodes(data.data);
-      }
-    } catch (error) {
-      console.error("Error fetching search results:", error);
-    }
-  };
+  const searchTerm = searchParams.get('searchTerm');
 
   useEffect(() => {
     if (searchTerm) {
@@ -53,7 +42,7 @@ export default function SearchTermPage({
             className="relative p-2 mb-3 border rounded shadow"
             onClick={() =>
               setSelectedEpisodeIndex(
-                index === selectedEpisodeIndex ? null : index
+                index === selectedEpisodeIndex ? null : index,
               )
             }
           >
@@ -79,7 +68,7 @@ export default function SearchTermPage({
 
             {episode.matchedSegmentNumbers.map((segmentNumber) => {
               const matchedSegment = episode.episode_data.find(
-                (segment) => segment.segment_number === segmentNumber
+                (segment) => segment.segment_number === segmentNumber,
               );
 
               return (

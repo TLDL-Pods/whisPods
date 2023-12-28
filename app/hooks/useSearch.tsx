@@ -14,12 +14,9 @@ export function useSearch() {
         setState(() => ({
           ...state,
           searchResultEpisodes: data.data,
+          hasSearched: true,
         }));
       }
-      setState(() => ({
-        ...state,
-        hasSearched: true,
-      }));
     } catch (error) {
       console.error('Error fetching search results:', error);
     }
