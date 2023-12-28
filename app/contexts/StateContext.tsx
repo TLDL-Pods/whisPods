@@ -9,6 +9,7 @@ export const initialState: AppState = {
   youtubeStartTimeMS: null,
   searchResultEpisodes: null,
   latestEpisodes: null,
+  hasSearched: false,
 };
 
 export const AppStateContext = createContext<{

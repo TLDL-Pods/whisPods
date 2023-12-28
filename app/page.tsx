@@ -1,58 +1,20 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { EpisodeProps } from '@/types';
+import { useEffect } from 'react';
 import PageSelect from '@/app/components/PageSelect';
 import { SearchBar } from '@/app/components/SearchBar';
 import SearchResults from '@/app/components/SearchResults';
 import { useApp } from './hooks/useApp';
+import { useLatestEpisodes } from './hooks/useLatestEpisodes';
+import { useSearch } from './hooks/useSearch';
 
 export default function Home() {
-  const { state, setState } = useApp();
-  const [hasSearched, setHasSearched] = useState(false);
-  const performSearch = async (term: string) => {
-    try {
-      console.log('term', term);
-      const response = await fetch(`/api/search/${encodeURIComponent(term)}`);
-      const data = await response.json();
-      if (data && Array.isArray(data.data)) {
-        setState(() => ({
-          ...state,
-          searchResultEpisodes: data.data,
-        }));
-      }
-      setHasSearched(true);
-    } catch (error) {
-      console.error('Error fetching search results:', error);
-    }
-  };
-
-  const clearSearchResults = () => {
-    setState(() => ({
-      ...state,
-      searchResultEpisodes: [],
-    }));
-    setHasSearched(false);
-  };
+  const { state } = useApp();
+  const { performSearch, clearSearchResults } = useSearch();
+  const { fetchData } = useLatestEpisodes();
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await fetch(`/api/all-episodes`, {
-          cache: 'no-store',
-        });
-        const json = await res.json();
-        setState(() => ({
-          ...state,
-          latestEpisodes: json['data'],
-        }));
-        console.log('latest', json['data']);
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
-    };
     fetchData();
-
     // refetch data
     const id = setInterval(fetchData, 10000);
     return () => clearInterval(id);
@@ -74,7 +36,7 @@ export default function Home() {
           <div className="flex items-center w-full md:w-1/2">
             <SearchBar
               onSearch={performSearch}
-              hasSearched={hasSearched}
+              hasSearched={state.hasSearched}
               clearSearchResults={clearSearchResults}
             />
           </div>
@@ -85,7 +47,7 @@ export default function Home() {
       <div className="">
         {/* <div className="pb-32"> */}
         <div className="">
-          {hasSearched ? (
+          {state.hasSearched ? (
             <SearchResults episodes={state.searchResultEpisodes} />
           ) : (
             state.latestEpisodes &&
