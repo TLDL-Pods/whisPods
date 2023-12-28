@@ -7,7 +7,7 @@ import { IoArrowBack } from 'react-icons/io5';
 import { ImListNumbered } from 'react-icons/im';
 import { BiSolidTimer } from 'react-icons/bi';
 
-import Segment from '@/app/components/Segment';
+import Segment from '@/app/components/EpisodeSegment';
 import { useEpisodes } from '@/app/hooks/useEpisodes';
 
 export default function EpisodePage({

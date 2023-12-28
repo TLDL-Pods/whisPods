@@ -1,5 +1,5 @@
 'use client';
-import React, { FC, useCallback, useState, useEffect } from 'react';
+import React, { FC, useState, useEffect } from 'react';
 import { RiMegaphoneLine } from 'react-icons/ri';
 import { FaCheck } from 'react-icons/fa';
 import { SegmentProps } from '@/types';
@@ -11,8 +11,9 @@ import 'slick-carousel/slick/slick-theme.css';
 import { FiShare } from 'react-icons/fi';
 import { FaPlayCircle } from 'react-icons/fa';
 import { useApp } from '../hooks/useApp';
+import { handleShare } from '../utils/handleShare';
 
-interface SegmentProps2 {
+interface EpisodeSegmentProps {
   segment: SegmentProps;
   segmentNumber: number;
   isOrganizedByLength: boolean;
@@ -22,7 +23,7 @@ interface SegmentProps2 {
   setShowSegmentIndex: (value: number | null) => void;
 }
 
-const Segment: FC<SegmentProps2> = ({
+const EpisodeSegment: FC<EpisodeSegmentProps> = ({
   segment,
   segmentNumber,
   isOrganizedByLength,
@@ -31,10 +32,9 @@ const Segment: FC<SegmentProps2> = ({
   setShowSegmentIndex,
 }) => {
   const { state, setState } = useApp();
+  const [copySuccess, setCopySuccess] = useState<boolean>(false);
 
-  const [copySuccess, setCopySuccess] = useState<string | null>(null);
-
-  const settings = {
+  const sliderSettings = {
     dots: true,
     infinite: true,
     speed: 500,
@@ -43,7 +43,7 @@ const Segment: FC<SegmentProps2> = ({
     adaptiveHeight: true,
   };
 
-  const contentArray = [...segment.bullets, segment.summary];
+  const sliderContentArray = [...segment.bullets, segment.summary];
 
   // Toggle segment detail view
   const handleSegmentToggle = () => {
@@ -55,7 +55,7 @@ const Segment: FC<SegmentProps2> = ({
   useEffect(() => {
     if (copySuccess) {
       const timer = setTimeout(() => {
-        setCopySuccess(null);
+        setCopySuccess(false);
       }, 1000);
 
       return () => clearTimeout(timer);
@@ -71,28 +71,6 @@ const Segment: FC<SegmentProps2> = ({
       }
     }
   }, [segmentNumber]);
-
-  const handleShare = () => {
-    const bulletsText = segment.bullets
-      .map((bullet) => `- ${bullet}`)
-      .join('\n');
-    const twitterLinks = segment.URL ? segment.URL.join('\n') : '';
-
-    // Calculate the start time in seconds and append it to the YouTube URL
-    const startTimeInSeconds = Math.floor(segment.start_time_ms / 1000);
-    const youtubeLinkWithTimestamp = `${youtube_url}&t=${startTimeInSeconds}s`;
-
-    const shareText = `TLDL:\n${bulletsText}\n\nSources:\n${twitterLinks}\n\nYouTube:\n${youtubeLinkWithTimestamp}`;
-
-    navigator.clipboard.writeText(shareText).then(
-      () => {
-        setCopySuccess('share');
-      },
-      (err) => {
-        console.error('Could not copy text: ', err);
-      },
-    );
-  };
 
   const openVideoDrawer = () => {
     setState(() => ({
@@ -142,9 +120,11 @@ const Segment: FC<SegmentProps2> = ({
             <div className="flex-col w-full max-w-full pb-4 shadow-inner shadow-black md-text-l text-violet-200 bg-gradient-to-b to-neutral-900 from-neutral-800 ">
               <button
                 className="absolute flex items-center justify-center px-4 py-2 font-bold text-white rounded top-7 right-2 hover:bg-zinc-700"
-                onClick={handleShare}
+                onClick={() =>
+                  handleShare({ segment, youtube_url, setCopySuccess })
+                }
               >
-                {copySuccess === 'share' ? (
+                {copySuccess === true ? (
                   <FaCheck size={20} />
                 ) : (
                   <FiShare size={20} />
@@ -153,14 +133,14 @@ const Segment: FC<SegmentProps2> = ({
 
               {/* Bullets or Summary */}
               <div className="flex flex-col w-full p-3 mx-auto shadow-inner shadow-black text-violet-100">
-                <Slider {...settings} className="mx-auto w-80 md:w-4/5">
+                <Slider {...sliderSettings} className="mx-auto w-80 md:w-4/5">
                   <div className="flex flex-col justify-between w-full">
                     <p className="mb-2 text-xl font-semibold text-center">
                       TLDL
                     </p>
 
                     <div className="flex flex-col space-y-1">
-                      {contentArray.slice(0, -1).map((bullet, idx) => (
+                      {sliderContentArray.slice(0, -1).map((bullet, idx) => (
                         <div
                           key={idx}
                           className="flex p-2 my-auto border-y border-violet-100 border-opacity-60 bg-zinc-950"
@@ -178,7 +158,7 @@ const Segment: FC<SegmentProps2> = ({
                       SUMMARY
                     </p>
                     <p className="p-4 overflow-y-auto bg-zinc-950 h-80">
-                      {contentArray[contentArray.length - 1]}
+                      {sliderContentArray[sliderContentArray.length - 1]}
                     </p>
                   </div>
                 </Slider>
@@ -213,4 +193,4 @@ const Segment: FC<SegmentProps2> = ({
   );
 };
 
-export default Segment;
+export default EpisodeSegment;
