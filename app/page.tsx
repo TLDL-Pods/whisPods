@@ -5,13 +5,13 @@ import EpisodeSelect from './components/episodeSelect/EpisodeSelect';
 import { SearchBar } from '@/app/components/SearchBar';
 import SearchResults from '@/app/components/SearchResults';
 import { useApp } from './hooks/useApp';
-import { useLatestEpisodes } from './hooks/useLatestEpisodes';
+import { useEpisodes } from './hooks/useEpisodes';
 import { useSearch } from './hooks/useSearch';
 
 export default function Home() {
   const { state } = useApp();
   const { performSearch, clearSearchResults } = useSearch();
-  const { fetchData } = useLatestEpisodes();
+  const { fetchData } = useEpisodes();
 
   useEffect(() => {
     fetchData();

@@ -13,32 +13,22 @@ import { FaPlayCircle } from 'react-icons/fa';
 import { useApp } from '../hooks/useApp';
 
 interface SegmentProps2 {
-  episodeNumber: number;
   segment: SegmentProps;
   segmentNumber: number;
   isOrganizedByLength: boolean;
-  showVideo: boolean;
-  setShowVideo: (value: boolean) => void;
   youtube_url: string;
   onSegmentClick: (segmentNumber: number) => void;
-  showSummary: number | null;
-  onSummaryToggle: (segmentNumber: number) => void;
   showSegmentIndex: number | null;
   setShowSegmentIndex: (value: number | null) => void;
-  handleSummaryToggle: (index: number) => void;
 }
 
 const Segment: FC<SegmentProps2> = ({
-  episodeNumber,
   segment,
   segmentNumber,
   isOrganizedByLength,
-  showVideo,
-  setShowVideo,
   youtube_url,
   showSegmentIndex,
   setShowSegmentIndex,
-  handleSummaryToggle,
 }) => {
   const { state, setState } = useApp();
 
