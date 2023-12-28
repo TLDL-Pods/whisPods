@@ -49,6 +49,7 @@ export interface AppState {
   youtubeStartTimeMS: number | null;
   searchResultEpisodes: EpisodeProps[] | null;
   latestEpisodes: EpisodeProps[] | null;
+  currentEpisode: string | null;
   hasSearched: boolean;
 }
 

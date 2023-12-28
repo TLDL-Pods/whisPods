@@ -1,16 +1,16 @@
-"use client";
+'use client';
 
-import Link from "next/link";
-import Image from "next/image";
-import { useState } from "react";
-import PageSelect from "@/app/components/PageSelect";
-import { EpisodeProps, SegmentProps } from "@/types";
-import { useEpisodeContext } from "@/app/hooks/useEpisodeContext";
-import TDG from "@/app/assets/the-daily-gwei.jpg";
-import sassano from "@/app/assets/sassano_400x400.jpg";
+import Link from 'next/link';
+import Image from 'next/image';
+import { useState } from 'react';
+import EpisodeSelect from '../components/episodeSelect/EpisodeSelect';
+import { EpisodeProps, SegmentProps } from '@/types';
+import TDG from '@/app/assets/the-daily-gwei.jpg';
+import sassano from '@/app/assets/sassano_400x400.jpg';
+import { useApp } from '../hooks/useApp';
 
 export default function Home() {
-  const { data, setData } = useEpisodeContext();
+  const { state } = useApp();
 
   return (
     <div className="flex flex-col items-center w-full max-w-full ">
@@ -23,7 +23,7 @@ export default function Home() {
               <div className="mr-4">
                 <Image
                   src={TDG}
-                  alt={"The Daily Gwei"}
+                  alt={'The Daily Gwei'}
                   className="w-32 h-32"
                   width={90}
                   height={90}
@@ -51,7 +51,7 @@ export default function Home() {
               <div className="mr-4">
                 <Image
                   src={sassano}
-                  alt={"The Daily Gwei"}
+                  alt={'The Daily Gwei'}
                   className="w-32 h-32"
                   width={90}
                   height={90}
@@ -73,9 +73,10 @@ export default function Home() {
 
       {/* Episodes */}
       <div className="pb-32">
-        {data.map((episode: EpisodeProps, index: number) => (
-          <PageSelect key={episode._id} episode={episode} />
-        ))}
+        {state.latestEpisodes &&
+          state.latestEpisodes.map((episode: EpisodeProps) => (
+            <EpisodeSelect key={episode._id} episode={episode} />
+          ))}
       </div>
     </div>
   );

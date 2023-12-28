@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
-import PageSelect from '@/app/components/PageSelect';
+import EpisodeSelect from './components/episodeSelect/EpisodeSelect';
 import { SearchBar } from '@/app/components/SearchBar';
 import SearchResults from '@/app/components/SearchResults';
 import { useApp } from './hooks/useApp';
@@ -52,7 +52,7 @@ export default function Home() {
           ) : (
             state.latestEpisodes &&
             state.latestEpisodes.map((episode) => (
-              <PageSelect key={episode._id} episode={episode} />
+              <EpisodeSelect key={episode._id} episode={episode} />
             ))
           )}
         </div>

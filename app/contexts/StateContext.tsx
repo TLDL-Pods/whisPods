@@ -9,6 +9,7 @@ export const initialState: AppState = {
   youtubeStartTimeMS: null,
   searchResultEpisodes: null,
   latestEpisodes: null,
+  currentEpisode: null,
   hasSearched: false,
 };
 

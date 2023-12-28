@@ -1,17 +1,22 @@
-import Link from "next/link";
-import Image from "next/image";
-import { EpisodeProps } from "@/types";
-import { RiMegaphoneLine } from "react-icons/ri";
-import TDG from "../assets/the-daily-gwei.jpg";
+import Link from 'next/link';
+import Image from 'next/image';
+import { EpisodeProps } from '@/types';
+import { RiMegaphoneLine } from 'react-icons/ri';
+import TDG from '@/app/assets/the-daily-gwei.jpg';
+import { useApp } from '@/app/hooks/useApp';
 
-interface PageSelectProps {
+interface EpisodeSelectProps {
   episode: EpisodeProps;
 }
 
-export default function PageSelect({ episode }: PageSelectProps) {
+/* REFACTOR LATER!!!! */
+
+export default function EpisodeSelect({ episode }: EpisodeSelectProps) {
   const topThreeSegments = episode.episode_data
     .sort((a, b) => b.segment_length_ms - a.segment_length_ms)
     .slice(0, 3);
+  const { state, setState } = useApp();
+
   return (
     <Link href={`/thedailygwei/${episode.episode_number}`}>
       <div className="flex flex-col flex-grow w-full min-h-full text-center transition-all duration-500 border-t bg-stone-950 border-violet-400 border-opacity-40 hover:bg-stone-800">
@@ -59,7 +64,7 @@ export default function PageSelect({ episode }: PageSelectProps) {
             <div className="grid grid-cols-12 gap-x-0 lg:text-left">
               {/* Episode Number*/}
               <div className="hidden mt-2 mr-1 lg:text-end lg:block text-l lg:text-xl text-violet-100 lg:col-span-1 lg:row-span-3">
-                {episode.episode_number}:{" "}
+                {episode.episode_number}:{' '}
               </div>
               {/* Title*/}
               <div className="justify-start hidden mt-2 lg:block text-l lg:text-xl text-violet-100 lg:col-span-9">
