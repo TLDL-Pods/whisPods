@@ -1,18 +1,20 @@
 `use client`;
 
-import React from "react";
-import { useApp } from "../hooks/useApp";
-import { initialState } from "../contexts/StateContext";
+import React from 'react';
+import { useApp } from '../hooks/useApp';
+import { initialState } from '../contexts/StateContext';
 
-const YoutubeVideo: React.FC = () => {
+const YoutubeDrawer: React.FC = () => {
   const { state, setState } = useApp();
 
-  const startTimeSeconds = state.currentSegment && state.currentSegment.start_time_ms
-    ? Math.floor(state.currentSegment.start_time_ms / 1000)
-    : 0;
-  const shortFormatMatch = state.currentEpisode && state.currentYouTubeVideo 
-    ? state.currentYouTubeVideo.match(/youtu.be\/([^&]+)/)
-    : "";
+  const startTimeSeconds =
+    state.currentSegment && state.currentSegment.start_time_ms
+      ? Math.floor(state.currentSegment.start_time_ms / 1000)
+      : 0;
+  const shortFormatMatch =
+    state.currentEpisode && state.currentYouTubeVideo
+      ? state.currentYouTubeVideo.match(/youtu.be\/([^&]+)/)
+      : '';
   const videoId = shortFormatMatch ? shortFormatMatch[1] : null;
   const embedUrl = `https://www.youtube.com/embed/${videoId}?start=${startTimeSeconds}?autoplay=0?rel=0`;
 
@@ -33,14 +35,20 @@ const YoutubeVideo: React.FC = () => {
       >
         <div className="h-1">
           <p className="pl-4 my-4 text-xl text-bold ">TLDL </p>
-          <p className="pl-4 my-4 text-md ">{state.currentSegment && state.currentSegment.summary } </p>
+          <p className="pl-4 my-4 text-md ">
+            {state.currentSegment && state.currentSegment.summary}{' '}
+          </p>
         </div>
         <div className="h-full"></div>
       </div>
       <button
         className="absolute px-1 text-md text-red-600 border border-red-400 right-1 top-2"
         onClick={() => {
-          setState({...state , isVideoModalOpen:false, currentYouTubeVideo: ''});
+          setState({
+            ...state,
+            isVideoModalOpen: false,
+            currentYouTubeVideo: '',
+          });
         }}
         aria-label="Close Video"
       >
@@ -50,4 +58,4 @@ const YoutubeVideo: React.FC = () => {
   );
 };
 
-export default YoutubeVideo;
+export default YoutubeDrawer;
