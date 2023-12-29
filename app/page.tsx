@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect } from 'react';
-import EpisodeSelect from './components/episodeSelect/EpisodeSelect';
+import EpisodeSelect from './components/EpisodeSelect';
 import { SearchBar } from '@/app/components/SearchBar';
 import SearchResults from '@/app/components/SearchResults';
 import { useApp } from './hooks/useApp';

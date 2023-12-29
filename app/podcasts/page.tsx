@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import PageSelect from '@/app/components/episodeSelect/EpisodeSelect';
+import PageSelect from '@/app/components/EpisodeSelect';
 import { EpisodeProps } from '@/types';
 import TDG from '@/app/assets/the-daily-gwei.jpg';
 import sassano from '@/app/assets/sassano_400x400.jpg';
