@@ -7,23 +7,34 @@ import SearchResults from '@/app/components/SearchResults';
 import { useApp } from './hooks/useApp';
 import { useEpisodes } from './hooks/useEpisodes';
 import { useSearch } from './hooks/useSearch';
+import { EpisodeProps } from '@/types';
 
 export default function Home() {
   const [page, setPage] = useState(1);
   const [isFetching, setIsFetching] = useState(false);
   const [hasMore, setHasMore] = useState(true);
   const loader = useRef(null);
-  const { state } = useApp();
+  const { state, setState } = useApp();
   const { performSearch, clearSearchResults } = useSearch();
   const { fetchData } = useEpisodes();
+
 
   useEffect(() => {
     if (!isFetching && hasMore) {
       setIsFetching(true);
-      fetchData(page).then(() => {
+      fetchData(page).then((newEpisodes) => {
+        if (newEpisodes.length === 0) {
+          setHasMore(false); // No more data to fetch
+        } else {
+          setState( () => ({
+            ...state,
+            latestEpisodes: [...(state.latestEpisodes || []), ...newEpisodes]
+          }));
+          setPage(prevPage => prevPage + 1); // Increment page only if new data was fetched
+        }
         setIsFetching(false);
-        // Check if fetched data is less than expected pageSize to determine if there's more data
       }).catch((error) => {
+        console.error('Error fetching data:', error);
         setIsFetching(false);
       });
     }

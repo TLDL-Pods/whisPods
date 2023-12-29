@@ -2,27 +2,37 @@
 
 import { useRef, createRef } from 'react';
 import { useApp } from './useApp';
-import { SegmentProps } from '@/types';
+import { SegmentProps, EpisodeProps } from '@/types';
 
 export function useEpisodes() {
   const { state, setState } = useApp();
 
   const segmentRefs = useRef<Array<React.RefObject<HTMLDivElement>>>([]);
 
-  const fetchData = async (page = 1) => {
-    try {
-      const res = await fetch(`/api/episode-page?page=${page}`, {
-        cache: 'no-store',
-      });
-      const json = await res.json();
-      setState(() => ({
-        ...state,
-        latestEpisodes: [...(state.latestEpisodes || []), ...json['data']],
-      }));
-    } catch (error) {
-      console.error('Error fetching data:', error);
-    }
-  };
+
+const fetchData = async (page: number): Promise<EpisodeProps[]> => {
+  const res = await fetch(`/api/episode-page?page=${page}`, {
+    cache: 'no-store',
+  });
+  const json = await res.json();
+  return json['data']; // Ensure this returns EpisodeProps[]
+};
+
+
+  // const fetchData = async (page = 1) => {
+  //   try {
+  //     const res = await fetch(`/api/episode-page?page=${page}`, {
+  //       cache: 'no-store',
+  //     });
+  //     const json = await res.json();
+  //     setState(() => ({
+  //       ...state,
+  //       latestEpisodes: [...(state.latestEpisodes || []), ...json['data']],
+  //     }));
+  //   } catch (error) {
+  //     console.error('Error fetching data:', error);
+  //   }
+  // };
 
   const fetchEpisodeData = async (ep_number: string) => {
     const episodeNumber = parseInt(ep_number, 10);
