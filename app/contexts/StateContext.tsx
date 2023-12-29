@@ -8,6 +8,7 @@ export const initialState: AppState = {
   searchResultEpisodes: null,
   latestEpisodes: null,
   currentEpisode: null,
+  currentYouTubeVideo: null,
   hasSearched: false,
   currentSegment: null,
 };
