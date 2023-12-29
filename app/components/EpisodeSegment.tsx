@@ -75,8 +75,8 @@ const EpisodeSegment: FC<EpisodeSegmentProps> = ({
   const openVideoDrawer = () => {
     setState(() => ({
       ...state,
-      youtubeURL: youtube_url,
       isVideoModalOpen: !state.isVideoModalOpen,
+      currentYouTubeVideo: youtube_url,
       currentSegment: segment,
     }));
   };

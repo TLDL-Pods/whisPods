@@ -49,6 +49,7 @@ export interface AppState {
   latestEpisodes: EpisodeProps[] | null;
   currentEpisode: EpisodeProps | null;
   currentSegment: SegmentProps | null;
+  currentYouTubeVideo: string | null;
   hasSearched: boolean;
 }
 
