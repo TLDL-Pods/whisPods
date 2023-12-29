@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { GiSoundWaves } from 'react-icons/gi';
-import YoutubeVideo from './components/YoutubeVideo';
+import YoutubeDrawer from './components/YoutubeDrawer';
 import { useApp } from './hooks/useApp';
 
 export default function Navbar({ children }: { children: React.ReactNode }) {
@@ -40,7 +40,7 @@ export default function Navbar({ children }: { children: React.ReactNode }) {
             : 'h-0'
         } w-full bottom-0 fixed bg-stone-900  duration-300`}
       >
-        <YoutubeVideo />
+        <YoutubeDrawer />
       </div>
     </div>
   );
