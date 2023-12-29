@@ -1,8 +1,9 @@
 'use client';
 import { EpisodeProps, SegmentProps } from '@/types';
 import { useState, useRef } from 'react';
-import EpisodeSegment from '@/app/components/EpisodeSegment';
+import EpisodeSegment from '@/app/thedailygwei/[ep_number]/components/episodeSegment/EpisodeSegment';
 import { useApp } from '@/app/hooks/useApp';
+
 
 interface SegmentsListProps {
   isOrganizedByLength: boolean;
