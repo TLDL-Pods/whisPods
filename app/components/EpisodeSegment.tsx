@@ -95,7 +95,7 @@ const EpisodeSegment: FC<EpisodeSegmentProps> = ({
         onClick={() => handleSegmentToggle()}
       >
         {/* Play Button */}
-        <div className="pr-4 my-2 text-center">
+        <div className="pr-1 my-2 text-center">
           <button
             className="text-4xl text-violet-400 hover:text-violet-300"
             onClick={openVideoDrawer}
