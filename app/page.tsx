@@ -27,7 +27,7 @@ export default function Home() {
           setPage((prevPage) => prevPage + 1);
         }
       },
-      { threshold: 1.0 }
+      { threshold: 1.0 },
     );
 
     if (loader.current) {
@@ -76,11 +76,17 @@ export default function Home() {
         <div className="">
           {state.hasSearched ? (
             <SearchResults episodes={state.searchResultEpisodes} />
-          ) : (
-            state.latestEpisodes &&
+          ) : state.latestEpisodes ? (
             state.latestEpisodes.map((episode) => (
               <EpisodeSelect key={episode._id} episode={episode} />
             ))
+          ) : (
+            <div className="w-full flex h-screen justify-center align-middle items-center">
+              <div className="w-full text-center h-1/2 mt-10">
+                <div className="spinner"></div>
+                <p className="m-auto mt-3">Loading...</p>
+              </div>
+            </div>
           )}
         </div>
       </div>

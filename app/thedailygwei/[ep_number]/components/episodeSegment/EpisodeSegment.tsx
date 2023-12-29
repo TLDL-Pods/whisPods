@@ -86,8 +86,11 @@ const EpisodeSegment: FC<EpisodeSegmentProps> = ({
               {isTweetLoaded ? (
                 <SummarySlider segment={segment} />
               ) : (
-                <div className="w-full flex h-24">
-                  <div className="spinner my-auto"></div>
+                <div className="w-full flex justify-center align-middle items-center">
+                  <div className="w-full text-center h-1/2 mt-10">
+                    <div className="spinner"></div>
+                    <p className="m-auto mt-3">Loading...</p>
+                  </div>
                 </div>
               )}
 
