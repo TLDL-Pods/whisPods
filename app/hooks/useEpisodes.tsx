@@ -1,23 +1,23 @@
 'use client';
 
-import { useRef, createRef, useState } from 'react';
+import { useRef, createRef } from 'react';
 import { useApp } from './useApp';
-import { EpisodeProps, SegmentProps } from '@/types';
+import { SegmentProps } from '@/types';
 
 export function useEpisodes() {
   const { state, setState } = useApp();
 
   const segmentRefs = useRef<Array<React.RefObject<HTMLDivElement>>>([]);
 
-  const fetchData = async () => {
+  const fetchData = async (page = 1) => {
     try {
-      const res = await fetch(`/api/all-episodes`, {
+      const res = await fetch(`/api/episode-page?page=${page}`, {
         cache: 'no-store',
       });
       const json = await res.json();
       setState(() => ({
         ...state,
-        latestEpisodes: json['data'],
+        latestEpisodes: [...(state.latestEpisodes || []), ...json['data']],
       }));
     } catch (error) {
       console.error('Error fetching data:', error);
