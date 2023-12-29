@@ -20,25 +20,25 @@ export default function Home() {
 
 
   useEffect(() => {
-    if (!isFetching && hasMore) {
-      setIsFetching(true);
+    console.log('latestEpisodes:', state.latestEpisodes);
+
+    if ( hasMore) {
       fetchData(page).then((newEpisodes) => {
         if (newEpisodes.length === 0) {
-          setHasMore(false); // No more data to fetch
+          setHasMore(false); 
         } else {
           setState( () => ({
             ...state,
             latestEpisodes: [...(state.latestEpisodes || []), ...newEpisodes]
           }));
-          setPage(prevPage => prevPage + 1); // Increment page only if new data was fetched
+         
         }
-        setIsFetching(false);
       }).catch((error) => {
         console.error('Error fetching data:', error);
         setIsFetching(false);
       });
     }
-  }, [page, hasMore, isFetching]);
+  }, [page, hasMore]);
 
   // Intersection Observer to detect when the user has scrolled to the bottom
   useEffect(() => {
