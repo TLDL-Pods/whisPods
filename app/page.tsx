@@ -10,14 +10,24 @@ import { useSearch } from './hooks/useSearch';
 
 export default function Home() {
   const [page, setPage] = useState(1);
+  const [isFetching, setIsFetching] = useState(false);
+  const [hasMore, setHasMore] = useState(true);
   const loader = useRef(null);
   const { state } = useApp();
   const { performSearch, clearSearchResults } = useSearch();
   const { fetchData } = useEpisodes();
 
   useEffect(() => {
-    fetchData(page);
-  }, [page]);
+    if (!isFetching && hasMore) {
+      setIsFetching(true);
+      fetchData(page).then(() => {
+        setIsFetching(false);
+        // Check if fetched data is less than expected pageSize to determine if there's more data
+      }).catch((error) => {
+        setIsFetching(false);
+      });
+    }
+  }, [page, hasMore, isFetching]);
 
   // Intersection Observer to detect when the user has scrolled to the bottom
   useEffect(() => {
@@ -41,12 +51,12 @@ export default function Home() {
     };
   }, []);
 
-  useEffect(() => {
-    fetchData();
-    // refetch data
-    const id = setInterval(fetchData, 10000);
-    return () => clearInterval(id);
-  }, []);
+  // useEffect(() => {
+  //   fetchData();
+  //   // refetch data
+  //   const id = setInterval(fetchData, 10000);
+  //   return () => clearInterval(id);
+  // }, []);
 
   return (
     <div className="flex-col justify-center w-full h-full p-4 ">
@@ -84,7 +94,7 @@ export default function Home() {
           )}
         </div>
       </div>
-      <div ref={loader} />
+      <div ref={loader} style={{ height: '1px' }} />
     </div>
   );
 }
