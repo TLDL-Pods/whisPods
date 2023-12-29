@@ -7,8 +7,8 @@ import { initialState } from "../contexts/StateContext";
 const YoutubeVideo: React.FC = () => {
   const { state, setState } = useApp();
 
-  const startTimeSeconds = state.youtubeStartTimeMS
-    ? Math.floor(state.youtubeStartTimeMS / 1000)
+  const startTimeSeconds = state.currentSegment && state.currentSegment.start_time_ms
+    ? Math.floor(state.currentSegment.start_time_ms / 1000)
     : 0;
   const shortFormatMatch = state.youtubeURL
     ? state.youtubeURL.match(/youtu.be\/([^&]+)/)
@@ -32,7 +32,8 @@ const YoutubeVideo: React.FC = () => {
         className={`hidden sm:flex flex-col w-1/3 items-center justify-center bg-stone-900 text-white`}
       >
         <div className="h-1">
-          <p className="my-4 text-xl font-bold">TLDL</p>
+          <p className="pl-4 my-4 text-xl text-bold ">TLDL </p>
+          <p className="pl-4 my-4 text-md ">{state.currentSegment && state.currentSegment.summary } </p>
         </div>
         <div className="h-full"></div>
       </div>
