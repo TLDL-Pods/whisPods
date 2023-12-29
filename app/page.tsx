@@ -8,43 +8,26 @@ import { useApp } from './hooks/useApp';
 import { useEpisodes } from './hooks/useEpisodes';
 import { useSearch } from './hooks/useSearch';
 import { EpisodeProps } from '@/types';
+import { get } from 'http';
 
 export default function Home() {
   const [page, setPage] = useState(1);
-  const [isFetching, setIsFetching] = useState(false);
-  const [hasMore, setHasMore] = useState(true);
   const loader = useRef(null);
   const { state, setState } = useApp();
   const { performSearch, clearSearchResults } = useSearch();
-  const { fetchData } = useEpisodes();
+  const { getNewPage, hasMore } = useEpisodes();
 
 
   useEffect(() => {
-    console.log('latestEpisodes:', state.latestEpisodes);
-
-    if ( hasMore) {
-      fetchData(page).then((newEpisodes) => {
-        if (newEpisodes.length === 0) {
-          setHasMore(false); 
-        } else {
-          setState( () => ({
-            ...state,
-            latestEpisodes: [...(state.latestEpisodes || []), ...newEpisodes]
-          }));
-         
-        }
-      }).catch((error) => {
-        console.error('Error fetching data:', error);
-        setIsFetching(false);
-      });
-    }
+    getNewPage(page)
   }, [page, hasMore]);
+
 
   // Intersection Observer to detect when the user has scrolled to the bottom
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
-        if (entries[0].isIntersecting && !isFetching && hasMore) {
+        if (entries[0].isIntersecting && hasMore) {
           setPage((prevPage) => prevPage + 1);
         }
       },
@@ -60,9 +43,7 @@ export default function Home() {
         observer.unobserve(loader.current);
       }
     };
-  }, [isFetching, hasMore]);
-
-
+  }, [hasMore]);
 
   return (
     <div className="flex-col justify-center w-full h-full p-4 ">

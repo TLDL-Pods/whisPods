@@ -1,11 +1,14 @@
 'use client';
 
-import { useRef, createRef } from 'react';
+import { useRef, createRef, useState } from 'react';
 import { useApp } from './useApp';
 import { SegmentProps, EpisodeProps } from '@/types';
 
+
+
 export function useEpisodes() {
   const { state, setState } = useApp();
+  const [hasMore, setHasMore] = useState(true);
 
   const segmentRefs = useRef<Array<React.RefObject<HTMLDivElement>>>([]);
 
@@ -19,20 +22,25 @@ const fetchData = async (page: number): Promise<EpisodeProps[]> => {
 };
 
 
-  // const fetchData = async (page = 1) => {
-  //   try {
-  //     const res = await fetch(`/api/episode-page?page=${page}`, {
-  //       cache: 'no-store',
-  //     });
-  //     const json = await res.json();
-  //     setState(() => ({
-  //       ...state,
-  //       latestEpisodes: [...(state.latestEpisodes || []), ...json['data']],
-  //     }));
-  //   } catch (error) {
-  //     console.error('Error fetching data:', error);
-  //   }
-  // };
+const  getNewPage = async (page: number)  => {
+
+  if ( hasMore) {
+    await fetchData(page).then((newEpisodes) => {
+      if (newEpisodes.length === 0) {
+        setHasMore(false); 
+      } else {
+        setState( () => ({
+          ...state,
+          latestEpisodes: [...(state.latestEpisodes || []), ...newEpisodes]
+        }));
+       
+      }
+    }).catch((error) => {
+      console.error('Error fetching data:', error);
+    });
+  }
+
+}
 
   const fetchEpisodeData = async (ep_number: string) => {
     const episodeNumber = parseInt(ep_number, 10);
@@ -54,5 +62,5 @@ const fetchData = async (page: number): Promise<EpisodeProps[]> => {
     setState(() => ({ ...state, currentEpisode: sortedData }));
   };
 
-  return { fetchData, fetchEpisodeData };
+  return { fetchData, fetchEpisodeData,  getNewPage, hasMore };
 }
