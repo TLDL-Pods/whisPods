@@ -3,7 +3,7 @@ import { EpisodeProps, SegmentProps } from '@/types';
 
 import { useState, useRef } from 'react';
 
-import Segment from '@/app/components/EpisodeSegment';
+import EpisodeSegment from '@/app/components/EpisodeSegment';
 
 interface SegmentsListProps {
   isOrganizedByLength: boolean;
@@ -38,7 +38,7 @@ export default function SegmentsList({
                 key={segment.segment_number}
                 className=" border-y border-violet-100 border-opacity-60 bg-neutral-950"
               >
-                <Segment
+                <EpisodeSegment
                   segment={segment}
                   segmentNumber={index}
                   isOrganizedByLength={isOrganizedByLength}
