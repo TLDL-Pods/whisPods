@@ -1,9 +1,8 @@
 'use client';
 import { EpisodeProps, SegmentProps } from '@/types';
-
 import { useState, useRef } from 'react';
-
 import EpisodeSegment from '@/app/components/EpisodeSegment';
+import { useApp } from '@/app/hooks/useApp';
 
 interface SegmentsListProps {
   isOrganizedByLength: boolean;
@@ -19,11 +18,14 @@ export default function SegmentsList({
   >(null);
   const [showSegmentIndex, setShowSegmentIndex] = useState<number | null>(null);
   const segmentRefs = useRef<Array<React.RefObject<HTMLDivElement>>>([]);
+  const { state,  } = useApp();
+
+  const containerClass = state.isVideoModalOpen ? 'pb-[350px] overflow-y-auto' : 'overflow-y-hidden';
 
   return (
     <div className="relative flex flex-col justify-center h-full min-w-screen">
       {/* Segments */}
-      <div className="flex justify-center w-full mt-2">
+      <div className={`flex justify-center w-full mt-2 ${containerClass}`}>
         <ul className="list-none">
           {currentEpisode.episode_data
             .sort(
