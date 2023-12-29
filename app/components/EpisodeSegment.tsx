@@ -89,30 +89,40 @@ const EpisodeSegment: FC<EpisodeSegmentProps> = ({
       key={segment.segment_number}
     >
       <li className="cursor-pointer">
-        {/* ROW 1: Index & Title */}
-        <div
-          className="flex items-center w-full h-20 gap-2 p-2 px-4 md:text-xl lg:text-2xl bg-gradient-to-b to-neutral-950 from-neutral-900"
-          onClick={() => handleSegmentToggle()}
-        >
-          {/* INDEX */}
-          <div className="px-1 font-semibold text-center grow-0 text-violet-400">
-            <p>
-              {isOrganizedByLength
-                ? `${Math.floor(segment.segment_length_ms / 60000)}:${(
-                    (segment.segment_length_ms % 60000) /
-                    1000
-                  )
-                    .toFixed(0)
-                    .padStart(2, '0')}`
-                : segmentNumber + 1 + '.'}
-            </p>
-          </div>
-          {/* HEADLINE*/}
-          <div className="content-center flex-grow my-auto font-semibold text-white text-balance">
-            <span>{segment.segment_title}</span>
-            {/* Share Button */}
-          </div>
+      {/* ROW 1: Index & Title */}
+      <div
+        className="flex items-center w-full h-20 gap-2 p-2 px-4 md:text-xl lg:text-2xl bg-gradient-to-b to-neutral-950 from-neutral-900"
+        onClick={() => handleSegmentToggle()}
+      >
+        {/* Play Button */}
+        <div className="pr-4 my-2 text-center">
+          <button
+            className="text-4xl text-violet-400 hover:text-violet-300"
+            onClick={openVideoDrawer}
+          >
+            <FaPlayCircle />
+          </button>
         </div>
+
+        {/* INDEX */}
+        <div className="px-1 font-semibold text-center grow-0 text-violet-400">
+          <p>
+            {isOrganizedByLength
+              ? `${Math.floor(segment.segment_length_ms / 60000)}:${(
+                  (segment.segment_length_ms % 60000) /
+                  1000
+                )
+                  .toFixed(0)
+                  .padStart(2, '0')}`
+              : segmentNumber + 1 + '.'}
+          </p>
+        </div>
+        {/* HEADLINE*/}
+        <div className="content-center flex-grow my-auto font-semibold text-white text-balance">
+          <span>{segment.segment_title}</span>
+          {/* Share Button */}
+        </div>
+      </div>
 
         {/* ROW 2: Blank & Content */}
         {showSegmentIndex === segmentNumber && (
@@ -162,17 +172,6 @@ const EpisodeSegment: FC<EpisodeSegmentProps> = ({
                     </p>
                   </div>
                 </Slider>
-              </div>
-
-              {/* Play Button */}
-              <div className="pt-4 my-2 text-center">
-                <button
-                  className="text-4xl text-violet-400 hover:text-violet-300"
-                  onClick={openVideoDrawer}
-                >
-                  <FaPlayCircle />
-                </button>
-                <div>Play Segment</div>
               </div>
 
               {/* Sources */}
