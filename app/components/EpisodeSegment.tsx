@@ -76,10 +76,9 @@ const EpisodeSegment: FC<EpisodeSegmentProps> = ({
     setState(() => ({
       ...state,
       youtubeURL: youtube_url,
-      youtubeStartTimeMS: segment.start_time_ms,
       isVideoModalOpen: !state.isVideoModalOpen,
+      currentSegment: segment,
     }));
-    console.log(youtube_url, segment.start_time_ms, state.isVideoModalOpen);
   };
 
   return (

@@ -11,6 +11,7 @@ export const initialState: AppState = {
   latestEpisodes: null,
   currentEpisode: null,
   hasSearched: false,
+  currentSegment: null,
 };
 
 export const AppStateContext = createContext<{
