@@ -4,13 +4,16 @@ import { useState, useEffect } from 'react';
 import { useEpisodes } from '@/app/hooks/useEpisodes';
 import SegmentsList from './components/SegmentsList';
 import EpisodeHeader from './components/EpisodeHeader';
+import { useApp } from '@/app/hooks/useApp';
 
 export default function EpisodePage({
   params,
 }: {
   params: { ep_number: string };
 }) {
-  const { fetchEpisodeData, currentEpisode } = useEpisodes();
+  const { fetchEpisodeData } = useEpisodes();
+  const { state, setState } = useApp();
+
   const [isOrganizedByLength, setIsOrganizedByLength] = useState<boolean>(true);
 
   const toggleOrganization = () => {
@@ -21,7 +24,7 @@ export default function EpisodePage({
     fetchEpisodeData(params.ep_number);
   }, []);
 
-  if (!currentEpisode) {
+  if (!state.currentEpisode) {
     return <div>Loading...</div>;
   }
 
@@ -29,12 +32,12 @@ export default function EpisodePage({
     <div className="relative flex flex-col justify-center h-full min-w-screen">
       <EpisodeHeader
         isOrganizedByLength={isOrganizedByLength}
-        currentEpisode={currentEpisode}
+        currentEpisode={state.currentEpisode}
         toggleOrganization={toggleOrganization}
       />
       <SegmentsList
         isOrganizedByLength={isOrganizedByLength}
-        currentEpisode={currentEpisode}
+        currentEpisode={state.currentEpisode}
       />
     </div>
   );

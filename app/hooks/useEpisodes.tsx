@@ -6,9 +6,7 @@ import { EpisodeProps, SegmentProps } from '@/types';
 
 export function useEpisodes() {
   const { state, setState } = useApp();
-  const [currentEpisode, setCurrentEpisode] = useState<EpisodeProps | null>(
-    null,
-  );
+
   const segmentRefs = useRef<Array<React.RefObject<HTMLDivElement>>>([]);
 
   const fetchData = async () => {
@@ -21,7 +19,6 @@ export function useEpisodes() {
         ...state,
         latestEpisodes: json['data'],
       }));
-      console.log('latest', json['data']);
     } catch (error) {
       console.error('Error fetching data:', error);
     }
@@ -44,8 +41,8 @@ export function useEpisodes() {
     segmentRefs.current = sortedData.episode_data.map(() =>
       createRef<HTMLDivElement>(),
     );
-    setCurrentEpisode(sortedData);
+    setState(() => ({ ...state, currentEpisode: sortedData }));
   };
 
-  return { fetchData, fetchEpisodeData, currentEpisode };
+  return { fetchData, fetchEpisodeData };
 }

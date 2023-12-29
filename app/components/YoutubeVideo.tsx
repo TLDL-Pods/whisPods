@@ -10,8 +10,8 @@ const YoutubeVideo: React.FC = () => {
   const startTimeSeconds = state.currentSegment && state.currentSegment.start_time_ms
     ? Math.floor(state.currentSegment.start_time_ms / 1000)
     : 0;
-  const shortFormatMatch = state.youtubeURL
-    ? state.youtubeURL.match(/youtu.be\/([^&]+)/)
+  const shortFormatMatch = state.currentEpisode && state.currentEpisode.youtube_url 
+    ? state.currentEpisode.youtube_url.match(/youtu.be\/([^&]+)/)
     : "";
   const videoId = shortFormatMatch ? shortFormatMatch[1] : null;
   const embedUrl = `https://www.youtube.com/embed/${videoId}?start=${startTimeSeconds}?autoplay=0?rel=0`;

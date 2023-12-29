@@ -5,7 +5,6 @@ import React, { createContext, useState, ReactNode } from 'react';
 
 export const initialState: AppState = {
   isVideoModalOpen: false,
-  youtubeURL: '',
   searchResultEpisodes: null,
   latestEpisodes: null,
   currentEpisode: null,

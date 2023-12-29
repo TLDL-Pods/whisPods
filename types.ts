@@ -45,10 +45,9 @@ export interface EpisodeContextType {
 
 export interface AppState {
   isVideoModalOpen: boolean;
-  youtubeURL: string | undefined;
   searchResultEpisodes: EpisodeProps[] | null;
   latestEpisodes: EpisodeProps[] | null;
-  currentEpisode: string | null;
+  currentEpisode: EpisodeProps | null;
   currentSegment: SegmentProps | null;
   hasSearched: boolean;
 }
