@@ -30,6 +30,7 @@ const EpisodeSegment: FC<EpisodeSegmentProps> = ({
   setShowSegmentIndex,
 }) => {
   const [copySuccess, setCopySuccess] = useState<boolean>(false);
+  const [isTweetLoaded, setIsTweetLoaded] = useState<boolean>(false);
 
   useEffect(() => {
     if (copySuccess) {
@@ -82,18 +83,26 @@ const EpisodeSegment: FC<EpisodeSegmentProps> = ({
                   <FiShare size={20} />
                 )}
               </button>
-
-              <SummarySlider segment={segment} />
+              {isTweetLoaded ? (
+                <SummarySlider segment={segment} />
+              ) : (
+                <div className="w-full flex h-24">
+                  <div className="spinner my-auto"></div>
+                </div>
+              )}
 
               {/* Sources */}
-              <div className="w-full px-3 mt-4 text-center">
-                <div className="">
-                  {/* Embed Tweet */}
-                  {segment.URL &&
-                    segment.URL.map((url, index) => (
-                      <TweetEmbed key={url} url={url} />
-                    ))}
-                </div>
+              <div className="w-full px-3 text-center">
+                {/* Embed Tweet */}
+                {segment.URL &&
+                  segment.URL.map((url, index) => (
+                    <TweetEmbed
+                      key={url}
+                      url={url}
+                      isTweetLoaded={isTweetLoaded}
+                      setIsTweetLoaded={setIsTweetLoaded}
+                    />
+                  ))}
               </div>
             </div>
           </div>
