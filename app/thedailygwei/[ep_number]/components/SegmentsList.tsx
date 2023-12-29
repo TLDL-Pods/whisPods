@@ -23,7 +23,7 @@ export default function SegmentsList({
   return (
     <div className="relative flex flex-col justify-center h-full min-w-screen">
       {/* Segments */}
-      <div className="flex justify-center w-full mt-4">
+      <div className="flex justify-center w-full mt-2">
         <ul className="list-none">
           {currentEpisode.episode_data
             .sort(

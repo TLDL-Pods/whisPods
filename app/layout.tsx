@@ -21,7 +21,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <GoogleAnalytics GA_MEASUREMENT_ID="G-Z6WGLHLZXB" />
-      <body className="min-h-screen bg-stone-950">
+      <body className="min-h-screen bg-stone-950 overflow-x-hidden">
         <AppStateProvider>
           <Navbar>{children}</Navbar>
         </AppStateProvider>
