@@ -5,17 +5,17 @@ import { ImListNumbered } from 'react-icons/im';
 import { BiSolidTimer } from 'react-icons/bi';
 import { EpisodeProps } from '@/types';
 
-interface SegmentsHeaderProps {
+interface EpisodeHeaderProps {
   isOrganizedByLength: boolean;
   currentEpisode: EpisodeProps;
   toggleOrganization: () => void;
 }
 
-export default function SegmentHeader({
+export default function EpisodeHeader({
   isOrganizedByLength,
   currentEpisode,
   toggleOrganization,
-}: SegmentsHeaderProps) {
+}: EpisodeHeaderProps) {
   const router = useRouter();
   return (
     <div className="w-full max-w-screen">
@@ -36,7 +36,7 @@ export default function SegmentHeader({
           </h3>
         </div>
       </div>
-      <div className="">
+      <div className="lg:w-1/2 lg:mx-auto">
         <div className="flex justify-between mx-4">
           {/* Back to Episodes button */}
           <button

@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 
 import { useEpisodes } from '@/app/hooks/useEpisodes';
 import SegmentsList from './components/SegmentsList';
-import SegmentHeader from './components/SegmentHeader';
+import EpisodeHeader from './components/EpisodeHeader';
 
 export default function EpisodePage({
   params,
@@ -27,7 +27,7 @@ export default function EpisodePage({
 
   return (
     <div className="relative flex flex-col justify-center h-full min-w-screen">
-      <SegmentHeader
+      <EpisodeHeader
         isOrganizedByLength={isOrganizedByLength}
         currentEpisode={currentEpisode}
         toggleOrganization={toggleOrganization}
