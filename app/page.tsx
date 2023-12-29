@@ -33,7 +33,7 @@ export default function Home() {
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
-        if (entries[0].isIntersecting) {
+        if (entries[0].isIntersecting && !isFetching && hasMore) {
           setPage((prevPage) => prevPage + 1);
         }
       },
@@ -49,14 +49,9 @@ export default function Home() {
         observer.unobserve(loader.current);
       }
     };
-  }, []);
+  }, [isFetching, hasMore]);
 
-  // useEffect(() => {
-  //   fetchData();
-  //   // refetch data
-  //   const id = setInterval(fetchData, 10000);
-  //   return () => clearInterval(id);
-  // }, []);
+
 
   return (
     <div className="flex-col justify-center w-full h-full p-4 ">
