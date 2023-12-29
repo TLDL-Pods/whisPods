@@ -29,7 +29,7 @@ export default function EpisodePage({
       <div className="w-full flex h-screen justify-center align-middle items-center">
         <div className="w-full text-center h-1/2">
           <div className="spinner"></div>
-          <p className="m-auto">Loading...</p>
+          <p className="m-auto mt-3">Loading...</p>
         </div>
       </div>
     );
