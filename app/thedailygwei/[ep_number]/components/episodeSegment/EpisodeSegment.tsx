@@ -1,15 +1,15 @@
-'use client';
-import React, { FC, useState, useEffect } from 'react';
-import { FaCheck } from 'react-icons/fa';
-import { SegmentProps } from '@/types';
-import TweetEmbed from '../../../../components/TweetEmbed';
+"use client";
+import React, { FC, useState, useEffect } from "react";
+import { FaCheck } from "react-icons/fa";
+import { SegmentProps } from "@/types";
+import TweetEmbed from "../../../../components/TweetEmbed";
 
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
-import { FiShare } from 'react-icons/fi';
-import { handleShare } from '../../../../utils/handleShare';
-import SummarySlider from './components/SummarySlider';
-import SegmentHeader from './components/SegmentHeader';
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
+import { FiShare } from "react-icons/fi";
+import { handleShare } from "../../../../utils/handleShare";
+import SummarySlider from "./components/SummarySlider";
+import SegmentHeader from "./components/SegmentHeader";
 
 interface EpisodeSegmentProps {
   segment: SegmentProps;
@@ -54,7 +54,7 @@ const EpisodeSegment: FC<EpisodeSegmentProps> = ({
 
   useEffect(() => {
     // If segment.URL is empty or contains only invalid URLs, set isTweetLoaded to true
-    if (!segment.URL || segment.URL.every(url => !url)) {
+    if (!segment.URL || segment.URL.every((url) => !url)) {
       setIsTweetLoaded(true);
     }
   }, [segment.URL]);

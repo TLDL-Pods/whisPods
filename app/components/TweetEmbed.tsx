@@ -1,6 +1,6 @@
-import React, { useEffect } from 'react';
-import { TwitterTweetEmbed } from 'react-twitter-embed';
-import { getTweetIdFromUrl } from '@/app/utils/utils';
+import React, { useEffect } from "react";
+import { TwitterTweetEmbed } from "react-twitter-embed";
+import { getTweetIdFromUrl } from "@/app/utils/utils";
 
 interface TweetEmbedProps {
   url: string;
@@ -28,7 +28,7 @@ const TweetEmbed: React.FC<TweetEmbedProps> = ({
         {tweetId ? (
           <TwitterTweetEmbed
             tweetId={tweetId}
-            options={{ theme: 'dark' }}
+            options={{ theme: "dark" }}
             onLoad={() => setIsTweetLoaded(true)}
           />
         ) : (
