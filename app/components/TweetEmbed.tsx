@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { TwitterTweetEmbed } from 'react-twitter-embed';
 import { getTweetIdFromUrl } from '@/app/utils/utils';
 
@@ -14,6 +14,13 @@ const TweetEmbed: React.FC<TweetEmbedProps> = ({
   setIsTweetLoaded,
 }) => {
   const tweetId = getTweetIdFromUrl(url);
+
+  useEffect(() => {
+    // If there's no tweetId, set isTweetLoaded to true
+    if (!tweetId) {
+      setIsTweetLoaded(true);
+    }
+  }, [tweetId, setIsTweetLoaded]);
 
   return (
     <div className="flex justify-center w-full mt-4">

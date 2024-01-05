@@ -52,6 +52,13 @@ const EpisodeSegment: FC<EpisodeSegmentProps> = ({
     }
   }, [segmentNumber]);
 
+  useEffect(() => {
+    // If segment.URL is empty or contains only invalid URLs, set isTweetLoaded to true
+    if (!segment.URL || segment.URL.every(url => !url)) {
+      setIsTweetLoaded(true);
+    }
+  }, [segment.URL]);
+
   return (
     <div
       id={`${segment.segment_number}`}
