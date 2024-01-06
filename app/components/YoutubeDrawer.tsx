@@ -1,11 +1,12 @@
 `use client`;
 
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useApp } from '../hooks/useApp';
-import { initialState } from '../contexts/StateContext';
 
 const YoutubeDrawer: React.FC = () => {
   const { state, setState } = useApp();
+  const playerRef = useRef<YT.Player | null>(null);
+  const playerReady = useRef(false);
 
   const startTimeSeconds =
     state.currentSegment && state.currentSegment.start_time_ms
@@ -16,18 +17,61 @@ const YoutubeDrawer: React.FC = () => {
       ? state.currentYouTubeVideo.match(/youtu.be\/([^&]+)/)
       : '';
   const videoId = shortFormatMatch ? shortFormatMatch[1] : null;
-  const embedUrl = `https://www.youtube.com/embed/${videoId}?start=${startTimeSeconds}?autoplay=0?rel=0`;
 
+  const embedUrl = `https://www.youtube.com/embed/${videoId}?start=${startTimeSeconds}?autoplay=0?rel=0`;
+  console.log('videoId', videoId);
+
+  // Player Initialization (Only Once)
+  useEffect(() => {
+    const loadYouTubeIframeAPI = () => {
+      const tag = document.createElement('script');
+      tag.src = 'https://www.youtube.com/iframe_api';
+      const firstScriptTag = document.getElementsByTagName('script')[0];
+      firstScriptTag.parentNode?.insertBefore(tag, firstScriptTag);
+    };
+
+    if (!window.YT) {
+      loadYouTubeIframeAPI();
+    }
+
+    window.onYouTubeIframeAPIReady = () => {
+      playerRef.current = new window.YT.Player('youtube-player', {
+        height: '350',
+        width: '600',
+        videoId: videoId,
+        playerVars: {
+          start: startTimeSeconds,
+          autoplay: 0,
+          rel: 0,
+        },
+        events: {
+          onReady: () => {
+            playerReady.current = true;
+          },
+        },
+      });
+    };
+
+    return () => {
+      if (playerRef.current) {
+        playerRef.current.destroy();
+      }
+    };
+  }, []);
+
+  // Video Update on Segment Change
+  useEffect(() => {
+    if (playerRef.current && playerReady.current && videoId) {
+      playerRef.current.loadVideoById({
+        videoId: videoId,
+        startSeconds: startTimeSeconds,
+      });
+    }
+  }, [videoId, startTimeSeconds]);
   return (
-    <div className="relative flex justify-center  w-full h-full">
+    <div className="relative flex justify-center w-full h-full">
       <div className="w-[600px] h-[350px] ">
-        <iframe
-          className="w-full h-full "
-          src={embedUrl}
-          title=""
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowFullScreen
-        ></iframe>
+        <div id="youtube-player" className="w-full h-full"></div>
       </div>
 
       <div
