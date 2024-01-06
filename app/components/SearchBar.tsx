@@ -1,22 +1,19 @@
-"use client";
-import { FC, useState } from "react";
-import { IoSearch, IoClose } from "react-icons/io5";
+'use client';
+import { FC, useState } from 'react';
+import { IoSearch, IoClose } from 'react-icons/io5';
 
 interface SearchBarProps {
   onSearch: (term: string) => void;
-  hasSearched: boolean;
   clearSearchResults: () => void;
 }
 
 export const SearchBar: FC<SearchBarProps> = ({
   onSearch,
-  hasSearched,
   clearSearchResults,
 }) => {
-  const [inputValue, setInputValue] = useState("");
-
+  const [inputValue, setInputValue] = useState<string>('');
   const handleInputChange = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === "Enter" && inputValue) {
+    if (event.key === 'Enter' && inputValue) {
       onSearch(inputValue);
     }
   };
@@ -37,7 +34,7 @@ export const SearchBar: FC<SearchBarProps> = ({
           type="button"
           className="absolute inset-y-0 right-0 flex items-center px-3 py-2 transition-colors duration-150 rounded-r-md focus:outline-none"
           onClick={() => {
-            setInputValue("");
+            setInputValue('');
             clearSearchResults();
           }}
         >

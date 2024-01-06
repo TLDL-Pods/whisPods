@@ -42,3 +42,19 @@ export interface EpisodeContextType {
   data: EpisodeProps[];
   setData: (data: EpisodeProps[]) => void;
 }
+
+export interface AppState {
+  isVideoModalOpen: boolean;
+  searchResultEpisodes: EpisodeProps[] | null;
+  latestEpisodes: EpisodeProps[] | null;
+  currentEpisode: EpisodeProps | null;
+  currentSegment: SegmentProps | null;
+  currentYouTubeVideo: string | null;
+  hasSearched: boolean;
+}
+
+export interface YouTubePlayerEvent {
+  target: {
+    playVideo: () => void;
+  };
+}

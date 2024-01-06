@@ -1,38 +1,48 @@
 'use client';
 
-import { useState } from 'react';
-import { EpisodeProps } from '@/types';
-import PageSelect from '@/app/components/PageSelect';
-import { useEpisodeContext } from '@/app/hooks/useEpisodeContext';
+import { useEffect, useState, useRef } from 'react';
+import EpisodeSelect from './components/EpisodeSelect';
 import { SearchBar } from '@/app/components/SearchBar';
 import SearchResults from '@/app/components/SearchResults';
+import { useApp } from './hooks/useApp';
+import { useEpisodes } from './hooks/useEpisodes';
+import { useSearch } from './hooks/useSearch';
 
 export default function Home() {
-  const [episodes, setEpisodes] = useState<EpisodeProps[]>([]);
-  const [hasSearched, setHasSearched] = useState(false);
-  const performSearch = async (term: string) => {
-    try {
-      console.log('term', term);
-      const response = await fetch(`/api/search/${encodeURIComponent(term)}`);
-      const data = await response.json();
-      if (data && Array.isArray(data.data)) {
-        setEpisodes(data.data);
-      }
-      setHasSearched(true);
-    } catch (error) {
-      console.error('Error fetching search results:', error);
+  const [page, setPage] = useState(1);
+  const loader = useRef(null);
+  const { state, setState } = useApp();
+  const { performSearch, clearSearchResults } = useSearch();
+  const { getNewPage, hasMore } = useEpisodes();
+
+  useEffect(() => {
+    getNewPage(page);
+  }, [page, hasMore]);
+
+  // Intersection Observer to detect when the user has scrolled to the bottom
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting && hasMore) {
+          setPage((prevPage) => prevPage + 1);
+        }
+      },
+      { threshold: 1.0 }
+    );
+
+    if (loader.current) {
+      observer.observe(loader.current);
     }
-  };
 
-  const clearSearchResults = () => {
-    setEpisodes([]);
-    setHasSearched(false);
-  };
-
-  const { data, setData } = useEpisodeContext();
+    return () => {
+      if (loader.current) {
+        observer.unobserve(loader.current);
+      }
+    };
+  }, [hasMore]);
 
   return (
-    <div className="flex-col justify-center h-full w-full p-4 ">
+    <div className="flex-col justify-center w-full h-full p-4 ">
       {/* Header */}
       <header className="p-4 text-white bg-gray-800">
         <div className="flex flex-col items-start justify-between md:flex-row md:items-center">
@@ -47,7 +57,6 @@ export default function Home() {
           <div className="flex items-center w-full md:w-1/2">
             <SearchBar
               onSearch={performSearch}
-              hasSearched={hasSearched}
               clearSearchResults={clearSearchResults}
             />
           </div>
@@ -58,15 +67,23 @@ export default function Home() {
       <div className="">
         {/* <div className="pb-32"> */}
         <div className="">
-          {hasSearched ? (
-            <SearchResults episodes={episodes} />
-          ) : (
-            data.map((episode, index) => (
-              <PageSelect key={episode._id} episode={episode} />
+          {state.hasSearched ? (
+            <SearchResults episodes={state.searchResultEpisodes} />
+          ) : state.latestEpisodes ? (
+            state.latestEpisodes.map((episode) => (
+              <EpisodeSelect key={episode._id} episode={episode} />
             ))
+          ) : (
+            <div className="w-full flex h-screen justify-center align-middle items-center">
+              <div className="w-full text-center h-1/2 mt-10">
+                <div className="spinner"></div>
+                <p className="m-auto mt-3">Loading...</p>
+              </div>
+            </div>
           )}
         </div>
       </div>
+      <div ref={loader} style={{ height: '1px' }} />
     </div>
   );
 }

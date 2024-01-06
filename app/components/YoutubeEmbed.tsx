@@ -1,3 +1,5 @@
+"use client";
+
 import { useState, useEffect } from "react";
 import "tailwindcss/tailwind.css";
 
@@ -10,17 +12,23 @@ function YouTubeEmbed({
   startTimeMs: number;
   maxWidth: string;
 }) {
-  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  // Initialize state with undefined during server rendering
+  const [windowWidth, setWindowWidth] = useState(
+    typeof window !== "undefined" ? window.innerWidth : undefined
+  );
 
   useEffect(() => {
     function handleResize() {
       setWindowWidth(window.innerWidth);
     }
 
-    window.addEventListener("resize", handleResize);
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
+    // Only add event listener if window is available
+    if (window) {
+      window.addEventListener("resize", handleResize);
+      return () => {
+        window.removeEventListener("resize", handleResize);
+      };
+    }
   }, []);
 
   // Convert start time from milliseconds to seconds
@@ -30,18 +38,15 @@ function YouTubeEmbed({
   const embedUrl = `https://www.youtube.com/embed/${videoId}?start=${startTimeSeconds}`;
 
   return (
-    <div
-      className={`mx-auto border aspect-w-16 aspect-h-9 ${
-        maxWidth && `max-w-${maxWidth}`
-      }`}
-    >
+    <div className={`flex w-full justify-center align-middle`}>
       <iframe
-        className="aspect-content"
+        className="h-[225px] w-[400px] sm:w-[600px] mx-auto"
         src={embedUrl}
         title="YouTube video player"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
         allowFullScreen
       ></iframe>
+      <div className="w-1/2"></div>
     </div>
   );
 }
