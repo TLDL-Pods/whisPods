@@ -16,6 +16,7 @@ const SearchResults: React.FC<SearchResultsProps> = ({ episodes }) => {
   const [selectedEpisodeIndex, setSelectedEpisodeIndex] = useState<
     number | null
   >(null);
+  const [isTweetLoaded, setIsTweetLoaded] = useState<boolean>(false);
 
   return (
     <div className="container p-4 mx-auto">
@@ -94,7 +95,14 @@ const SearchResults: React.FC<SearchResultsProps> = ({ episodes }) => {
                               matchedSegment.URL.map((url) => {
                                 const tweetId = getTweetIdFromUrl(url);
                                 if (tweetId) {
-                                  return <TweetEmbed key={url} url={url} />;
+                                  return (
+                                    <TweetEmbed
+                                      key={url}
+                                      url={url}
+                                      isTweetLoaded={isTweetLoaded}
+                                      setIsTweetLoaded={setIsTweetLoaded}
+                                    />
+                                  );
                                 }
                                 return null; // Show nothing for non-Twitter URLs
                               })}
