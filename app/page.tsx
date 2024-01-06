@@ -1,14 +1,12 @@
-'use client';
+"use client";
 
-import { useEffect, useState, useRef } from 'react';
-import EpisodeSelect from './components/EpisodeSelect';
-import { SearchBar } from '@/app/components/SearchBar';
-import SearchResults from '@/app/components/SearchResults';
-import { useApp } from './hooks/useApp';
-import { useEpisodes } from './hooks/useEpisodes';
-import { useSearch } from './hooks/useSearch';
-import { EpisodeProps } from '@/types';
-import { get } from 'http';
+import { useEffect, useState, useRef } from "react";
+import EpisodeSelect from "./components/EpisodeSelect";
+import { SearchBar } from "@/app/components/SearchBar";
+import SearchResults from "@/app/components/SearchResults";
+import { useApp } from "./hooks/useApp";
+import { useEpisodes } from "./hooks/useEpisodes";
+import { useSearch } from "./hooks/useSearch";
 
 export default function Home() {
   const [page, setPage] = useState(1);
@@ -17,11 +15,10 @@ export default function Home() {
   const { performSearch, clearSearchResults } = useSearch();
   const { getNewPage, hasMore } = useEpisodes();
 
-
   useEffect(() => {
-    getNewPage(page)
+    getNewPage(page);
+    console.log("page", state.latestEpisodes);
   }, [page, hasMore]);
-
 
   // Intersection Observer to detect when the user has scrolled to the bottom
   useEffect(() => {
@@ -31,7 +28,7 @@ export default function Home() {
           setPage((prevPage) => prevPage + 1);
         }
       },
-      { threshold: 1.0 },
+      { threshold: 1.0 }
     );
 
     if (loader.current) {
@@ -87,7 +84,7 @@ export default function Home() {
           )}
         </div>
       </div>
-      <div ref={loader} style={{ height: '1px' }} />
+      <div ref={loader} style={{ height: "1px" }} />
     </div>
   );
 }
