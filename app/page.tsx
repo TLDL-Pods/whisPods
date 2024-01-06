@@ -13,33 +13,37 @@ export default function Home() {
   const loader = useRef(null);
   const { state, setState } = useApp();
   const { performSearch, clearSearchResults } = useSearch();
-  const { getNewPage, hasMore } = useEpisodes();
+  const { getAllEpisodes, getNewPage, hasMore } = useEpisodes();
+
+  // useEffect(() => {
+  //   getNewPage(page);
+  // }, [page, hasMore]);
 
   useEffect(() => {
-    getNewPage(page);
-  }, [page, hasMore]);
+    getAllEpisodes();
+  }, []);
 
   // Intersection Observer to detect when the user has scrolled to the bottom
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (entries[0].isIntersecting && hasMore) {
-          setPage((prevPage) => prevPage + 1);
-        }
-      },
-      { threshold: 1.0 }
-    );
+  // useEffect(() => {
+  //   const observer = new IntersectionObserver(
+  //     (entries) => {
+  //       if (entries[0].isIntersecting && hasMore) {
+  //         setPage((prevPage) => prevPage + 1);
+  //       }
+  //     },
+  //     { threshold: 1.0 }
+  //   );
 
-    if (loader.current) {
-      observer.observe(loader.current);
-    }
+  //   if (loader.current) {
+  //     observer.observe(loader.current);
+  //   }
 
-    return () => {
-      if (loader.current) {
-        observer.unobserve(loader.current);
-      }
-    };
-  }, [hasMore]);
+  //   return () => {
+  //     if (loader.current) {
+  //       observer.unobserve(loader.current);
+  //     }
+  //   };
+  // }, [hasMore]);
 
   return (
     <div className="flex-col justify-center w-full h-full p-4 ">
