@@ -103,6 +103,9 @@ devDependencies:
   '@types/react-slick':
     specifier: ^0.23.11
     version: 0.23.11
+  '@types/youtube':
+    specifier: ^0.0.50
+    version: 0.0.50
 
 packages:
 
@@ -808,6 +811,10 @@ packages:
       '@types/node': 20.4.4
       '@types/webidl-conversions': 7.0.0
     dev: false
+
+  /@types/youtube@0.0.50:
+    resolution: {integrity: sha512-d4GpH4uPYp9W07kc487tiq6V/EUHl18vZWFMbQoe4Sk9LXEWzFi/BMf9x7TI4m7/j7gU3KeX8H6M8aPBgykeLw==}
+    dev: true
 
   /@typescript-eslint/parser@5.62.0(eslint@8.45.0)(typescript@5.1.6):
     resolution: {integrity: sha512-VlJEV0fOQ7BExOsHYAGrgbEiZoi8D+Bl2+f6V2RrXerRSylnp+ZBHmPvaIa8cz0Ajx7WO7Z5RqfgYg7ED1nRhA==}
