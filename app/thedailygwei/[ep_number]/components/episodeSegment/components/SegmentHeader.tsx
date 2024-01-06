@@ -25,14 +25,15 @@ export const SegmentHeader = ({
   // Toggle segment detail view
   const handleSegmentToggle = () => {
     setShowSegmentIndex(
-      showSegmentIndex === segmentNumber ? null : segmentNumber,
+      showSegmentIndex === segmentNumber ? null : segmentNumber
     );
   };
 
   const openVideoDrawer = () => {
+    console.log('openVideoDrawer', youtube_url);
     setState(() => ({
       ...state,
-      isVideoModalOpen: !state.isVideoModalOpen,
+      isVideoModalOpen: true,
       currentYouTubeVideo: youtube_url,
       currentSegment: segment,
     }));
