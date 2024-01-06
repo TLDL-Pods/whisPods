@@ -1,38 +1,35 @@
 // components/cookiebanner.tsx
 
-"use client";
+'use client';
 
-import Link from "next/link";
-import { getLocalStorage, setLocalStorage } from "@/app/lib/storageHelper";
-import { useState, useEffect } from "react";
+import Link from 'next/link';
+import { getLocalStorage, setLocalStorage } from '@/app/lib/storageHelper';
+import { useState, useEffect } from 'react';
 
 export default function CookieBanner() {
   const [cookieConsent, setCookieConsent] = useState(false);
 
   useEffect(() => {
-    const storedCookieConsent = getLocalStorage("cookie_consent", null);
+    const storedCookieConsent = getLocalStorage('cookie_consent', null);
 
     setCookieConsent(storedCookieConsent);
   }, [setCookieConsent]);
 
   useEffect(() => {
-    const newValue = cookieConsent ? "granted" : "denied";
+    const newValue = cookieConsent ? 'granted' : 'denied';
 
-    window.gtag("consent", "update", {
+    window.gtag('consent', 'update', {
       analytics_storage: newValue,
     });
 
-    setLocalStorage("cookie_consent", cookieConsent);
-
-    //For Testing
-    console.log("Cookie Consent: ", cookieConsent);
+    setLocalStorage('cookie_consent', cookieConsent);
   }, [cookieConsent]);
 
   return (
     <div
       className={`my-10 mx-auto max-w-max md:max-w-screen-sm
                         fixed bottom-0 left-0 right-0 
-                        ${cookieConsent != null ? "hidden" : "flex"} 
+                        ${cookieConsent != null ? 'hidden' : 'flex'} 
                          px-3 md:px-4 py-3 justify-between items-center flex-col sm:flex-row gap-4  
                          bg-gray-700 rounded-lg shadow`}
     >

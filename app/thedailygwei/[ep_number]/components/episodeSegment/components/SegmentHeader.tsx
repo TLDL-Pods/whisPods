@@ -30,7 +30,6 @@ export const SegmentHeader = ({
   };
 
   const openVideoDrawer = () => {
-    console.log('openVideoDrawer', youtube_url);
     setState(() => ({
       ...state,
       isVideoModalOpen: true,

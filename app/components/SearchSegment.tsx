@@ -1,11 +1,11 @@
-"use client";
-import React, { FC, useCallback, useState, useEffect } from "react";
-import { RiMegaphoneLine } from "react-icons/ri";
-import Image from "next/image";
-import { FaRegCopy, FaCheck } from "react-icons/fa";
+'use client';
+import React, { FC, useCallback, useState, useEffect } from 'react';
+import { RiMegaphoneLine } from 'react-icons/ri';
+import Image from 'next/image';
+import { FaRegCopy, FaCheck } from 'react-icons/fa';
 
-import sassalImage from "@/app/assets/sassal.webp";
-import creepySassalImage from "@/app/assets/creepySassal.webp";
+import sassalImage from '@/app/assets/sassal.webp';
+import creepySassalImage from '@/app/assets/creepySassal.webp';
 
 interface SegmentProps {
   segment: {
@@ -36,7 +36,6 @@ const SearchSegment: FC<SegmentProps> = ({
     const startTimeSeconds = Math.floor(startTimeMs / 1000);
 
     // Extract the video ID from the youtube URL
-    console.log("youtubeUrl", youtubeUrl);
     const shortFormatMatch = youtubeUrl.match(/youtu.be\/([^&]+)/);
     const videoId = shortFormatMatch ? shortFormatMatch[1] : null;
     // Construct the embed URL
@@ -56,7 +55,7 @@ const SearchSegment: FC<SegmentProps> = ({
   const [copySuccess, setCopySuccess] = useState<string | null>(null);
 
   const handleCopy = useCallback(
-    (textToCopy: string, type: "youtube" | "segment") => {
+    (textToCopy: string, type: 'youtube' | 'segment') => {
       navigator.clipboard.writeText(textToCopy);
       setCopySuccess(type);
     },
@@ -88,9 +87,9 @@ const SearchSegment: FC<SegmentProps> = ({
       </ul>
       <h3 className="text-lg font-bold text-violet-400">Video:</h3>
 
-      <div style={{ display: "flex", alignItems: "center" }}>
+      <div style={{ display: 'flex', alignItems: 'center' }}>
         <button
-          style={{ border: "none", background: "transparent" }}
+          style={{ border: 'none', background: 'transparent' }}
           onClick={() => setShowVideo(!showVideo)}
         >
           <Image
@@ -103,9 +102,9 @@ const SearchSegment: FC<SegmentProps> = ({
         <a
           href={`${youtube_url}&t=${Math.floor(segment.start_time_ms / 1000)}`}
           style={{
-            marginLeft: "10px",
-            color: "blue",
-            textDecoration: "underline",
+            marginLeft: '10px',
+            color: 'blue',
+            textDecoration: 'underline',
           }}
           onClick={(e) => {
             e.preventDefault();
@@ -117,18 +116,18 @@ const SearchSegment: FC<SegmentProps> = ({
 
         <button
           style={{
-            border: "none",
-            background: "transparent",
-            marginLeft: "10px",
+            border: 'none',
+            background: 'transparent',
+            marginLeft: '10px',
           }}
           onClick={() =>
             handleCopy(
               `${youtube_url}&t=${Math.floor(segment.start_time_ms / 1000)}`,
-              "youtube"
+              'youtube'
             )
           }
         >
-          {copySuccess === "youtube" ? <FaCheck /> : <FaRegCopy />}
+          {copySuccess === 'youtube' ? <FaCheck /> : <FaRegCopy />}
         </button>
       </div>
 
@@ -147,19 +146,19 @@ const SearchSegment: FC<SegmentProps> = ({
                 href={url}
                 target="_blank"
                 rel="noopener noreferrer"
-                style={{ color: "blue" }}
+                style={{ color: 'blue' }}
               >
                 {url}
               </a>
               <button
                 style={{
-                  border: "none",
-                  background: "transparent",
-                  marginLeft: "10px",
+                  border: 'none',
+                  background: 'transparent',
+                  marginLeft: '10px',
                 }}
-                onClick={() => handleCopy(url, "segment")}
+                onClick={() => handleCopy(url, 'segment')}
               >
-                {copySuccess === "segment" ? <FaCheck /> : <FaRegCopy />}
+                {copySuccess === 'segment' ? <FaCheck /> : <FaRegCopy />}
               </button>
             </li>
           ))}

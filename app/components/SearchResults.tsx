@@ -17,7 +17,6 @@ const SearchResults: React.FC<SearchResultsProps> = ({ episodes }) => {
     number | null
   >(null);
 
-  console.log('episodes', episodes);
   return (
     <div className="container p-4 mx-auto">
       <div className="mt-8">
@@ -28,7 +27,7 @@ const SearchResults: React.FC<SearchResultsProps> = ({ episodes }) => {
               className="relative p-2 mb-3 border rounded shadow"
               onClick={() =>
                 setSelectedEpisodeIndex(
-                  index === selectedEpisodeIndex ? null : index,
+                  index === selectedEpisodeIndex ? null : index
                 )
               }
             >
@@ -68,7 +67,7 @@ const SearchResults: React.FC<SearchResultsProps> = ({ episodes }) => {
 
               {episode.matchedSegmentNumbers.map((segmentNumber) => {
                 const matchedSegment = episode.episode_data.find(
-                  (segment) => segment.segment_number === segmentNumber,
+                  (segment) => segment.segment_number === segmentNumber
                 );
 
                 return (

@@ -19,7 +19,6 @@ const YoutubeDrawer: React.FC = () => {
   const videoId = shortFormatMatch ? shortFormatMatch[1] : null;
 
   const embedUrl = `https://www.youtube.com/embed/${videoId}?start=${startTimeSeconds}?autoplay=0?rel=0`;
-  console.log('videoId', videoId);
 
   // Player Initialization (Only Once)
   useEffect(() => {

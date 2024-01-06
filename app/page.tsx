@@ -17,7 +17,6 @@ export default function Home() {
 
   useEffect(() => {
     getNewPage(page);
-    console.log('page', state.latestEpisodes);
   }, [page, hasMore]);
 
   // Intersection Observer to detect when the user has scrolled to the bottom
