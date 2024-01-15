@@ -59,7 +59,7 @@ const SearchSegment: FC<SegmentProps> = ({
       navigator.clipboard.writeText(textToCopy);
       setCopySuccess(type);
     },
-    []
+    [],
   );
 
   useEffect(() => {
@@ -74,7 +74,7 @@ const SearchSegment: FC<SegmentProps> = ({
 
   return (
     <>
-      <h3 className="pt-2 text-lg font-bold text-violet-400">TLDL:</h3>
+      <h3 className="pt-2 text-lg font-bold text-primary">TLDL:</h3>
       <ul className="p-4 mt-2 w-fit bg-stone-950">
         {segment.bullets.map((bullet) => (
           <li key={bullet} className="flex">
@@ -85,7 +85,7 @@ const SearchSegment: FC<SegmentProps> = ({
           </li>
         ))}
       </ul>
-      <h3 className="text-lg font-bold text-violet-400">Video:</h3>
+      <h3 className="text-lg font-bold text-primary">Video:</h3>
 
       <div style={{ display: 'flex', alignItems: 'center' }}>
         <button
@@ -123,7 +123,7 @@ const SearchSegment: FC<SegmentProps> = ({
           onClick={() =>
             handleCopy(
               `${youtube_url}&t=${Math.floor(segment.start_time_ms / 1000)}`,
-              'youtube'
+              'youtube',
             )
           }
         >
@@ -138,7 +138,7 @@ const SearchSegment: FC<SegmentProps> = ({
         />
       )}
       <div className="mt-4">
-        <h4 className="text-lg font-bold text-violet-400">Sources:</h4>
+        <h4 className="text-lg font-bold text-primary">Sources:</h4>
         <ul>
           {segment.URL.map((url, idx) => (
             <li key={idx}>

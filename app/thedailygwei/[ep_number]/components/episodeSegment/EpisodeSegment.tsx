@@ -1,15 +1,15 @@
-"use client";
-import React, { FC, useState, useEffect } from "react";
-import { FaCheck } from "react-icons/fa";
-import { SegmentProps } from "@/types";
-import TweetEmbed from "../../../../components/TweetEmbed";
+'use client';
+import React, { FC, useState, useEffect } from 'react';
+import { FaCheck } from 'react-icons/fa';
+import { SegmentProps } from '@/types';
+import TweetEmbed from '../../../../components/TweetEmbed';
 
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-import { FiShare } from "react-icons/fi";
-import { handleShare } from "../../../../utils/handleShare";
-import SummarySlider from "./components/SummarySlider";
-import SegmentHeader from "./components/SegmentHeader";
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
+import { FiShare } from 'react-icons/fi';
+import { handleShare } from '../../../../utils/handleShare';
+import SummarySlider from './components/SummarySlider';
+import SegmentHeader from './components/SegmentHeader';
 
 interface EpisodeSegmentProps {
   segment: SegmentProps;
@@ -77,9 +77,9 @@ const EpisodeSegment: FC<EpisodeSegmentProps> = ({
 
         {showSegmentIndex === segmentNumber && (
           <div className="">
-            <div className="flex-col w-full max-w-full pb-4 shadow-inner shadow-black md-text-l text-violet-200 bg-gradient-to-b to-neutral-900 from-neutral-800 ">
+            <div className="flex-col w-full max-w-full pb-4 shadow-inner shadow-black md-text-l text-accent bg-gradient-to-b to-neutral-900 from-neutral-800 ">
               <button
-                className="absolute flex items-center justify-center px-4 py-2 font-bold text-white rounded top-7 right-2 hover:bg-zinc-700"
+                className="absolute flex items-center justify-center px-4 py-2 font-bold text-white rounded top-7 right-2 hover:bg-baseText2"
                 onClick={() =>
                   handleShare({ segment, youtube_url, setCopySuccess })
                 }

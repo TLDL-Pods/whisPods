@@ -48,7 +48,7 @@ export default function Home() {
   return (
     <div className="flex-col justify-center w-full h-full p-4 ">
       {/* Header */}
-      <header className="p-4 text-white bg-gray-800">
+      <header className="p-4 text-baseText bg-base">
         <div className="flex flex-col items-start justify-between md:flex-row md:items-center">
           {/* Title */}
           <div className="mb-4 md:mb-0">

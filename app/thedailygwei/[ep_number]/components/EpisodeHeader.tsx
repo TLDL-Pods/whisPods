@@ -22,19 +22,19 @@ export default function EpisodeHeader({
     <div className="w-full max-w-screen px-4">
       <div>
         <Link href={`/thedailygwei`}>
-          <div className="text-lg font-semibold text-center md:text-xl lg:text-2xl text-violet-400">
+          <div className="text-lg font-semibold text-center md:text-xl lg:text-2xl text-primary">
             The Daily Gwei Refuel
           </div>
         </Link>
-        <div className="text-lg text-center md:text-xl lg:text-2xl text-violet-200">
+        <div className="text-lg text-center md:text-xl lg:text-2xl text-accent">
           {currentEpisode.episode_title}
         </div>
         <div className="border-b w-64 mx-auto lg:my-4 hidden lg:block"></div>
         <div className="pt-4 lg:pt-1 max-w-screen flex justify-between lg:flex-col">
-          <h3 className="font-semibold text-center md:text-lg lg:text-xl text-violet-300">
+          <h3 className="font-semibold text-center md:text-lg lg:text-xl text-secondary">
             Episode {currentEpisode.episode_number}
           </h3>
-          <h3 className="text-center text-violet-100">
+          <h3 className="text-center text-baseText1">
             {currentEpisode.release_date}
           </h3>
         </div>

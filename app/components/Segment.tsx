@@ -58,13 +58,13 @@ const Segment: FC<SegmentProps2> = ({
       navigator.clipboard.writeText(textToCopy);
       setCopySuccess(type);
     },
-    []
+    [],
   );
 
   // Toggle segment detail view
   const handleSegmentToggle = () => {
     setShowSegmentIndex(
-      showSegmentIndex === segmentNumber ? null : segmentNumber
+      showSegmentIndex === segmentNumber ? null : segmentNumber,
     );
   };
 
@@ -106,7 +106,7 @@ const Segment: FC<SegmentProps2> = ({
       },
       (err) => {
         console.error('Could not copy text: ', err);
-      }
+      },
     );
   };
 
@@ -123,7 +123,7 @@ const Segment: FC<SegmentProps2> = ({
           onClick={() => handleSegmentToggle()}
         >
           {/* INDEX */}
-          <div className="px-1 font-semibold text-center grow-0 text-violet-400">
+          <div className="px-1 font-semibold text-center grow-0 text-primary">
             <p>
               {isOrganizedByLength
                 ? `${Math.floor(segment.segment_length_ms / 60000)}:${(
@@ -145,9 +145,9 @@ const Segment: FC<SegmentProps2> = ({
         {/* ROW 2: Blank & Content */}
         {showSegmentIndex === segmentNumber && (
           <div className="">
-            <div className="flex-col w-full max-w-full pb-4 shadow-inner shadow-black md-text-l text-violet-200 bg-gradient-to-b to-neutral-900 from-neutral-800 ">
+            <div className="flex-col w-full max-w-full pb-4 shadow-inner shadow-black md-text-l text-accent bg-gradient-to-b to-neutral-900 from-neutral-800 ">
               <button
-                className="absolute flex items-center justify-center px-4 py-2 font-bold text-white rounded top-7 right-2 hover:bg-zinc-700"
+                className="absolute flex items-center justify-center px-4 py-2 font-bold text-white rounded top-7 right-2 hover:bg-baseText2"
                 onClick={handleShare}
               >
                 {copySuccess === 'share' ? (
@@ -158,7 +158,7 @@ const Segment: FC<SegmentProps2> = ({
               </button>
 
               {/* Bullets or Summary */}
-              <div className="flex flex-col w-full p-3 mx-auto shadow-inner shadow-black text-violet-100">
+              <div className="flex flex-col w-full p-3 mx-auto shadow-inner shadow-black text-baseText1">
                 <Slider {...settings} className="mx-auto w-80 md:w-4/5">
                   <div className="flex flex-col justify-between w-full">
                     <p className="mb-2 text-xl font-semibold text-center">
@@ -168,9 +168,9 @@ const Segment: FC<SegmentProps2> = ({
                       {contentArray.slice(0, -1).map((bullet, idx) => (
                         <div
                           key={idx}
-                          className="flex p-2 my-auto border-y border-violet-100 border-opacity-60 bg-zinc-950"
+                          className="flex p-2 my-auto border-y border-baseText1 border-opacity-60 bg-baseText"
                         >
-                          <div className="flex my-auto text-lg text-violet-400">
+                          <div className="flex my-auto text-lg text-primary">
                             <RiMegaphoneLine />
                           </div>
                           <p className="ml-4">{bullet}</p>
@@ -179,10 +179,10 @@ const Segment: FC<SegmentProps2> = ({
                     </div>
                   </div>
                   <div className="">
-                    <p className="mb-2 text-xl font-semibold text-center text-violet-400">
+                    <p className="mb-2 text-xl font-semibold text-center text-primary">
                       SUMMARY
                     </p>
-                    <p className="p-4 overflow-y-auto bg-zinc-950 h-80">
+                    <p className="p-4 overflow-y-auto bg-baseText h-80">
                       {contentArray[contentArray.length - 1]}
                     </p>
                   </div>
@@ -231,7 +231,7 @@ const Segment: FC<SegmentProps2> = ({
                   </ul> */}
                 </div>
               </div>
-              <div className="w-3/5 mx-auto mt-4 border-b border-violet-300 opacity-40"></div>
+              <div className="w-3/5 mx-auto mt-4 border-b border-secondary opacity-40"></div>
 
               {/* YouTube Embed */}
               <div className="w-full px-4 pt-4 text-center">

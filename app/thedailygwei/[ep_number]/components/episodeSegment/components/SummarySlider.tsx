@@ -19,7 +19,7 @@ export const SummarySlider = ({ segment }: SummarySliderProps) => {
   const sliderContentArray = [...segment.bullets, segment.summary];
 
   return (
-    <div className="flex flex-col w-full p-3 mx-auto shadow-inner shadow-black text-violet-100">
+    <div className="flex flex-col w-full p-3 mx-auto shadow-inner shadow-black text-baseText1">
       <Slider {...sliderSettings} className="mx-auto w-80 md:w-4/5">
         <div className="flex flex-col justify-between w-full">
           <p className="mb-2 text-xl font-semibold text-center">TLDL</p>
@@ -28,9 +28,9 @@ export const SummarySlider = ({ segment }: SummarySliderProps) => {
             {sliderContentArray.slice(0, -1).map((bullet, idx) => (
               <div
                 key={idx}
-                className="flex p-2 my-auto border-y border-violet-100 border-opacity-60 bg-zinc-950"
+                className="flex p-2 my-auto border-y border-baseText1 border-opacity-60 bg-baseText"
               >
-                <div className="flex my-auto text-lg text-violet-400">
+                <div className="flex my-auto text-lg text-primary">
                   <RiMegaphoneLine />
                 </div>
                 <p className="ml-4">{bullet}</p>
@@ -39,10 +39,10 @@ export const SummarySlider = ({ segment }: SummarySliderProps) => {
           </div>
         </div>
         <div className="">
-          <p className="mb-2 text-xl font-semibold text-center text-violet-400">
+          <p className="mb-2 text-xl font-semibold text-center text-primary">
             SUMMARY
           </p>
-          <p className="p-4 overflow-y-auto bg-zinc-950 h-80">
+          <p className="p-4 overflow-y-auto bg-baseText h-80">
             {sliderContentArray[sliderContentArray.length - 1]}
           </p>
         </div>

@@ -25,7 +25,7 @@ export const SegmentHeader = ({
   // Toggle segment detail view
   const handleSegmentToggle = () => {
     setShowSegmentIndex(
-      showSegmentIndex === segmentNumber ? null : segmentNumber
+      showSegmentIndex === segmentNumber ? null : segmentNumber,
     );
   };
 
@@ -46,7 +46,7 @@ export const SegmentHeader = ({
       {/* Play Button */}
       <div className="pr-1 my-2 text-center">
         <button
-          className="text-4xl text-violet-400 hover:text-violet-300"
+          className="text-4xl text-primary hover:text-secondary"
           onClick={openVideoDrawer}
         >
           <FaPlayCircle />
@@ -54,7 +54,7 @@ export const SegmentHeader = ({
       </div>
 
       {/* INDEX */}
-      <div className="px-1 font-semibold text-center grow-0 text-violet-400">
+      <div className="px-1 font-semibold text-center grow-0 text-primary">
         <p>
           {isOrganizedByLength
             ? `${Math.floor(segment.segment_length_ms / 60000)}:${(

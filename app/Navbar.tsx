@@ -9,8 +9,8 @@ export default function Navbar({ children }: { children: React.ReactNode }) {
   const { state } = useApp();
 
   return (
-    <div className=" bg-stone-950 max-w-screen">
-      <header className="text-xl font-semibold text-gray-100 max-w-screen bg-stone-950 ">
+    <div className=" bg-base max-w-screen">
+      <header className="text-xl font-semibold text-baseText max-w-screen bg-base ">
         <div className="flex items-center justify-between w-full p-6">
           {/* TLDL Title */}
           <Link href={'/'}>
@@ -22,23 +22,21 @@ export default function Navbar({ children }: { children: React.ReactNode }) {
 
           {/* Links */}
           <div className="flex space-x-4 max-w-screen">
-            <Link href="/podcasts" className="hover:text-gray-300">
+            <Link href="/podcasts" className="hover:text-baseText1">
               Podcasts
             </Link>
-            <Link href="/about" className="hover:text-gray-300">
+            <Link href="/about" className="hover:text-baseText1">
               About
             </Link>
           </div>
         </div>
       </header>
 
-      <div className="w-screen h-full text-gray-100">{children}</div>
+      <div className="w-screen h-full text-baseText">{children}</div>
       <div
         className={`${
-          state.isVideoModalOpen
-            ? 'h-[350px] border-t border-violet-800'
-            : 'h-0'
-        } w-full bottom-0 fixed bg-stone-900  duration-300`}
+          state.isVideoModalOpen ? 'h-[350px] border-t border-primary' : 'h-0'
+        } w-full bottom-0 fixed bg-base1  duration-300`}
       >
         <YoutubeDrawer />
       </div>

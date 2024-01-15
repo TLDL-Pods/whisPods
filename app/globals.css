@@ -2,6 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  html {
+    --color-base: rgb(13, 13, 14);
+    --color-base1: rgb(28, 28, 29);
+    --color-base2: rgb(37, 37, 39);
+    --color-base3: rgb(48, 48, 51);
+    --color-baseText: #f8f8f8;
+    --color-baseText1: #cacaca;
+    --color-primary: rgb(132, 19, 160);
+    --color-secondary: rgb(206, 182, 212);
+    --color-accent: rgb(145, 65, 165);
+    --color-baseShadow: rgb(0, 0, 0);
+  }
+}
+
 ::-webkit-scrollbar {
   width: 5px;
 }

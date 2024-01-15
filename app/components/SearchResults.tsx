@@ -22,7 +22,7 @@ const SearchResults: React.FC<SearchResultsProps> = ({ episodes }) => {
   const handleSegmentClick = (
     episodeIndex: number,
     segmentNumber: number,
-    event: React.MouseEvent
+    event: React.MouseEvent,
   ) => {
     console.log('handleSegmentClick', episodeIndex, segmentNumber);
     // event.stopPropagation(); // Prevents the episode click event
@@ -48,7 +48,7 @@ const SearchResults: React.FC<SearchResultsProps> = ({ episodes }) => {
               className="relative p-2 mb-3 border rounded shadow"
               onClick={() =>
                 setSelectedEpisodeIndex(
-                  index === selectedEpisodeIndex ? null : index
+                  index === selectedEpisodeIndex ? null : index,
                 )
               }
             >
@@ -65,7 +65,7 @@ const SearchResults: React.FC<SearchResultsProps> = ({ episodes }) => {
                 </button>
               )}
 
-              <div className="flex items-center p-2 bg-gray-800 rounded">
+              <div className="flex items-center p-2 bg-baseText2 rounded">
                 <Image
                   src={TDG}
                   alt="The Daily Gwei"
@@ -88,7 +88,7 @@ const SearchResults: React.FC<SearchResultsProps> = ({ episodes }) => {
 
               {episode.matchedSegmentNumbers.map((segmentNumber) => {
                 const matchedSegment = episode.episode_data.find(
-                  (segment) => segment.segment_number === segmentNumber
+                  (segment) => segment.segment_number === segmentNumber,
                 );
 
                 return (
@@ -96,7 +96,7 @@ const SearchResults: React.FC<SearchResultsProps> = ({ episodes }) => {
                     key={segmentNumber}
                     onClick={(e) => handleSegmentClick(index, segmentNumber, e)}
                   >
-                    <h3 className="text-lg font-bold text-violet-400">
+                    <h3 className="text-lg font-bold text-primary">
                       {matchedSegment?.headline}
                     </h3>
 
