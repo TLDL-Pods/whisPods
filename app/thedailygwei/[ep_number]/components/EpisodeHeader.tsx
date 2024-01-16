@@ -22,7 +22,7 @@ export default function EpisodeHeader({
     <div className="w-full max-w-screen px-4">
       <div>
         <Link href={`/thedailygwei`}>
-          <div className="text-lg font-semibold text-center md:text-xl lg:text-2xl text-accent">
+          <div className="text-lg font-semibold text-center md:text-xl lg:text-2xl text-accent hover:opacity-90 w-fit mx-auto duration-100">
             The Daily Gwei Refuel
           </div>
         </Link>
@@ -51,7 +51,7 @@ export default function EpisodeHeader({
           {/* Organize by time or order button */}
           <button
             onClick={toggleOrganization}
-            className="hover:bg-stone-900"
+            className="hover:bg-stone-900 border border-white border-opacity-40 hover:border-opacity-100 px-6 py-1"
             title="Presentation order or longest first"
           >
             {isOrganizedByLength ? <ImListNumbered /> : <BiSolidTimer />}

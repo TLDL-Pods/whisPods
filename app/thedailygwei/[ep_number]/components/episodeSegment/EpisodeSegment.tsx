@@ -78,15 +78,19 @@ const EpisodeSegment: FC<EpisodeSegmentProps> = ({
         {showSegmentIndex === segmentNumber && (
           <div className="flex-col w-full max-w-full pb-8 shadow-inner shadow-black md-text-l text-accent bg-gradient-to-b to-base1 from-base2 relative">
             <button
-              className="absolute flex items-center justify-center px-4 font-bold text-white rounded top-7 right-2 hover:bg-baseText2"
+              className="absolute flex items-center justify-center px-4 font-bold text-primary rounded top-7 right-2 hover:bg-baseText2"
               onClick={() =>
                 handleShare({ segment, youtube_url, setCopySuccess })
               }
             >
               {copySuccess === true ? (
-                <FaCheck size={20} />
+                <div className="text-accent">
+                  <FaCheck size={20} />
+                </div>
               ) : (
-                <FiShare size={20} />
+                <div className="text-primary">
+                  <FiShare size={20} />
+                </div>
               )}
             </button>
             {isTweetLoaded ? (

@@ -40,13 +40,13 @@ export const SegmentHeader = ({
 
   return (
     <div
-      className="flex items-center h-24 md:text-xl lg:text-2xl bg-gradient-to-b to-base from-base1 w-full md:w-[768px] my-1"
+      className="flex items-center h-24 md:text-xl lg:text-2xl bg-gradient-to-b to-base from-base1 w-full md:w-[768px] my-1 group"
       onClick={() => handleSegmentToggle()}
     >
       {/* Play Button */}
-      <div className=" text-center w-1/12 min-w-fit h-full px-2 bg-base2 flex">
+      <div className=" text-center w-1/12 min-w-fit h-full px-2 bg-base2 flex group-hover:border-l border-secondary">
         <button
-          className="text-4xl text-accent hover:text-secondary m-auto"
+          className="text-4xl text-accent hover:text-secondary m-auto duration-300"
           onClick={openVideoDrawer}
         >
           <FaPlayCircle />
@@ -71,7 +71,7 @@ export const SegmentHeader = ({
         </p>
       </div>
       {/* HEADLINE*/}
-      <div className="flex items-start my-auto font-semibold text-textBase w-10/12 max-h-16 h-16 px-2">
+      <div className="flex items-start my-auto text-textBase w-10/12 max-h-16 h-16 px-4">
         <span className="line-clamp-2 my-auto text-left">
           {segment.segment_title}
         </span>
