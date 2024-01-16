@@ -67,8 +67,10 @@ export const SegmentHeader = ({
         </p>
       </div>
       {/* HEADLINE*/}
-      <div className="flex items-start text-ellipsis my-auto font-semibold text-textBase w-10/12 max-h-16 h-16 px-2">
-        <span className="my-auto text-left">{segment.segment_title}</span>
+      <div className="flex items-start my-auto font-semibold text-textBase w-10/12 max-h-16 h-16 px-2">
+        <span className="line-clamp-2 my-auto text-left">
+          {segment.segment_title}
+        </span>
       </div>
     </div>
   );
