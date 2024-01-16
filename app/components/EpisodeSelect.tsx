@@ -15,14 +15,17 @@ export default function EpisodeSelect({ episode }: EpisodeSelectProps) {
 
   return (
     <Link href={`/thedailygwei/${episode.episode_number}`}>
-      <div className="flex flex-col flex-grow w-full min-h-full text-center transition-all duration-500 border-t bg-stone-950 border-primary border-opacity-40 hover:bg-stone-800">
+      <div
+        className="flex flex-col flex-grow w-full min-h-full text-center transition-all duration-500 bg-base
+       border-b border-white border-opacity-40 hover:bg-stone-800 py-2"
+      >
         {/* Image, Episode Number, and Date for mobile */}
         <div className="flex items-center mx-auto w-full lg:w-1/2 lg:p-0 p-2">
           <div className="flex flex-col mr-2">
-            <span className=" font-bold text-secondary lg:text-2xl lg:border-b border-secondary border-opacity-40 lg:pb-1 lg:mb-2">
+            <span className=" font-bold text-accent lg:text-2xl lg:border-b border-accent border-opacity-40 lg:pb-1 lg:mb-2">
               {episode.episode_number}
             </span>
-            <span className="text-xs text-white text-opacity-80 lg:text-sm">
+            <span className="text-xs text-secondary text-opacity-80 lg:text-sm">
               {episode.release_date}
             </span>
           </div>
@@ -36,7 +39,7 @@ export default function EpisodeSelect({ episode }: EpisodeSelectProps) {
           </div>
 
           <div className="w-full">
-            <div className="lg:text-2xl lg:text-left text-secondary">
+            <div className="lg:text-2xl lg:text-left text-textBase">
               {episode.episode_title
                 ? episode.episode_title.toUpperCase()
                 : null}
@@ -44,7 +47,7 @@ export default function EpisodeSelect({ episode }: EpisodeSelectProps) {
             <div className="mt-2 text-baseText1 hidden lg:block">
               {topThreeSegments.map((segment, index) => (
                 <div key={segment.segment_number} className="flex">
-                  <div className="mt-1 text-primary">
+                  <div className="mt-1 text-textBase">
                     <RiMegaphoneLine />
                   </div>
 

@@ -73,7 +73,7 @@ export default function SearchTermPage({
 
               return (
                 <div key={segmentNumber}>
-                  <h3 className="text-lg font-bold text-primary">Title:</h3>
+                  <h3 className="text-lg font-bold text-textBase">Title:</h3>
 
                   <h2 className="pt-1 text-lg font-semibold ">
                     {matchedSegment?.headline}

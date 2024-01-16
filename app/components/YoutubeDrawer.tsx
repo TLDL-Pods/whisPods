@@ -85,7 +85,9 @@ const YoutubeDrawer: React.FC = () => {
         <div className="h-full"></div>
       </div>
       <button
-        className="absolute px-1 text-md text-red-600 border border-red-400 right-1 top-2"
+        className={`${
+          state.isVideoModalOpen ? 'block' : 'hidden'
+        } absolute px-1 text-md text-red-400 border border-primary bg-base right-0 -top-8 w-8 h-8`}
         onClick={() => {
           setState({
             ...state,

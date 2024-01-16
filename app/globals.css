@@ -8,11 +8,11 @@
     --color-base1: rgb(28, 28, 29);
     --color-base2: rgb(37, 37, 39);
     --color-base3: rgb(48, 48, 51);
-    --color-baseText: #f8f8f8;
+    --color-baseText: #ffffff;
     --color-baseText1: #cacaca;
-    --color-primary: rgb(132, 19, 160);
-    --color-secondary: rgb(206, 182, 212);
-    --color-accent: rgb(145, 65, 165);
+    --color-primary: rgb(247, 247, 247);
+    --color-secondary: rgb(233, 206, 240);
+    --color-accent: rgb(172, 44, 204);
     --color-baseShadow: rgb(0, 0, 0);
   }
 }

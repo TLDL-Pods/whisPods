@@ -76,44 +76,42 @@ const EpisodeSegment: FC<EpisodeSegmentProps> = ({
         />
 
         {showSegmentIndex === segmentNumber && (
-          <div className="">
-            <div className="flex-col w-full max-w-full pb-4 shadow-inner shadow-black md-text-l text-accent bg-gradient-to-b to-neutral-900 from-neutral-800 ">
-              <button
-                className="absolute flex items-center justify-center px-4 py-2 font-bold text-white rounded top-7 right-2 hover:bg-baseText2"
-                onClick={() =>
-                  handleShare({ segment, youtube_url, setCopySuccess })
-                }
-              >
-                {copySuccess === true ? (
-                  <FaCheck size={20} />
-                ) : (
-                  <FiShare size={20} />
-                )}
-              </button>
-              {isTweetLoaded ? (
-                <SummarySlider segment={segment} />
+          <div className="flex-col w-full max-w-full pb-8 shadow-inner shadow-black md-text-l text-accent bg-gradient-to-b to-base1 from-base2 ">
+            <button
+              className="absolute flex items-center justify-center px-4 font-bold text-white rounded top-7 right-2 hover:bg-baseText2"
+              onClick={() =>
+                handleShare({ segment, youtube_url, setCopySuccess })
+              }
+            >
+              {copySuccess === true ? (
+                <FaCheck size={20} />
               ) : (
-                <div className="w-full flex justify-center align-middle items-center">
-                  <div className="w-full text-center h-1/2 mt-10">
-                    <div className="spinner"></div>
-                    <p className="m-auto mt-3">Loading...</p>
-                  </div>
-                </div>
+                <FiShare size={20} />
               )}
-
-              {/* Sources */}
-              <div className="w-full px-3 text-center">
-                {/* Embed Tweet */}
-                {segment.URL &&
-                  segment.URL.map((url, index) => (
-                    <TweetEmbed
-                      key={url}
-                      url={url}
-                      isTweetLoaded={isTweetLoaded}
-                      setIsTweetLoaded={setIsTweetLoaded}
-                    />
-                  ))}
+            </button>
+            {isTweetLoaded ? (
+              <SummarySlider segment={segment} />
+            ) : (
+              <div className="w-full flex justify-center align-middle items-center">
+                <div className="w-full text-center h-1/2 mt-10">
+                  <div className="spinner"></div>
+                  <p className="m-auto mt-3">Loading...</p>
+                </div>
               </div>
+            )}
+
+            {/* Sources */}
+            <div className="w-full px-3 text-center">
+              {/* Embed Tweet */}
+              {segment.URL &&
+                segment.URL.map((url, index) => (
+                  <TweetEmbed
+                    key={url}
+                    url={url}
+                    isTweetLoaded={isTweetLoaded}
+                    setIsTweetLoaded={setIsTweetLoaded}
+                  />
+                ))}
             </div>
           </div>
         )}

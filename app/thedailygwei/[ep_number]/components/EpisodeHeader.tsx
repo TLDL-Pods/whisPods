@@ -22,16 +22,16 @@ export default function EpisodeHeader({
     <div className="w-full max-w-screen px-4">
       <div>
         <Link href={`/thedailygwei`}>
-          <div className="text-lg font-semibold text-center md:text-xl lg:text-2xl text-primary">
+          <div className="text-lg font-semibold text-center md:text-xl lg:text-2xl text-accent">
             The Daily Gwei Refuel
           </div>
         </Link>
-        <div className="text-lg text-center md:text-xl lg:text-2xl text-accent">
+        <div className="text-lg text-center md:text-xl lg:text-xl text-secondary">
           {currentEpisode.episode_title}
         </div>
         <div className="border-b w-64 mx-auto lg:my-4 hidden lg:block"></div>
         <div className="pt-4 lg:pt-1 max-w-screen flex justify-between lg:flex-col">
-          <h3 className="font-semibold text-center md:text-lg lg:text-xl text-secondary">
+          <h3 className="font-semibold text-center md:text-lg lg:text-xl text-baseText">
             Episode {currentEpisode.episode_number}
           </h3>
           <h3 className="text-center text-baseText1">
@@ -39,7 +39,7 @@ export default function EpisodeHeader({
           </h3>
         </div>
       </div>
-      <div className="lg:w-1/2 lg:mx-auto mt-2">
+      <div className="md:max-w-[768px] lg:mx-auto mt-2">
         <div className="flex justify-between mx-4">
           {/* Back to Episodes button */}
           <button

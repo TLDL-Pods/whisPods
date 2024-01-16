@@ -96,7 +96,7 @@ const SearchResults: React.FC<SearchResultsProps> = ({ episodes }) => {
                     key={segmentNumber}
                     onClick={(e) => handleSegmentClick(index, segmentNumber, e)}
                   >
-                    <h3 className="text-lg font-bold text-primary">
+                    <h3 className="text-lg font-bold text-textBase">
                       {matchedSegment?.headline}
                     </h3>
 

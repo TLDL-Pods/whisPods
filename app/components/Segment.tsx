@@ -119,11 +119,11 @@ const Segment: FC<SegmentProps2> = ({
       <li className="cursor-pointer ">
         {/* ROW 1: Index & Title */}
         <div
-          className="flex items-center w-full h-20 gap-2 p-2 px-4 md:text-xl lg:text-2xl bg-gradient-to-b to-neutral-950 from-neutral-900"
+          className="flex items-center w-full h-20 gap-2 p-2 px-4 md:text-xl lg:text-2xl bg-gradient-to-b to-base from-base1"
           onClick={() => handleSegmentToggle()}
         >
           {/* INDEX */}
-          <div className="px-1 font-semibold text-center grow-0 text-primary">
+          <div className="px-1 font-semibold text-center grow-0 text-textBase">
             <p>
               {isOrganizedByLength
                 ? `${Math.floor(segment.segment_length_ms / 60000)}:${(
@@ -145,7 +145,7 @@ const Segment: FC<SegmentProps2> = ({
         {/* ROW 2: Blank & Content */}
         {showSegmentIndex === segmentNumber && (
           <div className="">
-            <div className="flex-col w-full max-w-full pb-4 shadow-inner shadow-black md-text-l text-accent bg-gradient-to-b to-neutral-900 from-neutral-800 ">
+            <div className="flex-col w-full max-w-full pb-4 shadow-inner shadow-black md-text-l text-accent bg-gradient-to-b to-base1 from-base2 ">
               <button
                 className="absolute flex items-center justify-center px-4 py-2 font-bold text-white rounded top-7 right-2 hover:bg-baseText2"
                 onClick={handleShare}
@@ -170,7 +170,7 @@ const Segment: FC<SegmentProps2> = ({
                           key={idx}
                           className="flex p-2 my-auto border-y border-baseText1 border-opacity-60 bg-baseText"
                         >
-                          <div className="flex my-auto text-lg text-primary">
+                          <div className="flex my-auto text-lg text-textBase">
                             <RiMegaphoneLine />
                           </div>
                           <p className="ml-4">{bullet}</p>
@@ -179,7 +179,7 @@ const Segment: FC<SegmentProps2> = ({
                     </div>
                   </div>
                   <div className="">
-                    <p className="mb-2 text-xl font-semibold text-center text-primary">
+                    <p className="mb-2 text-xl font-semibold text-center text-textBase">
                       SUMMARY
                     </p>
                     <p className="p-4 overflow-y-auto bg-baseText h-80">

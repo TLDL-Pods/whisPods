@@ -40,13 +40,13 @@ export const SegmentHeader = ({
 
   return (
     <div
-      className="flex items-center w-full h-20 gap-2 p-2 px-4 md:text-xl lg:text-2xl bg-gradient-to-b to-neutral-950 from-neutral-900"
+      className="flex items-center h-24 py-2 md:text-xl lg:text-2xl bg-gradient-to-b to-base from-base1 w-full md:w-[768px]"
       onClick={() => handleSegmentToggle()}
     >
       {/* Play Button */}
-      <div className="pr-1 my-2 text-center">
+      <div className=" text-center w-1/12 min-w-fit px-2">
         <button
-          className="text-4xl text-primary hover:text-secondary"
+          className="text-4xl text-accent hover:text-secondary "
           onClick={openVideoDrawer}
         >
           <FaPlayCircle />
@@ -54,7 +54,7 @@ export const SegmentHeader = ({
       </div>
 
       {/* INDEX */}
-      <div className="px-1 font-semibold text-center grow-0 text-primary">
+      <div className="font-semibold text-center grow-0 text-secondary w-1/12 px-2 min-w-fit">
         <p>
           {isOrganizedByLength
             ? `${Math.floor(segment.segment_length_ms / 60000)}:${(
@@ -67,9 +67,8 @@ export const SegmentHeader = ({
         </p>
       </div>
       {/* HEADLINE*/}
-      <div className="content-center flex-grow my-auto font-semibold text-white text-balance">
-        <span>{segment.segment_title}</span>
-        {/* Share Button */}
+      <div className="flex items-start text-ellipsis my-auto font-semibold text-textBase w-10/12 max-h-16 h-16 px-2">
+        <span className="my-auto text-left">{segment.segment_title}</span>
       </div>
     </div>
   );
