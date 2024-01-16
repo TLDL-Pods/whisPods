@@ -74,10 +74,10 @@ const YoutubeDrawer: React.FC = () => {
       </div>
 
       <div
-        className={`hidden sm:flex flex-col w-1/3 items-center justify-center bg-stone-900 text-white`}
+        className={`hidden sm:flex flex-col w-1/3 items-center justify-center bg-base1 text-baseText`}
       >
         <div className="h-1">
-          <p className="pl-4 my-4 text-xl text-bold ">TLDL </p>
+          <p className="pl-4 my-4 text-2xl text-bold ">TLDL </p>
           <p className="pl-4 my-4 text-md ">
             {state.currentSegment && state.currentSegment.summary}{' '}
           </p>
