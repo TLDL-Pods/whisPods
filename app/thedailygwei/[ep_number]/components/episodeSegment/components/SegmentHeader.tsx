@@ -40,13 +40,13 @@ export const SegmentHeader = ({
 
   return (
     <div
-      className="flex items-center h-24 py-2 md:text-xl lg:text-2xl bg-gradient-to-b to-base from-base1 w-full md:w-[768px]"
+      className="flex items-center h-24 md:text-xl lg:text-2xl bg-gradient-to-b to-base from-base1 w-full md:w-[768px] my-1"
       onClick={() => handleSegmentToggle()}
     >
       {/* Play Button */}
-      <div className=" text-center w-1/12 min-w-fit px-2">
+      <div className=" text-center w-1/12 min-w-fit h-full px-2 bg-base2 flex">
         <button
-          className="text-4xl text-accent hover:text-secondary "
+          className="text-4xl text-accent hover:text-secondary m-auto"
           onClick={openVideoDrawer}
         >
           <FaPlayCircle />
@@ -54,8 +54,12 @@ export const SegmentHeader = ({
       </div>
 
       {/* INDEX */}
-      <div className="font-semibold text-center grow-0 text-secondary w-1/12 px-2 min-w-fit">
-        <p>
+      <div
+        className={`font-semibold text-center grow-0 text-secondary w-20 px-2 min-w-fit border-r border-white border-base3 bg-base2 h-full flex ${
+          isOrganizedByLength ? ' w-20' : 'w-10'
+        }`}
+      >
+        <p className=" m-auto">
           {isOrganizedByLength
             ? `${Math.floor(segment.segment_length_ms / 60000)}:${(
                 (segment.segment_length_ms % 60000) /
@@ -63,7 +67,7 @@ export const SegmentHeader = ({
               )
                 .toFixed(0)
                 .padStart(2, '0')}`
-            : segmentNumber + 1 + '.'}
+            : segmentNumber + 1}
         </p>
       </div>
       {/* HEADLINE*/}

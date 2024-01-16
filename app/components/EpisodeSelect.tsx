@@ -29,17 +29,17 @@ export default function EpisodeSelect({ episode }: EpisodeSelectProps) {
               {episode.release_date}
             </span>
           </div>
-          <div className="w-24 h-16 mr-1 lg:w-64 lg:h-auto lg:p-4">
+          <div className="w-24 h-16 min-w-min mr-1 lg:w-64 lg:h-auto lg:p-4">
             {/* Image container */}
             <Image
               src={TDG}
               alt="Background"
-              className="object-cover w-full h-full"
+              className="object-cover w-16 h-16 lg:h-full lg:w-64"
             />
           </div>
 
           <div className="w-full">
-            <div className="lg:text-2xl lg:text-left text-textBase">
+            <div className="lg:text-2xl lg:text-left text-textBase line-clamp-2">
               {episode.episode_title
                 ? episode.episode_title.toUpperCase()
                 : null}

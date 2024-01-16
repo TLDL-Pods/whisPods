@@ -39,12 +39,12 @@ export default function EpisodeHeader({
           </h3>
         </div>
       </div>
-      <div className="md:max-w-[768px] lg:mx-auto mt-2">
-        <div className="flex justify-between mx-4">
+      <div className="md:max-w-[768px] lg:mx-auto">
+        <div className="flex justify-between">
           {/* Back to Episodes button */}
           <button
             onClick={() => router.push('/')}
-            className="font-bold text-white rounded hover:bg-stone-900"
+            className="font-bold text-white hover:bg-stone-900 border border-white border-opacity-40 hover:border-opacity-100 px-6 py-1"
           >
             <IoArrowBack size={24} className="inline-block" />
           </button>

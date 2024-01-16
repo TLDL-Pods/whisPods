@@ -40,7 +40,7 @@ export default function SegmentsList({
             .map((segment, index) => (
               <div
                 key={segment.segment_number}
-                className="border-b border-white border-opacity-40 bg-base"
+                className="border-b border-white border-opacity-30 bg-base"
               >
                 <EpisodeSegment
                   segment={segment}
