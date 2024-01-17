@@ -15,13 +15,13 @@ export default function EpisodeSelect({ episode }: EpisodeSelectProps) {
 
   return (
     <Link href={`/thedailygwei/${episode.episode_number}`}>
-      <div className="flex my-1 flex-col flex-grow w-full min-h-full text-center transition-all duration-500 bg-gradient-to-r from-transparent via-base2 to-transparent border-b border-opacity-40 border-white hover:bg-base2 py-2">
+      <div className="flex my-1 flex-col flex-grow w-full min-h-full text-center transition-all duration-500 bg-gradient-to-r from-transparent via-base1 to-transparent border-b border-opacity-40 border-white hover:bg-base2 py-2">
         {/* Image, Episode Number, and Date for mobile */}
         <div className="h-full w-4 bg-purple-600"></div>
 
         <div className="flex items-center mx-auto w-full lg:p-0 p-2">
           <div className="flex flex-col mr-2 w-32 items-center">
-            <span className=" font-bold text-accent lg:text-2xl lg:border-b border-accent border-opacity-40 w-fit lg:pb-1 lg:mb-2">
+            <span className=" font-bold text-accent lg:text-2xl lg:border-b-2 border-accent border-opacity-40 w-fit lg:pb-1 lg:mb-2">
               {episode.episode_number}
             </span>
             <span className="text-xs text-secondary text-opacity-80 lg:text-sm">

@@ -21,7 +21,7 @@ export const SummarySlider = ({ segment }: SummarySliderProps) => {
 
   return (
     <div className="flex flex-col w-full p-3 mx-auto text-baseText">
-      <Slider {...sliderSettings} className="mx-auto w-72 md:w-1/2">
+      <Slider {...sliderSettings} className="mx-auto w-72 md:w-1/2 max-w-md">
         <div className="flex flex-col justify-between w-full py-8">
           <p className="mb-2 text-2xl font-semibold text-baseText text-center ">
             TLDL

@@ -78,7 +78,9 @@ const EpisodeSegment: FC<EpisodeSegmentProps> = ({
         {showSegmentIndex === segmentNumber && (
           <div className="flex-col w-full max-w-full pb-8 shadow-inner shadow-black md-text-l bg-base1 text-accent relative">
             <button
-              className="absolute flex items-center justify-center px-4 font-bold text-primary rounded top-7 right-2 hover:bg-baseText2"
+              className={`border border-white bg-base1 hover:bg-base1 border-opacity-40 duration-500 md:hover:border-opacity-100 px-6 py-1 absolute flex items-center justify-center shadow-lg font-bold text-primary rounded top-7 ${
+                copySuccess === true ? 'shadow-transparent ' : 'shadow-black'
+              } right-4 xl:right-52 hover:bg-baseText2`}
               onClick={() =>
                 handleShare({ segment, youtube_url, setCopySuccess })
               }

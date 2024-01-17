@@ -48,13 +48,10 @@ export default function Home() {
 
   return (
     <div className="flex-col justify-center w-full h-full p-4 mx-auto xl:w-[1200px]">
-      {/* Header */}
-      <header className="p-4 text-baseText bg-base"></header>
-
       {/* Episodes or Search Results */}
       <div className="">
         <Link href={`/thedailygwei`}>
-          <div className="text-lg mb-6 font-semibold text-center md:text-xl lg:text-3xl text-accent hover:opacity-90 w-fit mx-auto duration-100">
+          <div className="text-xl py-4 text-center md:text-xl lg:text-3xl text-secondary hover:opacity-90 duration-300">
             The Daily Gwei Refuel
           </div>
         </Link>
