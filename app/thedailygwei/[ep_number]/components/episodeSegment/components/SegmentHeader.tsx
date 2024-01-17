@@ -40,7 +40,7 @@ export const SegmentHeader = ({
 
   return (
     <div
-      className="flex items-center h-24 md:text-xl lg:text-2xl bg-gradient-to-r to-transparent via-base2 from-transparent hover:bg-base3 duration-300 w-full md:w-[1200px] my-1 group"
+      className="flex items-center h-24 md:text-xl lg:text-2xl bg-gradient-to-r from-transparent to-transparent via-base1 hover:bg-base3 duration-300 w-full md:w-[1200px] my-1 group"
       onClick={() => handleSegmentToggle()}
     >
       {/* Play Button */}
