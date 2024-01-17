@@ -55,7 +55,7 @@ export const SegmentHeader = ({
 
       {/* INDEX */}
       <div
-        className={`font-semibold text-center grow-0 text-secondary w-20 px-2 min-w-fit border-r border-white border-base3 bg-base2 h-full flex ${
+        className={`font-semibold text-center grow-0 text-secondary w-20 px-2 min-w-fit border-r border-base3 bg-base2 h-full flex ${
           isOrganizedByLength ? ' w-20' : 'w-10'
         }`}
       >

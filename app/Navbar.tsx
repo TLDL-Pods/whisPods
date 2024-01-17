@@ -35,7 +35,9 @@ export default function Navbar({ children }: { children: React.ReactNode }) {
       <div className="w-screen h-full text-baseText">{children}</div>
       <div
         className={`${
-          state.isVideoModalOpen ? 'h-[350px] border-t border-primary' : 'h-0'
+          state.isVideoModalOpen
+            ? 'h-[350px] border-t border-white border-opacity-40'
+            : 'h-0'
         } w-full bottom-0 fixed bg-base1  duration-300`}
       >
         <YoutubeDrawer />
