@@ -30,7 +30,7 @@ export default function Home() {
               </div>
               {/* Info on the right */}
               <div className="max-w-md break-words">
-                <h1 className="text-xl text-center text-violet-200">
+                <h1 className="text-xl text-center text-accent">
                   The Daily Gwei Refuel
                 </h1>
                 <p className="text-sm text-center text-gray-400">
@@ -58,7 +58,7 @@ export default function Home() {
               </div>
               {/* Info on the right */}
               <div className="max-w-md break-words">
-                <h1 className="text-xl text-center text-violet-200">
+                <h1 className="text-xl text-center text-accent">
                   Anthony Sassano
                 </h1>
                 <p className="text-sm text-center text-gray-400">

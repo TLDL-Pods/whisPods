@@ -1,10 +1,10 @@
-"use client";
-import { useState, useEffect, FC } from "react";
-import { useSearchParams } from "next/navigation";
-import { SearchBar } from "@/app/components/SearchBar";
-import { EpisodeProps } from "@/types";
-import SearchSegment from "@/app/components/SearchSegment";
-import { FaWindowMinimize } from "react-icons/fa";
+'use client';
+import { useState, useEffect, FC } from 'react';
+import { useSearchParams } from 'next/navigation';
+import { SearchBar } from '@/app/components/SearchBar';
+import { EpisodeProps } from '@/types';
+import SearchSegment from '@/app/components/SearchSegment';
+import { FaWindowMinimize } from 'react-icons/fa';
 
 const SearchPage: FC = () => {
   const [episodes, setEpisodes] = useState<EpisodeProps[]>([]);
@@ -15,18 +15,18 @@ const SearchPage: FC = () => {
   const searchParams = useSearchParams();
 
   // Get the searchTerm from the URL query parameters.
-  const searchTerm = searchParams.get("search");
+  const searchTerm = searchParams.get('search');
 
   const performSearch = async (term: string) => {
     try {
-      console.log("term", term);
+      console.log('term', term);
       const response = await fetch(`/api/search/${encodeURIComponent(term)}`);
       const data = await response.json();
       if (data && Array.isArray(data.data)) {
         setEpisodes(data.data);
       }
     } catch (error) {
-      console.error("Error fetching search results:", error);
+      console.error('Error fetching search results:', error);
     }
   };
 
@@ -49,7 +49,7 @@ const SearchPage: FC = () => {
             className="relative p-2 mb-3 border rounded shadow"
             onClick={() =>
               setSelectedEpisodeIndex(
-                index === selectedEpisodeIndex ? null : index
+                index === selectedEpisodeIndex ? null : index,
               )
             }
           >
@@ -66,7 +66,7 @@ const SearchPage: FC = () => {
               </button>
             )}
 
-            <div className="p-2 bg-gray-800 rounded">
+            <div className="p-2 bg-baseText2 rounded">
               <h1 className="text-xl font-semibold">
                 {episode.episode_number}: {episode.episode_title}
               </h1>
@@ -75,12 +75,12 @@ const SearchPage: FC = () => {
 
             {episode.matchedSegmentNumbers.map((segmentNumber) => {
               const matchedSegment = episode.episode_data.find(
-                (segment) => segment.segment_number === segmentNumber
+                (segment) => segment.segment_number === segmentNumber,
               );
 
               return (
                 <div key={segmentNumber}>
-                  <h3 className="text-lg font-bold text-violet-400">Title:</h3>
+                  <h3 className="text-lg font-bold text-textBase">Title:</h3>
 
                   <h2 className="pt-1 text-lg font-semibold ">
                     {matchedSegment?.headline}

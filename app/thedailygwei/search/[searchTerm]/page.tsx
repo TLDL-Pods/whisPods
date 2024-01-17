@@ -59,7 +59,7 @@ export default function SearchTermPage({
               </button>
             )}
 
-            <div className="p-2 bg-gray-800 rounded">
+            <div className="p-2 bg-baseText2 rounded">
               <h1 className="text-xl font-semibold">
                 {episode.episode_number}: {episode.episode_title}
               </h1>
@@ -73,7 +73,7 @@ export default function SearchTermPage({
 
               return (
                 <div key={segmentNumber}>
-                  <h3 className="text-lg font-bold text-violet-400">Title:</h3>
+                  <h3 className="text-lg font-bold text-textBase">Title:</h3>
 
                   <h2 className="pt-1 text-lg font-semibold ">
                     {matchedSegment?.headline}

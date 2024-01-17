@@ -17,6 +17,26 @@ const SearchResults: React.FC<SearchResultsProps> = ({ episodes }) => {
     number | null
   >(null);
   const [isTweetLoaded, setIsTweetLoaded] = useState<boolean>(false);
+  const [expandedSegment, setExpandedSegment] = useState<number | null>(null);
+
+  const handleSegmentClick = (
+    episodeIndex: number,
+    segmentNumber: number,
+    event: React.MouseEvent,
+  ) => {
+    console.log('handleSegmentClick', episodeIndex, segmentNumber);
+    // event.stopPropagation(); // Prevents the episode click event
+    if (
+      selectedEpisodeIndex === episodeIndex &&
+      expandedSegment === segmentNumber
+    ) {
+      // Close the segment if it's already open
+      setExpandedSegment(null);
+    } else {
+      // Open the clicked segment
+      setExpandedSegment(segmentNumber);
+    }
+  };
 
   return (
     <div className="container p-4 mx-auto">
@@ -28,7 +48,7 @@ const SearchResults: React.FC<SearchResultsProps> = ({ episodes }) => {
               className="relative p-2 mb-3 border rounded shadow"
               onClick={() =>
                 setSelectedEpisodeIndex(
-                  index === selectedEpisodeIndex ? null : index
+                  index === selectedEpisodeIndex ? null : index,
                 )
               }
             >
@@ -45,7 +65,7 @@ const SearchResults: React.FC<SearchResultsProps> = ({ episodes }) => {
                 </button>
               )}
 
-              <div className="flex items-center p-2 bg-gray-800 rounded">
+              <div className="flex items-center p-2 bg-baseText2 rounded">
                 <Image
                   src={TDG}
                   alt="The Daily Gwei"
@@ -68,12 +88,15 @@ const SearchResults: React.FC<SearchResultsProps> = ({ episodes }) => {
 
               {episode.matchedSegmentNumbers.map((segmentNumber) => {
                 const matchedSegment = episode.episode_data.find(
-                  (segment) => segment.segment_number === segmentNumber
+                  (segment) => segment.segment_number === segmentNumber,
                 );
 
                 return (
-                  <div key={segmentNumber}>
-                    <h3 className="text-lg font-bold text-violet-400">
+                  <div
+                    key={segmentNumber}
+                    onClick={(e) => handleSegmentClick(index, segmentNumber, e)}
+                  >
+                    <h3 className="text-lg font-bold text-textBase">
                       {matchedSegment?.headline}
                     </h3>
 
@@ -82,41 +105,43 @@ const SearchResults: React.FC<SearchResultsProps> = ({ episodes }) => {
                     </p>
 
                     {/* Render expanded segment details if episode is selected */}
-                    {selectedEpisodeIndex === index && matchedSegment && (
-                      <li
-                        onClick={(event) => event.stopPropagation()}
-                        className="pl-0 list-none"
-                      >
-                        {/* Sources */}
-                        <div className="mt-4 ">
-                          <div className="">
-                            {/* Embed Tweet */}
-                            {matchedSegment.URL &&
-                              matchedSegment.URL.map((url) => {
-                                const tweetId = getTweetIdFromUrl(url);
-                                if (tweetId) {
-                                  return (
-                                    <TweetEmbed
-                                      key={url}
-                                      url={url}
-                                      isTweetLoaded={isTweetLoaded}
-                                      setIsTweetLoaded={setIsTweetLoaded}
-                                    />
-                                  );
-                                }
-                                return null; // Show nothing for non-Twitter URLs
-                              })}
+                    {selectedEpisodeIndex === index &&
+                      expandedSegment === segmentNumber &&
+                      matchedSegment && (
+                        <li
+                          onClick={(event) => event.stopPropagation()}
+                          className="pl-0 list-none"
+                        >
+                          {/* Sources */}
+                          <div className="mt-4 ">
+                            <div className="">
+                              {/* Embed Tweet */}
+                              {matchedSegment.URL &&
+                                matchedSegment.URL.map((url) => {
+                                  const tweetId = getTweetIdFromUrl(url);
+                                  if (tweetId) {
+                                    return (
+                                      <TweetEmbed
+                                        key={url}
+                                        url={url}
+                                        isTweetLoaded={isTweetLoaded}
+                                        setIsTweetLoaded={setIsTweetLoaded}
+                                      />
+                                    );
+                                  }
+                                  return null; // Show nothing for non-Twitter URLs
+                                })}
+                            </div>
                           </div>
-                        </div>
 
-                        <YouTubeEmbed
-                          youtubeUrl={episode.youtube_url}
-                          startTimeMs={matchedSegment.start_time_ms}
-                          maxWidth="screen-sm"
-                        />
-                      </li>
-                    )}
-                    {/* White separator line */}
+                          <YouTubeEmbed
+                            youtubeUrl={episode.youtube_url}
+                            startTimeMs={matchedSegment.start_time_ms}
+                            maxWidth="screen-sm"
+                          />
+                        </li>
+                      )}
+                    {/* Segment separator line */}
                     {segmentNumber !==
                       episode.matchedSegmentNumbers[
                         episode.matchedSegmentNumbers.length - 1

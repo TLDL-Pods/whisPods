@@ -74,10 +74,10 @@ const YoutubeDrawer: React.FC = () => {
       </div>
 
       <div
-        className={`hidden sm:flex flex-col w-1/3 items-center justify-center bg-stone-900 text-white`}
+        className={`hidden sm:flex flex-col w-1/3 items-center justify-center bg-base1 text-baseText`}
       >
         <div className="h-1">
-          <p className="pl-4 my-4 text-xl text-bold ">TLDL </p>
+          <p className="pl-4 my-4 text-2xl text-bold ">TLDL </p>
           <p className="pl-4 my-4 text-md ">
             {state.currentSegment && state.currentSegment.summary}{' '}
           </p>
@@ -85,7 +85,9 @@ const YoutubeDrawer: React.FC = () => {
         <div className="h-full"></div>
       </div>
       <button
-        className="absolute px-1 text-md text-red-600 border border-red-400 right-1 top-2"
+        className={`${
+          state.isVideoModalOpen ? 'block' : 'hidden'
+        } absolute px-1 text-md text-red-400 hover:bg-base3 text-center duration-300 border border-white border-opacity-40 hover:border-opacity-100 bg-base1 right-0 -top-8 w-8 md:w-16 h-8`}
         onClick={() => {
           setState({
             ...state,

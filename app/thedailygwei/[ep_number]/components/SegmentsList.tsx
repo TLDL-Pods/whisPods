@@ -4,7 +4,6 @@ import { useState, useRef } from 'react';
 import EpisodeSegment from '@/app/thedailygwei/[ep_number]/components/episodeSegment/EpisodeSegment';
 import { useApp } from '@/app/hooks/useApp';
 
-
 interface SegmentsListProps {
   isOrganizedByLength: boolean;
   currentEpisode: EpisodeProps;
@@ -19,9 +18,11 @@ export default function SegmentsList({
   >(null);
   const [showSegmentIndex, setShowSegmentIndex] = useState<number | null>(null);
   const segmentRefs = useRef<Array<React.RefObject<HTMLDivElement>>>([]);
-  const { state,  } = useApp();
+  const { state } = useApp();
 
-  const containerClass = state.isVideoModalOpen ? 'pb-[350px] overflow-y-auto' : 'overflow-y-hidden';
+  const containerClass = state.isVideoModalOpen
+    ? 'pb-[350px] overflow-y-auto'
+    : 'overflow-y-hidden';
 
   return (
     <div className="relative flex flex-col justify-center h-full min-w-screen">
@@ -39,7 +40,7 @@ export default function SegmentsList({
             .map((segment, index) => (
               <div
                 key={segment.segment_number}
-                className=" border-y border-violet-100 border-opacity-60 bg-neutral-950"
+                className="border-b border-white border-opacity-30 bg-base"
               >
                 <EpisodeSegment
                   segment={segment}

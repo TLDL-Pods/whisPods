@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
-import React, { useState, useEffect } from "react";
-import YouTube from "react-youtube";
+import React, { useState, useEffect } from 'react';
+import YouTube from 'react-youtube';
 
 const VideoPopup: React.FC = () => {
   const [showVideo, setShowVideo] = useState(false);
-  const [youtubeId, setYoutubeId] = useState("");
+  const [youtubeId, setYoutubeId] = useState('');
   const [startTime, setStartTime] = useState(0);
 
   const handleYoutubeIdChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -17,8 +17,8 @@ const VideoPopup: React.FC = () => {
   };
 
   const videoOptions = {
-    height: "315",
-    width: "500",
+    height: '315',
+    width: '500',
     playerVars: {
       autoplay: 1,
       start: startTime,
@@ -52,7 +52,7 @@ const VideoPopup: React.FC = () => {
       {showVideo && (
         <div
           className="w-[500px] h-[315px] bg-orange-600 block"
-          style={{ backgroundColor: "#D05F27" }}
+          style={{ backgroundColor: '#D05F27' }}
         >
           <YouTube videoId={youtubeId} opts={videoOptions} />
           <button

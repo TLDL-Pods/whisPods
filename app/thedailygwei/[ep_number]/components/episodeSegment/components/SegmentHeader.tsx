@@ -25,7 +25,7 @@ export const SegmentHeader = ({
   // Toggle segment detail view
   const handleSegmentToggle = () => {
     setShowSegmentIndex(
-      showSegmentIndex === segmentNumber ? null : segmentNumber
+      showSegmentIndex === segmentNumber ? null : segmentNumber,
     );
   };
 
@@ -40,13 +40,14 @@ export const SegmentHeader = ({
 
   return (
     <div
-      className="flex items-center w-full h-20 gap-2 p-2 px-4 md:text-xl lg:text-2xl bg-gradient-to-b to-neutral-950 from-neutral-900"
+      className="flex items-center h-24 md:text-xl lg:text-2xl bg-gradient-to-r from-transparent to-transparent via-base1 hover:bg-base3 duration-300 w-full xl:w-[1200px] my-1 group"
       onClick={() => handleSegmentToggle()}
     >
       {/* Play Button */}
-      <div className="pr-1 my-2 text-center">
+      <div className="w-2 h-full bg-base1 group-hover:bg-secondary duration-500"></div>
+      <div className=" text-center w-16 min-w-fit h-full px-2 bg-base2 flex">
         <button
-          className="text-4xl text-violet-400 hover:text-violet-300"
+          className="text-4xl text-accent hover:text-secondary m-auto duration-300"
           onClick={openVideoDrawer}
         >
           <FaPlayCircle />
@@ -54,8 +55,12 @@ export const SegmentHeader = ({
       </div>
 
       {/* INDEX */}
-      <div className="px-1 font-semibold text-center grow-0 text-violet-400">
-        <p>
+      <div
+        className={`font-semibold text-center grow-0 text-secondary w-20 px-2 min-w-fit border-r border-base3 bg-base2 h-full flex ${
+          isOrganizedByLength ? ' w-20' : 'w-10'
+        }`}
+      >
+        <p className=" m-auto">
           {isOrganizedByLength
             ? `${Math.floor(segment.segment_length_ms / 60000)}:${(
                 (segment.segment_length_ms % 60000) /
@@ -63,13 +68,14 @@ export const SegmentHeader = ({
               )
                 .toFixed(0)
                 .padStart(2, '0')}`
-            : segmentNumber + 1 + '.'}
+            : segmentNumber + 1}
         </p>
       </div>
       {/* HEADLINE*/}
-      <div className="content-center flex-grow my-auto font-semibold text-white text-balance">
-        <span>{segment.segment_title}</span>
-        {/* Share Button */}
+      <div className="flex items-start my-auto text-textBase w-10/12 max-h-16 h-16 px-4">
+        <span className="line-clamp-2 my-auto text-left">
+          {segment.segment_title}
+        </span>
       </div>
     </div>
   );

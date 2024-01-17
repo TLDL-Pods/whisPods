@@ -1,4 +1,5 @@
 import { SegmentProps } from '@/types';
+import { GiSoundWaves } from 'react-icons/gi';
 import { RiMegaphoneLine } from 'react-icons/ri';
 import Slider from 'react-slick';
 
@@ -19,18 +20,17 @@ export const SummarySlider = ({ segment }: SummarySliderProps) => {
   const sliderContentArray = [...segment.bullets, segment.summary];
 
   return (
-    <div className="flex flex-col w-full p-3 mx-auto shadow-inner shadow-black text-violet-100">
-      <Slider {...sliderSettings} className="mx-auto w-80 md:w-4/5">
-        <div className="flex flex-col justify-between w-full">
-          <p className="mb-2 text-xl font-semibold text-center">TLDL</p>
+    <div className="flex flex-col w-full p-3 mx-auto text-baseText">
+      <Slider {...sliderSettings} className="mx-auto w-72 md:w-1/2 max-w-md">
+        <div className="flex flex-col justify-between w-full py-8">
+          <p className="mb-2 text-2xl font-semibold text-baseText text-center ">
+            TLDL
+          </p>
 
-          <div className="flex flex-col space-y-1">
+          <div className="flex flex-col space-y-1 w-full ">
             {sliderContentArray.slice(0, -1).map((bullet, idx) => (
-              <div
-                key={idx}
-                className="flex p-2 my-auto border-y border-violet-100 border-opacity-60 bg-zinc-950"
-              >
-                <div className="flex my-auto text-lg text-violet-400">
+              <div key={idx} className="flex p-2 my-auto0 bg-base rounded-lg">
+                <div className="flex my-auto text-lg text-textBase">
                   <RiMegaphoneLine />
                 </div>
                 <p className="ml-4">{bullet}</p>
@@ -38,11 +38,9 @@ export const SummarySlider = ({ segment }: SummarySliderProps) => {
             ))}
           </div>
         </div>
-        <div className="">
-          <p className="mb-2 text-xl font-semibold text-center text-violet-400">
-            SUMMARY
-          </p>
-          <p className="p-4 overflow-y-auto bg-zinc-950 h-80">
+        <div className="text-textBase">
+          <p className="mb-2 text-xl font-semibold text-center">SUMMARY</p>
+          <p className="p-4 overflow-y-auto bg-base text-baseText h-80 rounded-lg">
             {sliderContentArray[sliderContentArray.length - 1]}
           </p>
         </div>

@@ -51,6 +51,7 @@ export interface AppState {
   currentSegment: SegmentProps | null;
   currentYouTubeVideo: string | null;
   hasSearched: boolean;
+  isMenuModalOpen: boolean;
 }
 
 export interface YouTubePlayerEvent {

@@ -1,15 +1,15 @@
-"use client";
-import React, { FC, useState, useEffect } from "react";
-import { FaCheck } from "react-icons/fa";
-import { SegmentProps } from "@/types";
-import TweetEmbed from "../../../../components/TweetEmbed";
+'use client';
+import React, { FC, useState, useEffect } from 'react';
+import { FaCheck } from 'react-icons/fa';
+import { SegmentProps } from '@/types';
+import TweetEmbed from '../../../../components/TweetEmbed';
 
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-import { FiShare } from "react-icons/fi";
-import { handleShare } from "../../../../utils/handleShare";
-import SummarySlider from "./components/SummarySlider";
-import SegmentHeader from "./components/SegmentHeader";
+import 'slick-carousel/slick/slick.css';
+import 'slick-carousel/slick/slick-theme.css';
+import { FiShare } from 'react-icons/fi';
+import { handleShare } from '../../../../utils/handleShare';
+import SummarySlider from './components/SummarySlider';
+import SegmentHeader from './components/SegmentHeader';
 
 interface EpisodeSegmentProps {
   segment: SegmentProps;
@@ -62,7 +62,7 @@ const EpisodeSegment: FC<EpisodeSegmentProps> = ({
   return (
     <div
       id={`${segment.segment_number}`}
-      className="align-middle md:max-w-[768px] relative shadow-inner shadow-black"
+      className="align-middle xl:max-w-[1200px] relative shadow-inner shadow-black"
       key={segment.segment_number}
     >
       <li className="cursor-pointer">
@@ -76,44 +76,48 @@ const EpisodeSegment: FC<EpisodeSegmentProps> = ({
         />
 
         {showSegmentIndex === segmentNumber && (
-          <div className="">
-            <div className="flex-col w-full max-w-full pb-4 shadow-inner shadow-black md-text-l text-violet-200 bg-gradient-to-b to-neutral-900 from-neutral-800 ">
-              <button
-                className="absolute flex items-center justify-center px-4 py-2 font-bold text-white rounded top-7 right-2 hover:bg-zinc-700"
-                onClick={() =>
-                  handleShare({ segment, youtube_url, setCopySuccess })
-                }
-              >
-                {copySuccess === true ? (
+          <div className="flex-col w-full max-w-full pb-8 shadow-inner shadow-black md-text-l bg-base1 text-accent relative">
+            <button
+              className={`border border-white bg-base1 hover:bg-base1 border-opacity-40 duration-500 md:hover:border-opacity-100 px-6 py-1 absolute flex items-center justify-center shadow-lg font-bold text-primary rounded top-7 ${
+                copySuccess === true ? 'shadow-transparent ' : 'shadow-black'
+              } right-4 xl:right-52 hover:bg-baseText2`}
+              onClick={() =>
+                handleShare({ segment, youtube_url, setCopySuccess })
+              }
+            >
+              {copySuccess === true ? (
+                <div className="text-accent">
                   <FaCheck size={20} />
-                ) : (
-                  <FiShare size={20} />
-                )}
-              </button>
-              {isTweetLoaded ? (
-                <SummarySlider segment={segment} />
+                </div>
               ) : (
-                <div className="w-full flex justify-center align-middle items-center">
-                  <div className="w-full text-center h-1/2 mt-10">
-                    <div className="spinner"></div>
-                    <p className="m-auto mt-3">Loading...</p>
-                  </div>
+                <div className="text-primary">
+                  <FiShare size={20} />
                 </div>
               )}
-
-              {/* Sources */}
-              <div className="w-full px-3 text-center">
-                {/* Embed Tweet */}
-                {segment.URL &&
-                  segment.URL.map((url, index) => (
-                    <TweetEmbed
-                      key={url}
-                      url={url}
-                      isTweetLoaded={isTweetLoaded}
-                      setIsTweetLoaded={setIsTweetLoaded}
-                    />
-                  ))}
+            </button>
+            {isTweetLoaded ? (
+              <SummarySlider segment={segment} />
+            ) : (
+              <div className="w-full flex justify-center align-middle items-center">
+                <div className="w-full text-center h-1/2 mt-10">
+                  <div className="spinner"></div>
+                  <p className="m-auto mt-3">Loading...</p>
+                </div>
               </div>
+            )}
+
+            {/* Sources */}
+            <div className="w-full px-3 text-center">
+              {/* Embed Tweet */}
+              {segment.URL &&
+                segment.URL.map((url, index) => (
+                  <TweetEmbed
+                    key={url}
+                    url={url}
+                    isTweetLoaded={isTweetLoaded}
+                    setIsTweetLoaded={setIsTweetLoaded}
+                  />
+                ))}
             </div>
           </div>
         )}

@@ -1,46 +1,133 @@
 'use client';
 
 import Link from 'next/link';
-import { GiSoundWaves } from 'react-icons/gi';
+import { GiHamburgerMenu, GiSoundWaves } from 'react-icons/gi';
 import YoutubeDrawer from './components/YoutubeDrawer';
 import { useApp } from './hooks/useApp';
+import SearchBar from './components/SearchBar';
+import { useSearch } from './hooks/useSearch';
 
 export default function Navbar({ children }: { children: React.ReactNode }) {
-  const { state } = useApp();
+  const { state, setState } = useApp();
+  const { performSearch, clearSearchResults } = useSearch();
 
   return (
-    <div className=" bg-stone-950 max-w-screen">
-      <header className="text-xl font-semibold text-gray-100 max-w-screen bg-stone-950 ">
-        <div className="flex items-center justify-between w-full p-6">
+    <div className="bg-base max-w-screen">
+      <header className="xl:fixed h-fit w-full xl:px-24 mx-auto text-xl font-semibold text-baseText max-w-screen bg-base z-40">
+        <div className="flex items-center justify-between w-full pt-2 pl-4 xl:py-4">
           {/* TLDL Title */}
           <Link href={'/'}>
-            <div className="flex items-center my-auto text-4xl font-bold cursor-pointer">
-              <GiSoundWaves className="my-auto mr-2 text-6xl" />
-              <p className="my-auto">TLDL</p>
+            <div className="flex flex-col my-auto text-4xl font-bold cursor-pointer">
+              <div className="flex">
+                <GiSoundWaves className="my-auto mr-2 text-6xl" />
+                <p className="my-auto">TLDL</p>
+              </div>
+              <h1 className="text-sm font-semibold text-right">
+                Too Long Didn't Listen
+              </h1>
             </div>
           </Link>
-
+          <div className="flex-col hidden lg:block justify-center items-center w-full md:w-1/2">
+            <div className="md:mb-0 text-center">
+              <p className="mb-4 text-normal font-light">
+                Summarization, trends, and references for Podcasts
+              </p>
+            </div>
+            <SearchBar
+              onSearch={performSearch}
+              clearSearchResults={clearSearchResults}
+            />
+          </div>
           {/* Links */}
-          <div className="flex space-x-4 max-w-screen">
-            <Link href="/podcasts" className="hover:text-gray-300">
+          <div className="space-x-4 max-w-screen hidden lg:block">
+            <Link href="/podcasts" className="hover:text-baseText1">
               Podcasts
             </Link>
-            <Link href="/about" className="hover:text-gray-300">
+            <Link href="/about" className="hover:text-baseText1">
               About
             </Link>
           </div>
         </div>
       </header>
 
-      <div className="w-screen h-full text-gray-100">{children}</div>
+      <div className="w-screen h-full text-baseText z-0 -pt-0 xl:pt-36">
+        {children}
+      </div>
       <div
         className={`${
           state.isVideoModalOpen
-            ? 'h-[350px] border-t border-violet-800'
+            ? 'h-[350px] border-t border-white border-opacity-40'
             : 'h-0'
-        } w-full bottom-0 fixed bg-stone-900  duration-300`}
+        } w-full bottom-0 fixed bg-base1  duration-300`}
       >
         <YoutubeDrawer />
+      </div>
+      <div
+        onClick={() => {
+          setState(() => ({
+            ...state,
+            isMenuModalOpen: !state.isMenuModalOpen,
+          }));
+        }}
+        className={`${
+          state.isMenuModalOpen ? 'text-secondary' : 'text-accent'
+        } fixed top-4 p-1 text-3xl duration-300 right-4 border bg-base3 w-10 h-10 z-50 lg:hidden`}
+      >
+        <GiHamburgerMenu />
+      </div>
+      <div
+        className={`${
+          state.isMenuModalOpen ? '-translate-y-36' : 'translate-y-0'
+        } fixed top-0 right-0 w-full h-36 z-40 duration-300 bg-black bg-opacity-95 border-l border border-white text-baseText border-opacity-40 lg:hidden`}
+      >
+        <div className="flex w-3/4 justify-evenly m-4 my-6">
+          <Link
+            onClick={(e) => {
+              e.stopPropagation();
+              setState(() => ({
+                ...state,
+                isMenuModalOpen: !state.isMenuModalOpen,
+              }));
+            }}
+            href="/"
+            className="hover:text-baseText1"
+          >
+            <p>Home</p>
+          </Link>
+
+          <Link
+            onClick={(e) => {
+              e.stopPropagation();
+              setState(() => ({
+                ...state,
+                isMenuModalOpen: !state.isMenuModalOpen,
+              }));
+            }}
+            href="/podcasts"
+            className="hover:text-baseText1"
+          >
+            <p>Podcasts</p>
+          </Link>
+          <Link
+            onClick={(e) => {
+              e.stopPropagation();
+              setState(() => ({
+                ...state,
+                isMenuModalOpen: !state.isMenuModalOpen,
+              }));
+            }}
+            href="/about"
+            className="hover:text-baseText1"
+          >
+            <p>About</p>
+          </Link>
+        </div>
+        <div className="w-full px-3 mt-8">
+          <SearchBar
+            onSearch={performSearch}
+            clearSearchResults={clearSearchResults}
+          />
+        </div>
       </div>
     </div>
   );

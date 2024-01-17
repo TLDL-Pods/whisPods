@@ -36,7 +36,7 @@ export default function EpisodePage({
   }
 
   return (
-    <div className="relative flex flex-col justify-center h-full min-w-screen max-w-screen">
+    <div className="relative flex flex-col justify-center h-full min-w-screen w-full max-w-screen">
       <EpisodeHeader
         isOrganizedByLength={isOrganizedByLength}
         currentEpisode={state.currentEpisode}

@@ -2,6 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  html {
+    --color-base: rgb(13, 13, 14);
+    --color-base1: rgb(28, 28, 29);
+    --color-base2: rgb(37, 37, 39);
+    --color-base3: rgb(48, 48, 51);
+    --color-baseText: #ffffff;
+    --color-baseText1: #cacaca;
+    --color-primary: rgb(247, 247, 247);
+    --color-secondary: rgb(233, 206, 240);
+    --color-accent: rgb(172, 44, 204);
+    --color-baseShadow: rgb(0, 0, 0);
+  }
+}
+
 ::-webkit-scrollbar {
   width: 5px;
 }
@@ -85,4 +100,13 @@
   100% {
     transform: rotate(360deg);
   }
+}
+
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;
 }
