@@ -14,7 +14,7 @@ export default function Navbar({ children }: { children: React.ReactNode }) {
   return (
     <div className="bg-base max-w-screen">
       <header className="fixed h-fit w-full text-xl font-semibold text-baseText max-w-screen bg-base z-40">
-        <div className="flex items-center justify-between w-full p-6">
+        <div className="flex items-center justify-between w-full p-6 py-4">
           {/* TLDL Title */}
           <Link href={'/'}>
             <div className="flex flex-col my-auto text-4xl font-bold cursor-pointer">
@@ -22,7 +22,7 @@ export default function Navbar({ children }: { children: React.ReactNode }) {
                 <GiSoundWaves className="my-auto mr-2 text-6xl" />
                 <p className="my-auto">TLDL</p>
               </div>
-              <h1 className="text-sm font-semibold text-center">
+              <h1 className="text-sm font-semibold text-right">
                 Too Long Didn't Listen
               </h1>
             </div>
