@@ -62,7 +62,7 @@ const EpisodeSegment: FC<EpisodeSegmentProps> = ({
   return (
     <div
       id={`${segment.segment_number}`}
-      className="align-middle cd:max-w-[1200px] relative shadow-inner shadow-black"
+      className="align-middle xl:max-w-[1200px] relative shadow-inner shadow-black"
       key={segment.segment_number}
     >
       <li className="cursor-pointer">
