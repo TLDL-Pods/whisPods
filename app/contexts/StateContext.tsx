@@ -11,6 +11,7 @@ export const initialState: AppState = {
   currentYouTubeVideo: null,
   hasSearched: false,
   currentSegment: null,
+  isMenuModalOpen: false,
 };
 
 export const AppStateContext = createContext<{

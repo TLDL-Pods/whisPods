@@ -40,11 +40,12 @@ export const SegmentHeader = ({
 
   return (
     <div
-      className="flex items-center h-24 md:text-xl lg:text-2xl bg-gradient-to-b to-base from-base1 w-full md:w-[768px] my-1 group"
+      className="flex items-center h-24 md:text-xl lg:text-2xl bg-gradient-to-r to-transparent via-base2 from-transparent hover:bg-base3 duration-300 w-full md:w-[1200px] my-1 group"
       onClick={() => handleSegmentToggle()}
     >
       {/* Play Button */}
-      <div className=" text-center w-1/12 min-w-fit h-full px-2 bg-base2 flex group-hover:border-l border-secondary">
+      <div className="w-2 h-full bg-base1 group-hover:bg-secondary duration-500"></div>
+      <div className=" text-center w-16 min-w-fit h-full px-2 bg-base2 flex">
         <button
           className="text-4xl text-accent hover:text-secondary m-auto duration-300"
           onClick={openVideoDrawer}

@@ -20,19 +20,16 @@ export const SummarySlider = ({ segment }: SummarySliderProps) => {
   const sliderContentArray = [...segment.bullets, segment.summary];
 
   return (
-    <div className="flex flex-col w-full p-3 mx-auto shadow-inner shadow-black text-baseText">
-      <Slider {...sliderSettings} className="mx-auto w-72 md:w-4/5">
+    <div className="flex flex-col w-full p-3 mx-auto text-baseText">
+      <Slider {...sliderSettings} className="mx-auto w-72 md:w-1/2">
         <div className="flex flex-col justify-between w-full py-8">
           <p className="mb-2 text-2xl font-semibold text-baseText text-center ">
             TLDL
           </p>
 
-          <div className="flex flex-col space-y-1">
+          <div className="flex flex-col space-y-1 w-full ">
             {sliderContentArray.slice(0, -1).map((bullet, idx) => (
-              <div
-                key={idx}
-                className="flex p-2 my-auto border border-white border-opacity-20 bg-base rounded-lg"
-              >
+              <div key={idx} className="flex p-2 my-auto0 bg-base rounded-lg">
                 <div className="flex my-auto text-lg text-textBase">
                   <RiMegaphoneLine />
                 </div>

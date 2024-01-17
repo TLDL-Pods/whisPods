@@ -39,19 +39,19 @@ export default function EpisodeHeader({
           </h3>
         </div>
       </div>
-      <div className="md:max-w-[768px] lg:mx-auto">
+      <div className="md:max-w-[1200px] lg:mx-auto">
         <div className="flex justify-between">
           {/* Back to Episodes button */}
           <button
             onClick={() => router.push('/')}
-            className="font-bold text-white hover:bg-stone-900 border border-white border-opacity-40 hover:border-opacity-100 px-6 py-1"
+            className="font-bold text-white bg-base1 hover:bg-base border duration-300 border-white border-opacity-40 hover:border-opacity-100 px-6 py-1"
           >
             <IoArrowBack size={24} className="inline-block" />
           </button>
           {/* Organize by time or order button */}
           <button
             onClick={toggleOrganization}
-            className="hover:bg-stone-900 border border-white border-opacity-40 hover:border-opacity-100 px-6 py-1"
+            className=" border border-white bg-base1 hover:bg-base border-opacity-40 duration-300 hover:border-opacity-100 px-6 py-1"
             title="Presentation order or longest first"
           >
             {isOrganizedByLength ? <ImListNumbered /> : <BiSolidTimer />}

@@ -7,6 +7,7 @@ import SearchResults from '@/app/components/SearchResults';
 import { useApp } from './hooks/useApp';
 import { useEpisodes } from './hooks/useEpisodes';
 import { useSearch } from './hooks/useSearch';
+import Link from 'next/link';
 
 export default function Home() {
   const [page, setPage] = useState(1);
@@ -46,29 +47,17 @@ export default function Home() {
   // }, [hasMore]);
 
   return (
-    <div className="flex-col justify-center w-full h-full p-4 ">
+    <div className="flex-col justify-center w-full h-full p-4 mx-auto md:w-[1200px]">
       {/* Header */}
-      <header className="p-4 text-baseText bg-base">
-        <div className="flex flex-col items-start justify-between md:flex-row md:items-center">
-          {/* Title */}
-          <div className="mb-4 md:mb-0">
-            <h1 className="text-2xl font-bold">Too Long Didn't Listen</h1>
-            <p className="mt-2">
-              Summarize, trends, and references for Podcasts
-            </p>
-          </div>
-          {/* Search Content */}
-          <div className="flex items-center w-full md:w-1/2">
-            <SearchBar
-              onSearch={performSearch}
-              clearSearchResults={clearSearchResults}
-            />
-          </div>
-        </div>
-      </header>
+      <header className="p-4 text-baseText bg-base"></header>
 
       {/* Episodes or Search Results */}
       <div className="">
+        <Link href={`/thedailygwei`}>
+          <div className="text-lg mb-6 font-semibold text-center md:text-xl lg:text-3xl text-accent hover:opacity-90 w-fit mx-auto duration-100">
+            The Daily Gwei Refuel
+          </div>
+        </Link>
         {/* <div className="pb-32"> */}
         <div className="">
           {state.hasSearched ? (
