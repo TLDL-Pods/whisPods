@@ -47,7 +47,7 @@ export default function Home() {
   // }, [hasMore]);
 
   return (
-    <div className="flex-col justify-center w-full h-full p-4 mx-auto md:w-[1200px]">
+    <div className="flex-col justify-center w-full h-full p-4 mx-auto xl:w-[1200px]">
       {/* Header */}
       <header className="p-4 text-baseText bg-base"></header>
 

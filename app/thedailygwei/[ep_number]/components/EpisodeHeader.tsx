@@ -22,7 +22,7 @@ export default function EpisodeHeader({
     <div className="w-full max-w-screen px-4">
       <div>
         <Link href={`/thedailygwei`}>
-          <div className="text-lg font-semibold text-center md:text-xl lg:text-2xl text-accent hover:opacity-90 w-fit mx-auto duration-100">
+          <div className="text-lg pt-8 md:pt-0 font-semibold text-center md:text-xl lg:text-2xl text-accent hover:opacity-90 w-fit mx-auto duration-100">
             The Daily Gwei Refuel
           </div>
         </Link>
@@ -39,7 +39,7 @@ export default function EpisodeHeader({
           </h3>
         </div>
       </div>
-      <div className="md:max-w-[1200px] lg:mx-auto">
+      <div className="md:max-w-[1200px] lg:mx-auto lg:mt-0 mt-4">
         <div className="flex justify-between">
           {/* Back to Episodes button */}
           <button

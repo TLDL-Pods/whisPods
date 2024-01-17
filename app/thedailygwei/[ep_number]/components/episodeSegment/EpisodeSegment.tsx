@@ -62,7 +62,7 @@ const EpisodeSegment: FC<EpisodeSegmentProps> = ({
   return (
     <div
       id={`${segment.segment_number}`}
-      className="align-middle md:max-w-[1200px] relative shadow-inner shadow-black"
+      className="align-middle cd:max-w-[1200px] relative shadow-inner shadow-black"
       key={segment.segment_number}
     >
       <li className="cursor-pointer">
@@ -76,7 +76,7 @@ const EpisodeSegment: FC<EpisodeSegmentProps> = ({
         />
 
         {showSegmentIndex === segmentNumber && (
-          <div className="flex-col w-full max-w-full pb-8 shadow-inner shadow-black md-text-l text-accent relative">
+          <div className="flex-col w-full max-w-full pb-8 shadow-inner shadow-black md-text-l bg-base1 text-accent relative">
             <button
               className="absolute flex items-center justify-center px-4 font-bold text-primary rounded top-7 right-2 hover:bg-baseText2"
               onClick={() =>
