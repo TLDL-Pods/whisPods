@@ -20,15 +20,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <>
-      <Suspense fallback={<div>Loading analytics...</div>}>
-        <GoogleAnalytics GA_MEASUREMENT_ID="G-Z6WGLHLZXB" />
-      </Suspense>
-      <AppStateProvider>
-        <Navbar>{children} </Navbar>
-        <CookieBanner />
-        <Analytics />
-      </AppStateProvider>
-    </>
+    <html lang="en">
+      {/* <GoogleAnalytics GA_MEASUREMENT_ID="G-Z6WGLHLZXB" /> */}
+      <body className="min-h-screen bg-base overflow-x-hidden">
+        <AppStateProvider>
+          <Navbar>{children}</Navbar>
+        </AppStateProvider>
+        {/* <CookieBanner /> */}
+        {/* <Analytics /> */}
+      </body>
+    </html>
   );
 }
