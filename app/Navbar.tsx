@@ -7,7 +7,7 @@ import { useApp } from './hooks/useApp';
 import SearchBar from './components/SearchBar';
 import { useSearch } from './hooks/useSearch';
 
-export default function Navbar({ children }: { children: React.ReactNode }) {
+export default function Navbar() {
   const { state, setState } = useApp();
   const { performSearch, clearSearchResults } = useSearch();
 
@@ -49,10 +49,6 @@ export default function Navbar({ children }: { children: React.ReactNode }) {
           </div>
         </div>
       </header>
-
-      <div className="w-screen h-full text-baseText z-0 -pt-0 xl:pt-36">
-        {children}
-      </div>
       <div
         className={`${
           state.isVideoModalOpen

@@ -22,9 +22,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       {/* <GoogleAnalytics GA_MEASUREMENT_ID="G-Z6WGLHLZXB" /> */}
-      <body className="min-h-screen bg-base overflow-x-hidden">
+      <body className="min-h-screen overflow-x-hidden bg-base">
         <AppStateProvider>
-          <Navbar>{children}</Navbar>
+          <Navbar />
+          <main className="z-0 w-screen h-full text-baseText -pt-0 xl:pt-36">
+            {children}
+          </main>
         </AppStateProvider>
         {/* <CookieBanner /> */}
         {/* <Analytics /> */}
