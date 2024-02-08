@@ -14,6 +14,7 @@ import { getTokenUrl } from 'frames.js';
 import { DEBUG_HUB_OPTIONS } from './action';
 import { useEpisodes } from '@/app/hooks/useEpisodes';
 import { useApp } from '@/app/hooks/useApp';
+import { fetchEpisodeDataUtil } from '@/app/utils/fetchEpisodeData';
 
 type frameState = {
   active: string;
@@ -36,7 +37,7 @@ export default async function Home({
   params,
   searchParams,
 }: NextServerPageProps) {
-  // const { fetchEpisodeData } = useEpisodes();
+  const episodeData = await fetchEpisodeDataUtil('722');
   // const { state, setState } = useApp();
 
   const previousFrame = getPreviousFrame<frameState>(searchParams);
@@ -100,7 +101,9 @@ export default async function Home({
         {/* <FrameImage src="https://framesjs.org/og.png" /> */}
         <FrameImage>
           <div tw="w-full h-full bg-slate-700 text-white justify-center items-center">
-            {frameMessage?.inputText ? frameMessage.inputText : 'Booty Booty'}
+            {frameMessage?.inputText
+              ? frameMessage.inputText
+              : episodeData[0]?.segment_title}
           </div>
         </FrameImage>
         <FrameInput text="put some text here" />
