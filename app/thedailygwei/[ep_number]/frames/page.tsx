@@ -17,12 +17,6 @@ type frameState = {
   count: number;
 };
 
-// Define the action type
-type frameAction = {
-  type: string;
-  // You can add other properties here depending on your actions
-};
-
 // Update the reducer function to use these types
 const reducer: FrameReducer<frameState> = (state, action) => ({
   count: state.count + 1,
@@ -55,21 +49,3 @@ const Home: NextPage<NextServerPageProps> = async ({ searchParams }) => {
 };
 
 export default Home;
-
-// type Action =
-//   | { type: 'INCREMENT' }
-//   | { type: 'DECREMENT' }
-//   | { type: 'SET', payload: number };
-
-// const reducer = (state: State, action: Action): State => {
-//   switch (action.type) {
-//     case 'INCREMENT':
-//       return { count: state.count + 1 };
-//     case 'DECREMENT':
-//       return { count: state.count - 1 };
-//     case 'SET':
-//       return { count: action.payload };
-//     default:
-//       return state;
-//   }
-// };

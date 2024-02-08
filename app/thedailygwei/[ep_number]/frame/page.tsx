@@ -36,8 +36,8 @@ export default async function Home({
   params,
   searchParams,
 }: NextServerPageProps) {
-  const { fetchEpisodeData } = useEpisodes();
-  const { state, setState } = useApp();
+  // const { fetchEpisodeData } = useEpisodes();
+  // const { state, setState } = useApp();
 
   const previousFrame = getPreviousFrame<frameState>(searchParams);
 
@@ -100,9 +100,7 @@ export default async function Home({
         {/* <FrameImage src="https://framesjs.org/og.png" /> */}
         <FrameImage>
           <div tw="w-full h-full bg-slate-700 text-white justify-center items-center">
-            {frameMessage?.inputText
-              ? frameMessage.inputText
-              : state.currentEpisode?.episode_title}
+            {frameMessage?.inputText ? frameMessage.inputText : 'Booty Booty'}
           </div>
         </FrameImage>
         <FrameInput text="put some text here" />
