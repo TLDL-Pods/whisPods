@@ -12,8 +12,6 @@ import {
 import Link from 'next/link';
 import { getTokenUrl } from 'frames.js';
 import { DEBUG_HUB_OPTIONS } from './action';
-import { useEpisodes } from '@/app/hooks/useEpisodes';
-import { useApp } from '@/app/hooks/useApp';
 import { fetchEpisodeDataUtil } from '@/app/utils/fetchEpisodeData';
 
 type frameState = {
@@ -38,7 +36,6 @@ export default async function Home({
   searchParams,
 }: NextServerPageProps) {
   const episodeData = await fetchEpisodeDataUtil('722');
-  // const { state, setState } = useApp();
 
   const previousFrame = getPreviousFrame<frameState>(searchParams);
 
