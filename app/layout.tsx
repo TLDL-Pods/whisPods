@@ -21,9 +21,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      {/* <Suspense fallback={<div>Loading Analytics...</div>}>
+      <Suspense fallback={<div>Loading Analytics...</div>}>
         <GoogleAnalytics GA_MEASUREMENT_ID="G-Z6WGLHLZXB" />
-      </Suspense> */}
+      </Suspense>
       <body className="min-h-screen overflow-x-hidden bg-base">
         <AppStateProvider>
           <Navbar />
@@ -31,8 +31,8 @@ export default function RootLayout({
             {children}
           </main>
         </AppStateProvider>
-        {/* <CookieBanner /> */}
-        {/* <Analytics /> */}
+        <CookieBanner />
+        <Analytics />
       </body>
     </html>
   );
