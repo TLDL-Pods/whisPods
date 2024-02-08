@@ -51,7 +51,7 @@ export default function Home() {
       {/* Episodes or Search Results */}
       <div className="">
         <Link href={`/thedailygwei`}>
-          <div className="text-xl py-4 text-center md:text-xl lg:text-3xl text-secondary hover:opacity-90 duration-300">
+          <div className="py-4 text-xl text-center duration-300 md:text-xl lg:text-3xl text-secondary hover:opacity-90">
             The Daily Gwei Refuel
           </div>
         </Link>
@@ -64,8 +64,8 @@ export default function Home() {
               <EpisodeSelect key={episode._id} episode={episode} />
             ))
           ) : (
-            <div className="w-full flex h-screen justify-center align-middle items-center">
-              <div className="w-full text-center h-1/2 mt-10">
+            <div className="flex items-center justify-center w-full h-screen align-middle">
+              <div className="w-full mt-10 text-center h-1/2">
                 <div className="spinner"></div>
                 <p className="m-auto mt-3">Loading...</p>
               </div>

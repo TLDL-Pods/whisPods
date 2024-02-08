@@ -13,19 +13,24 @@ export const metadata: Metadata = {
   description: "Too Long Didn't Listen",
 };
 
-export default function Layout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
-    <>
+    <html lang="en">
       <GoogleAnalytics GA_MEASUREMENT_ID="G-Z6WGLHLZXB" />
-      <AppStateProvider>
-        <main className="min-h-screen overflow-x-hidden bg-base">
-          <Navbar />
-
-          <CookieBanner />
-          <Analytics />
-          {children}
-        </main>
-      </AppStateProvider>
-    </>
+      <body className="min-h-screen overflow-x-hidden bg-base">
+        <AppStateProvider>
+          <Navbar />{' '}
+          <div className="z-0 w-screen h-full text-baseText -pt-0 xl:pt-36">
+            {children}
+          </div>
+        </AppStateProvider>
+        <CookieBanner />
+        <Analytics />
+      </body>
+    </html>
   );
 }
