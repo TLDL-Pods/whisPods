@@ -23,6 +23,7 @@
     "eslint": "8.45.0",
     "eslint-config-next": "13.4.12",
     "frames.js": "^0.4.0",
+    "fs": "0.0.1-security",
     "lodash.debounce": "^4.0.8",
     "mongo": "^0.1.0",
     "mongodb": "^5.7.0",
