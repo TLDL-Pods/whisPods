@@ -1,5 +1,6 @@
 // layout.tsx
 
+import React, { Suspense } from 'react';
 import './globals.css';
 import type { Metadata } from 'next';
 import Navbar from './Navbar';
@@ -20,7 +21,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <GoogleAnalytics GA_MEASUREMENT_ID="G-Z6WGLHLZXB" />
+      {/* <Suspense fallback={<div>Loading Analytics...</div>}>
+        <GoogleAnalytics GA_MEASUREMENT_ID="G-Z6WGLHLZXB" />
+      </Suspense> */}
       <body className="min-h-screen overflow-x-hidden bg-base">
         <AppStateProvider>
           <Navbar />
@@ -28,8 +31,8 @@ export default function RootLayout({
             {children}
           </main>
         </AppStateProvider>
-        <CookieBanner />
-        <Analytics />
+        {/* <CookieBanner /> */}
+        {/* <Analytics /> */}
       </body>
     </html>
   );
