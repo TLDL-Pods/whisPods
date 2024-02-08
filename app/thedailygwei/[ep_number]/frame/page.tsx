@@ -100,7 +100,7 @@ export default async function Home({
           <div tw="w-full h-full bg-slate-700 text-white justify-center items-center">
             {frameMessage?.inputText
               ? frameMessage.inputText
-              : episodeData[0]?.segment_title}
+              : episodeData[5]?.segment_title}
           </div>
         </FrameImage>
         <FrameInput text="put some text here" />
