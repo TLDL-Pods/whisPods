@@ -10,15 +10,8 @@ import {
   getFrameMessage,
 } from 'frames.js/next/server';
 import Link from 'next/link';
-import { HubHttpUrlOptions } from 'frames.js';
 import { getTokenUrl } from 'frames.js';
-
-const DEBUG_HUB_OPTIONS: HubHttpUrlOptions = {
-  hubHttpUrl:
-    process.env.NODE_ENV === 'development'
-      ? 'http://localhost:3000/debug/hub'
-      : undefined,
-};
+import { DEBUG_HUB_OPTIONS } from './action';
 
 type State = {
   active: string;
@@ -91,9 +84,9 @@ export default async function Home({
   return (
     <div className="p-4">
       TLDL.
-      <Link href={`/debug?url=${baseUrl}`} className="underline">
+      {/* <Link href={`/debug?url=${baseUrl}`} className="underline">
         Debug
-      </Link>
+      </Link> */}
       <FrameContainer
         postUrl="/frames"
         state={state}
