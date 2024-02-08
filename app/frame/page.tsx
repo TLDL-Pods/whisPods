@@ -13,7 +13,7 @@ import Link from 'next/link';
 import { HubHttpUrlOptions } from 'frames.js';
 import { getTokenUrl } from 'frames.js';
 
-export const DEBUG_HUB_OPTIONS: HubHttpUrlOptions = {
+const DEBUG_HUB_OPTIONS: HubHttpUrlOptions = {
   hubHttpUrl:
     process.env.NODE_ENV === 'development'
       ? 'http://localhost:3000/debug/hub'
