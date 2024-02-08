@@ -1,9 +1,9 @@
 'use client';
 import { useState, useEffect } from 'react';
 
-import { useEpisodes } from '@/app/hooks/useEpisodes';
 import SegmentsList from './components/SegmentsList';
 import EpisodeHeader from './components/EpisodeHeader';
+import { useEpisodes } from '@/app/hooks/useEpisodes';
 import { useApp } from '@/app/hooks/useApp';
 
 export default function EpisodePage({
