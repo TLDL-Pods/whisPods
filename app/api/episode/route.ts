@@ -5,15 +5,11 @@ import { getClientAndDb } from "../mongo/db";
 export const dynamic = "force-dynamic";
 
 export async function GET(req: NextRequest) {
+  console.log("GET /api/episode");
   try {
     const { client, db } = await getClientAndDb();
     const collection = db.collection("thedailygweiRecap");
 
-    // Get episode Number
-    // const episodeNumberStr: string | null =
-    //   req.nextUrl.searchParams.get("episode_number");
-
-    // const { searchParams } = new URL(req.url, "http://localhost");
     const { searchParams } = req.nextUrl;
     const episodeNumberStr = searchParams.get("episode_number");
 
