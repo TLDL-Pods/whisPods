@@ -114,13 +114,12 @@ export default async function Home({
         previousFrame={previousFrame}
       >
         <FrameImage>
-          <div tw="flex flex-col w-full h-full  text-white p-4">
-            <div tw="mb-4 flex flex-col">
-              <span tw="text-3xl">Episode {episodeData?.episode_number}: </span>
-              <span tw="text-3xl">{episodeData?.episode_title}</span>
+          <div tw="flex flex-col w-full h-full bg-slate-700 text-white p-4">
+            <div tw="text-xl mb-4 flex flex-col">
+              Episode {episodeData?.episode_number}:{' '}
+              {episodeData?.episode_title}
             </div>
 
-            {/* Decrease segment title font size */}
             <div tw="flex flex-col space-y-2">
               {segmentTitles.split('\n').map((title, index) => (
                 <div key={index} tw="flex text-left">
@@ -132,7 +131,6 @@ export default async function Home({
             </div>
           </div>
         </FrameImage>
-
         <FrameButton onClick={dispatch}>
           {frameState?.active === '1' ? 'Active' : 'Inactive'}
         </FrameButton>
