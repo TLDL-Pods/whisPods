@@ -98,21 +98,36 @@ export default async function Home({
   // then, when done, return next frame
   return (
     <div className="p-4">
-      TLDL boi
       {episodeData?.episode_title}
       {episodeData?.episode_number}
+      <div tw="w-full h-full bg-slate-700 text-white justify-center items-center flex flex-col p-4">
+        {segmentTitles.split('\n').map((title, index) => (
+          <div key={index} tw="text-center">
+            {title}
+          </div>
+        ))}
+      </div>
       <FrameContainer
         postUrl="/frames"
         state={frameState}
         previousFrame={previousFrame}
       >
         <FrameImage>
-          <div tw="w-full h-full bg-slate-700 text-white justify-center items-center flex flex-col p-4">
-            {segmentTitles.split('\n').map((title, index) => (
-              <div key={index} tw="text-center">
-                {title}
-              </div>
-            ))}
+          <div tw="w-full h-full bg-slate-700 text-white flex flex-col p-4">
+            {/* Episode title and number with larger font size */}
+            <div tw="text-xl mb-4">
+              Episode {episodeData?.episode_number}:{' '}
+              {episodeData?.episode_title}
+            </div>
+
+            {/* Segment titles left-justified with index numbers */}
+            <div tw="flex flex-col space-y-2">
+              {segmentTitles.split('\n').map((title, index) => (
+                <div key={index} tw="text-left">
+                  {index + 1}. {title}
+                </div>
+              ))}
+            </div>
           </div>
         </FrameImage>
 
