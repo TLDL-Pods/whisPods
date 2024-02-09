@@ -15,6 +15,13 @@ import { DEBUG_HUB_OPTIONS } from './action';
 import { fetchEpisodeDataUtil } from '@/app/utils/fetchEpisodeData';
 import { EpisodeProps } from '@/types';
 
+interface ExtendedServerPageProps extends NextServerPageProps {
+  params: {
+    slug: string;
+    ep_number: string;
+  };
+}
+
 type frameState = {
   active: string;
   total_button_presses: number;
@@ -35,9 +42,11 @@ const reducer: FrameReducer<frameState> = (state, action) => {
 export default async function Home({
   params,
   searchParams,
-}: NextServerPageProps) {
-  const episodeData: EpisodeProps = await fetchEpisodeDataUtil('722');
-  console.log('info: episodeData is:', episodeData.episode_title);
+}: ExtendedServerPageProps) {
+  const episodeData: EpisodeProps = await fetchEpisodeDataUtil(
+    params.ep_number
+  );
+  console.log('info: episodeData is:', episodeData.episode_number);
   const previousFrame = getPreviousFrame<frameState>(searchParams);
 
   const frameMessage = await getFrameMessage(previousFrame.postBody, {
@@ -82,25 +91,38 @@ export default async function Home({
     console.log('info: frameMessage is:', frameMessage);
   }
 
+  const segmentTitles = episodeData.episode_data
+    .map((segment) => segment.segment_title)
+    .join('\n');
+
   // then, when done, return next frame
   return (
     <div className="p-4">
       TLDL boi
       {episodeData?.episode_title}
+      {episodeData?.episode_number}
       <FrameContainer
         postUrl="/frames"
         state={frameState}
         previousFrame={previousFrame}
       >
-        {/* <FrameImage src="https://framesjs.org/og.png" /> */}
         <FrameImage>
+          <div tw="w-full h-full bg-slate-700 text-white justify-center items-center flex flex-col p-4">
+            {segmentTitles.split('\n').map((title, index) => (
+              <div key={index} tw="text-center">
+                {title}
+              </div>
+            ))}
+          </div>
+        </FrameImage>
+
+        {/* <FrameImage>
           <div tw="w-full h-full bg-slate-700 text-white justify-center items-center">
             {frameMessage?.inputText
               ? frameMessage.inputText
               : episodeData?.episode_title}
           </div>
-        </FrameImage>
-        <FrameInput text="put some text here" />
+        </FrameImage> */}
         <FrameButton onClick={dispatch}>
           {frameState?.active === '1' ? 'Active' : 'Inactive'}
         </FrameButton>
