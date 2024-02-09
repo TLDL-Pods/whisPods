@@ -115,15 +115,15 @@ export default async function Home({
       >
         <FrameImage>
           <div tw="flex flex-col bg-slate-700 text-white p-4 h-full w-full">
-            <div tw="text-l mb-4 flex flex-col">
-              <span tw="text-lg">Episode {episodeData?.episode_number}: </span>
-              <span tw="text-lg">{episodeData?.episode_title}</span>
+            <div tw="text-l mb-4 flex ">
+              <span tw="text-cl">{episodeData?.episode_number}: </span>
+              <span tw="text-xl">{episodeData?.episode_title}</span>
             </div>
 
             <div tw="flex flex-col space-y-2">
               {segmentTitles.split('\n').map((title, index) => (
                 <div key={index} tw="flex text-left">
-                  <span tw="text-base">
+                  <span tw="text-lg">
                     {index + 1}. {title}
                   </span>
                 </div>
