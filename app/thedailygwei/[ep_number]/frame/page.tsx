@@ -13,6 +13,7 @@ import Link from 'next/link';
 import { getTokenUrl } from 'frames.js';
 import { DEBUG_HUB_OPTIONS } from './action';
 import { fetchEpisodeDataUtil } from '@/app/utils/fetchEpisodeData';
+import { EpisodeProps } from '@/types';
 
 type frameState = {
   active: string;
@@ -35,8 +36,8 @@ export default async function Home({
   params,
   searchParams,
 }: NextServerPageProps) {
-  const episodeData = await fetchEpisodeDataUtil('722');
-
+  const episodeData: EpisodeProps = await fetchEpisodeDataUtil('722');
+  console.log('info: episodeData is:', episodeData.episode_title);
   const previousFrame = getPreviousFrame<frameState>(searchParams);
 
   const frameMessage = await getFrameMessage(previousFrame.postBody, {
@@ -81,15 +82,11 @@ export default async function Home({
     console.log('info: frameMessage is:', frameMessage);
   }
 
-  const baseUrl = process.env.NEXT_PUBLIC_HOST || 'http://localhost:3000';
-
   // then, when done, return next frame
   return (
     <div className="p-4">
       TLDL boi
-      {/* <Link href={`/debug?url=${baseUrl}`} className="underline">
-        Debug
-      </Link> */}
+      {episodeData?.episode_title}
       <FrameContainer
         postUrl="/frames"
         state={frameState}
@@ -100,7 +97,7 @@ export default async function Home({
           <div tw="w-full h-full bg-slate-700 text-white justify-center items-center">
             {frameMessage?.inputText
               ? frameMessage.inputText
-              : episodeData[5]?.segment_title}
+              : episodeData?.episode_title}
           </div>
         </FrameImage>
         <FrameInput text="put some text here" />
@@ -110,15 +107,7 @@ export default async function Home({
         <FrameButton onClick={dispatch}>
           {frameState?.active === '2' ? 'Active' : 'Inactive'}
         </FrameButton>
-        {/* <FrameButton
-          mint={getTokenUrl({
-            address: '0x060f3edd18c47f59bd23d063bbeb9aa4a8fec6df',
-            tokenId: '123',
-            chainId: 7777777,
-          })}
-        >
-          Mint
-        </FrameButton> */}
+
         <FrameButton href={`https://www.google.com`}>External</FrameButton>
       </FrameContainer>
     </div>
