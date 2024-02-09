@@ -114,8 +114,8 @@ export default async function Home({
         previousFrame={previousFrame}
       >
         <FrameImage>
-          <div tw="flex flex-col w-full h-full bg-slate-700 text-white p-4">
-            <div tw="text-xl mb-4 flex flex-col">
+          <div tw="aspect-w-1 aspect-h-1 flex flex-col bg-slate-700 text-white p-4">
+            <div tw="text-l mb-4 flex flex-col">
               <span tw="text-l">Episode {episodeData?.episode_number}: </span>
               <span tw="text-l">{episodeData?.episode_title}</span>
             </div>
