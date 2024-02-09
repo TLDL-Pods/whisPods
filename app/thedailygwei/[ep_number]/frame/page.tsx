@@ -25,9 +25,10 @@ interface ExtendedServerPageProps extends NextServerPageProps {
 type frameState = {
   active: string;
   total_button_presses: number;
+  count: number;
 };
 
-const initialState = { active: '1', total_button_presses: 0 };
+const initialState = { active: '1', total_button_presses: 0, count: 0 };
 
 const reducer: FrameReducer<frameState> = (state, action) => {
   return {
@@ -35,6 +36,7 @@ const reducer: FrameReducer<frameState> = (state, action) => {
     active: action.postBody?.untrustedData.buttonIndex
       ? String(action.postBody?.untrustedData.buttonIndex)
       : '1',
+    count: state.count + 1,
   };
 };
 
@@ -48,7 +50,6 @@ export default async function Home({
   );
   console.log('info: episodeData is:', episodeData.episode_number);
   const previousFrame = getPreviousFrame<frameState>(searchParams);
-
   const frameMessage = await getFrameMessage(previousFrame.postBody, {
     ...DEBUG_HUB_OPTIONS,
     fetchHubContext: true,
@@ -95,12 +96,21 @@ export default async function Home({
     .map((segment) => segment.segment_title)
     .join('\n');
 
+  // Determine the segment title based on the current count
+  // Ensure we cycle through segment titles without exceeding bounds
+  const segmentCount = episodeData.episode_data.length;
+  const currentSegmentIndex = frameState.count % segmentCount;
+  const currentSegmentTitle =
+    episodeData.episode_data[currentSegmentIndex]?.segment_title || 'No title';
+
   // then, when done, return next frame
   return (
     <div className="p-4">
       <div tw="aspect-square  bg-slate-700 text-white justify-center items-center flex flex-col p-4">
-        <div tw="text-xl mb-4">
-          Episode {episodeData?.episode_number}: {episodeData?.episode_title}
+        <div tw="mb-4 flex items-center">
+          <span tw="text-xl">
+            {episodeData?.episode_number}: {episodeData?.episode_title}
+          </span>
         </div>
         {segmentTitles.split('\n').map((title, index) => (
           <div key={index} tw="text-left">
@@ -115,31 +125,34 @@ export default async function Home({
       >
         <FrameImage>
           <div tw="flex flex-col bg-slate-700 text-white p-4 h-full w-full">
-            <div tw="text-xl mb-4 flex ">
-              <span tw="text-xl">{episodeData?.episode_number}: </span>
-              <span tw="text-xl">{episodeData?.episode_title}</span>
-            </div>
-
-            <div tw="flex flex-col space-y-2">
-              {segmentTitles.split('\n').map((title, index) => (
-                <div key={index} tw="flex text-left">
-                  <span tw="text-lg">
-                    {index + 1}. {title}
-                  </span>
-                </div>
-              ))}
+            <div tw="text-xl mb-4 flex">
+              <span>{currentSegmentTitle}</span>
             </div>
           </div>
         </FrameImage>
-        <FrameButton onClick={dispatch}>
-          {frameState?.active === '1' ? 'Active' : 'Inactive'}
-        </FrameButton>
-        <FrameButton onClick={dispatch}>
-          {frameState?.active === '2' ? 'Active' : 'Inactive'}
-        </FrameButton>
-
-        <FrameButton href={`https://www.google.com`}>External</FrameButton>
+        <FrameButton onClick={dispatch}>Next Segment</FrameButton>
       </FrameContainer>
     </div>
   );
+}
+
+{
+  /* <FrameImage>
+<div tw="flex flex-col bg-slate-700 text-white p-4 h-full w-full">
+  <div tw="text-xl mb-4 flex ">
+    <span tw="text-xl">{episodeData?.episode_number}: </span>
+    <span tw="text-xl">{episodeData?.episode_title}</span>
+  </div>
+
+  <div tw="flex flex-col space-y-2">
+    {segmentTitles.split('\n').map((title, index) => (
+      <div key={index} tw="flex text-left">
+        <span tw="text-lg">
+          {index + 1}. {title}
+        </span>
+      </div>
+    ))}
+  </div>
+</div>
+</FrameImage> */
 }
