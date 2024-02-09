@@ -119,7 +119,7 @@ export default async function Home({
         ))}
       </div>
       <FrameContainer
-        postUrl="/frames"
+        postUrl="/api/frames"
         state={frameState}
         previousFrame={previousFrame}
       >
