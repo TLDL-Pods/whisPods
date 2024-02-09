@@ -116,14 +116,14 @@ export default async function Home({
         <FrameImage>
           <div tw="flex flex-col w-full h-full bg-slate-700 text-white p-4">
             <div tw="text-xl mb-4 flex flex-col">
-              Episode {episodeData?.episode_number}:{' '}
-              {episodeData?.episode_title}
+              <span tw="text-l">Episode {episodeData?.episode_number}: </span>
+              <span tw="text-l">{episodeData?.episode_title}</span>
             </div>
 
             <div tw="flex flex-col space-y-2">
               {segmentTitles.split('\n').map((title, index) => (
                 <div key={index} tw="flex text-left">
-                  <span tw="text-sm">
+                  <span tw="text-m">
                     {index + 1}. {title}
                   </span>
                 </div>
