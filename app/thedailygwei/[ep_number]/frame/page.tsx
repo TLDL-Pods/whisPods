@@ -114,22 +114,24 @@ export default async function Home({
         previousFrame={previousFrame}
       >
         <FrameImage>
-          <div tw="w-full h-full bg-slate-700 text-white justify-center items-center flex flex-col p-4">
-            {segmentTitles.split('\n').map((title, index) => (
-              <div key={index} tw="text-center">
-                {title}
-              </div>
-            ))}
+          <div tw="flex flex-col w-full h-full bg-slate-700 text-white p-4">
+            <div tw="text-xl mb-4 flex flex-col">
+              Episode {episodeData?.episode_number}:{' '}
+              {episodeData?.episode_title}
+            </div>
+
+            <div tw="flex flex-col space-y-2">
+              {segmentTitles.split('\n').map((title, index) => (
+                <div key={index} tw="flex text-left">
+                  <span>
+                    {index + 1}. {title}
+                  </span>
+                </div>
+              ))}
+            </div>
           </div>
         </FrameImage>
 
-        {/* <FrameImage>
-          <div tw="w-full h-full bg-slate-700 text-white justify-center items-center">
-            {frameMessage?.inputText
-              ? frameMessage.inputText
-              : episodeData?.episode_title}
-          </div>
-        </FrameImage> */}
         <FrameButton onClick={dispatch}>
           {frameState?.active === '1' ? 'Active' : 'Inactive'}
         </FrameButton>
