@@ -98,7 +98,7 @@ export default async function Home({
   // then, when done, return next frame
   return (
     <div className="p-4">
-      <div tw="w-full h-full bg-slate-700 text-white justify-center items-center flex flex-col p-4">
+      <div tw="aspect-square  bg-slate-700 text-white justify-center items-center flex flex-col p-4">
         <div tw="text-xl mb-4">
           Episode {episodeData?.episode_number}: {episodeData?.episode_title}
         </div>
@@ -115,8 +115,8 @@ export default async function Home({
       >
         <FrameImage>
           <div tw="flex flex-col bg-slate-700 text-white p-4 h-full w-full">
-            <div tw="text-l mb-4 flex ">
-              <span tw="text-cl">{episodeData?.episode_number}: </span>
+            <div tw="text-xl mb-4 flex ">
+              <span tw="text-xl">{episodeData?.episode_number}: </span>
               <span tw="text-xl">{episodeData?.episode_title}</span>
             </div>
 
