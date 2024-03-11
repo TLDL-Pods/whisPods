@@ -31,9 +31,7 @@ export default function RootLayout({
             <Suspense fallback={<div>Loading...</div>}>
               <main className="flex-grow overflow-y-auto">{children}</main>
             </Suspense>
-
             <footer className="flex w-full justify-center bg-base2 py-4 font-light"></footer>
-            {/* <NavModal /> */}
           </div>
         </AppStateProvider>
         <CookieBanner />
