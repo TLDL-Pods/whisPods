@@ -19,11 +19,11 @@ export const SearchBar: FC<SearchBarProps> = ({
   };
 
   return (
-    <div className="relative flex items-center w-full bg-[#1b1b1b]">
+    <div className="relative flex w-full items-center">
       <input
         type="text"
         placeholder="Search for episodes..."
-        className="w-full py-2 pl-10 pr-10 bg-[#1b1b1b] text-#9c22ee transition-colors duration-150 border border-gray-300 rounded-md focus:border-[#9c22ee] focus:outline-none hover:bg-gray-50 hover:text-black"
+        className=" h-12 w-full rounded-md border border-gray-200 bg-black bg-opacity-[96%] py-2 pl-10 pr-10 transition-colors duration-150 hover:bg-gray-50 hover:text-black focus:border-[#9c22ee] focus:outline-none md:shadow-lg md:shadow-base"
         value={inputValue}
         onChange={(e) => setInputValue(e.target.value)}
         onKeyDown={handleInputChange}
@@ -32,7 +32,7 @@ export const SearchBar: FC<SearchBarProps> = ({
       {inputValue && (
         <button
           type="button"
-          className="absolute inset-y-0 right-0 flex items-center px-3 py-2 transition-colors duration-150 rounded-r-md focus:outline-none"
+          className="absolute inset-y-0 right-0 flex items-center rounded-r-md px-3 py-2 transition-colors duration-150 focus:outline-none"
           onClick={() => {
             setInputValue('');
             clearSearchResults();
@@ -42,7 +42,7 @@ export const SearchBar: FC<SearchBarProps> = ({
         </button>
       )}
 
-      <div className="absolute inset-y-0 flex items-center pointer-events-none left-3">
+      <div className="pointer-events-none absolute inset-y-0 left-3 flex items-center">
         <IoSearch className="text-[#9c22ee]" />
       </div>
     </div>
