@@ -15,7 +15,6 @@ const links = [
 
 export default function Navbar() {
   const { state, setState } = useApp();
-  const { performSearch, clearSearchResults } = useSearch();
 
   const navMenuToggle = () => {
     setState((prevState) => ({
@@ -55,10 +54,7 @@ export default function Navbar() {
         <div
           className={`absolute left-0 right-0 top-6 mx-auto hidden w-11/12 flex-col items-center justify-center duration-300 lg:block lg:w-1/2`}
         >
-          <SearchBar
-            onSearch={performSearch}
-            clearSearchResults={clearSearchResults}
-          />
+          <SearchBar/>
         </div>
 
         {/*NavMenu */}
@@ -69,10 +65,7 @@ export default function Navbar() {
           <div
             className={`mb-2 w-full flex-col items-center justify-center duration-300 lg:hidden`}
           >
-            <SearchBar
-              onSearch={performSearch}
-              clearSearchResults={clearSearchResults}
-            />
+            <SearchBar />
           </div>
           {links.map((link, i) => (
             <Link
