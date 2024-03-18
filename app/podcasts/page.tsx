@@ -50,10 +50,11 @@ export default function Home() {
 
   return (
     <div className="flex w-full max-w-full flex-col items-center pb-24">
-      <h1 className="my-8 text-3xl font-light">
-        <span className="font-semibold">TLDL </span>SUPPORTED PODCASTS
+      <h1 className="my-8 flex text-center text-2xl font-light sm:text-3xl">
+        <span className="mr-3 hidden font-semibold sm:block">TLDL </span>
+        SUPPORTED PODCASTS
       </h1>
-      <div className="grid-rows-auto mt-12 grid max-w-4xl grid-cols-1 gap-x-20 gap-y-12 2xl:grid-cols-2">
+      <div className="grid-rows-auto mt-4 grid max-w-5xl grid-cols-1 gap-x-20 gap-y-12 sm:mt-12 lg:grid-cols-2">
         {podcasts.map((podcast) => (
           <Link href={podcast.href}>
             <Card

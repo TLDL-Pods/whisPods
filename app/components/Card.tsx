@@ -33,7 +33,7 @@ export default function Card({
         backgroundSize: 'cover',
         backgroundPosition: 'center',
       }}
-      className={`shadow-shadow group flex h-[450px] w-[450px] flex-col justify-end rounded-xl shadow-md duration-300 md:max-w-xl xl:hover:scale-105`}
+      className={`shadow-shadow group flex h-[350px] w-[350px] flex-col justify-end rounded-xl shadow-md duration-300 sm:h-[450px] sm:w-[450px] md:max-w-xl xl:hover:scale-105`}
     >
       <div className="z-10 flex h-full w-full flex-col justify-between border border-white border-opacity-30 bg-black bg-opacity-[92%] opacity-0 duration-300 group-hover:opacity-100 md:p-6">
         <div className="p-4 py-1 md:w-full md:pl-2">
