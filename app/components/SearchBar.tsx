@@ -7,8 +7,6 @@ import { useRouter } from 'next/navigation';
 export const SearchBar = () => {
   const { state, setState } = useApp();
   const [inputValue, setInputValue] = useState<string>('');
-  const [isSearching, setIsSearching] = useState(false);
-  const searchRef = useRef<HTMLDivElement>(null);
   const router = useRouter();
 
   // Handle search submission
@@ -20,16 +18,14 @@ export const SearchBar = () => {
   // Clear search results
   const clearSearchResults = () => {
     setInputValue('');
-    setIsSearching(false);
     setState((prevState) => ({
       ...prevState,
-      searchResultEpisodes: [],
       hasSearched: false,
     }));
   };
 
   return (
-    <div ref={searchRef} className="relative z-20 flex w-full items-center">
+    <div className="relative z-20 flex w-full items-center">
       <input
         type="text"
         placeholder="Search for episodes..."

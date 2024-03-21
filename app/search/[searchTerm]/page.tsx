@@ -10,20 +10,41 @@ async function getData(searchTerm: string) {
     let pipeline = [
       {
         $search: {
-          index: 'podcastSearch',
-          text: {
-            query: searchTerm,
-            path: {
-              wildcard: '*',
-            },
+          index: 'default',
+          compound: {
+            should: [
+              {
+                text: {
+                  query: searchTerm,
+                  path: 'episode_title',
+                  fuzzy: {},
+                  score: { boost: { value: 3 } },
+                },
+              },
+              {
+                text: {
+                  query: searchTerm,
+                  path: 'episode_data.headline',
+                  fuzzy: {},
+                  score: { boost: { value: 2 } },
+                },
+              },
+              {
+                text: {
+                  query: searchTerm,
+                  path: 'episode_data.summary',
+                  fuzzy: {},
+                  score: { boost: { value: 1 } },
+                },
+              },
+            ],
+            minimumShouldMatch: 1, // Ensure at least one should condition matches
           },
         },
       },
-      { $sort: { episode_number: -1 } },
       { $limit: 10 },
     ];
 
-    // If no searchTerm is provided, skip the $search stage
     if (!searchTerm) {
       pipeline.shift();
     }
@@ -42,10 +63,16 @@ export default async function Page({ params }: any) {
   const data = await getData(searchTerm);
 
   return (
-    <main>
-      {data.map((d: EpisodeProps, i: number) => (
-        <Link href={`/thedailygwei/${d.episode_number}`}>
-          <div>{d.episode_title}</div>
+    <main className="flex flex-col items-center">
+      {data.map((ep: EpisodeProps) => (
+        <Link
+          href={`/thedailygwei/${ep.episode_number}`}
+          className="flex h-32 w-1/2 items-center justify-center bg-base1 p-12 duration-300 hover:bg-base2"
+        >
+          <div className="flex text-2xl">
+            <p>{ep.episode_number} - </p>
+            <p className="ml-2">{ep.episode_title}</p>
+          </div>
         </Link>
       ))}
     </main>
