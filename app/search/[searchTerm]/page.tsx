@@ -1,8 +1,8 @@
 import { getClientAndDb } from '@/app/api/mongo/db';
+import EpisodeSelect from '@/app/components/EpisodeSelect';
 import { EpisodeProps } from '@/types';
-import Link from 'next/link';
 
-async function getData(searchTerm: string) {
+async function getSearchResults(searchTerm: string) {
   try {
     const { db } = await getClientAndDb();
     const collection = db.collection('thedailygweiRecap');
@@ -38,7 +38,7 @@ async function getData(searchTerm: string) {
                 },
               },
             ],
-            minimumShouldMatch: 1, // Ensure at least one should condition matches
+            minimumShouldMatch: 1,
           },
         },
       },
@@ -49,9 +49,10 @@ async function getData(searchTerm: string) {
       pipeline.shift();
     }
 
-    const data = await collection.aggregate(pipeline).toArray();
+    const searchResults = await collection.aggregate(pipeline).toArray();
+    console.log(searchResults[40]);
 
-    return data;
+    return searchResults;
   } catch (error: any) {
     console.error(error);
     return error.json({ status: 500, message: error.message });
@@ -60,21 +61,17 @@ async function getData(searchTerm: string) {
 
 export default async function Page({ params }: any) {
   const searchTerm = params.searchTerm;
-  const data = await getData(searchTerm);
-
+  const searchResults = await getSearchResults(searchTerm);
   return (
     <main className="flex flex-col items-center">
-      {data.map((ep: EpisodeProps) => (
-        <Link
-          href={`/thedailygwei/${ep.episode_number}`}
-          className="flex h-32 w-1/2 items-center justify-center bg-base1 p-12 duration-300 hover:bg-base2"
-        >
-          <div className="flex text-2xl">
-            <p>{ep.episode_number} - </p>
-            <p className="ml-2">{ep.episode_title}</p>
-          </div>
-        </Link>
-      ))}
+      <div className="">
+        {searchResults &&
+          searchResults.map((result: any) => (
+            <div className="flex flex-col ">
+              <EpisodeSelect key={result._id} episode={result} />
+            </div>
+          ))}
+      </div>
     </main>
   );
 }
