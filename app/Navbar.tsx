@@ -1,11 +1,10 @@
 'use client';
 
 import Link from 'next/link';
-import { GiHamburgerMenu, GiSoundWaves } from 'react-icons/gi';
+import { GiHamburgerMenu } from 'react-icons/gi';
 import YoutubeDrawer from './components/YoutubeDrawer';
 import { useApp } from './hooks/useApp';
 import SearchBar from './components/SearchBar';
-import { useSearch } from './hooks/useSearch';
 
 const links = [
   { name: 'HOME', href: '/' },
@@ -54,7 +53,7 @@ export default function Navbar() {
         <div
           className={`absolute left-0 right-0 top-6 mx-auto hidden w-11/12 flex-col items-center justify-center duration-300 lg:block lg:w-1/2`}
         >
-          <SearchBar/>
+          <SearchBar />
         </div>
 
         {/*NavMenu */}
