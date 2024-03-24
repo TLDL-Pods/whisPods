@@ -9,22 +9,6 @@ export function useEpisodes() {
 
   const segmentRefs = useRef<Array<React.RefObject<HTMLDivElement>>>([]);
 
-  const getAllEpisodes = async () => {
-    try {
-      const res = await fetch(`/api/all-episodes`, {
-        cache: 'no-store',
-      });
-      const json = await res.json();
-      console.log(json['data']);
-      setState(() => ({
-        ...state,
-        latestEpisodes: json['data'],
-      }));
-    } catch (error) {
-      console.error('Error fetching data:', error);
-    }
-  };
-
   const fetchEpisodeData = async (ep_number: string) => {
     const episodeNumber = parseInt(ep_number, 10);
     const res = await fetch(`/api/episode?episode_number=${episodeNumber}`);
