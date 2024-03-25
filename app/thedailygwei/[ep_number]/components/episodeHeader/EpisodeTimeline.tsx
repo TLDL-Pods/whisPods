@@ -42,7 +42,7 @@ export default function SegmentTimeline({
   });
 
   return (
-    <div className="flex w-4/5 flex-col text-xs">
+    <div className="mx-auto flex w-11/12 flex-col text-xs">
       <p className="text-center">
         {state.segmentsByLength ? 'Segments By Length' : 'Segments By Order'}
       </p>

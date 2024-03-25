@@ -37,7 +37,6 @@ export default function EpisodeHeader({ currentEpisode }: EpisodeHeaderProps) {
           </h3>
         </div>
       </div>
-
       <div className="mt-8 w-full lg:mx-auto lg:max-w-6xl">
         <div className="flex w-full justify-between">
           {/* Back to Episodes button */}
@@ -47,7 +46,9 @@ export default function EpisodeHeader({ currentEpisode }: EpisodeHeaderProps) {
           >
             <IoArrowBack size={24} className="inline-block" />
           </Link>
-          <SegmentTimeline currentEpisode={currentEpisode} />
+          <div className="hidden w-full lg:flex">
+            <SegmentTimeline currentEpisode={currentEpisode} />
+          </div>
           {/* Organize by time or order button */}
           <button
             onClick={toggleOrganization}
