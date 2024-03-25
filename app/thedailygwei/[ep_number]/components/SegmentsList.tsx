@@ -1,33 +1,18 @@
-'use client';
 import { EpisodeProps, SegmentProps } from '@/types';
-import { useState, useRef } from 'react';
 import EpisodeSegment from '@/app/thedailygwei/[ep_number]/components/episodeSegment/EpisodeSegment';
-import { useApp } from '@/app/hooks/useApp';
+import { useSegments } from '@/app/hooks/useSegments';
 
 interface SegmentsListProps {
-  isOrganizedByLength: boolean;
   currentEpisode: EpisodeProps;
 }
 
-export default function SegmentsList({
-  isOrganizedByLength,
-  currentEpisode,
-}: SegmentsListProps) {
-  const [selectedSegmentIndex, setSelectedSegmentIndex] = useState<
-    number | null
-  >(null);
-  const [showSegmentIndex, setShowSegmentIndex] = useState<number | null>(null);
-  const segmentRefs = useRef<Array<React.RefObject<HTMLDivElement>>>([]);
-  const { state } = useApp();
-
-  const containerClass = state.isVideoModalOpen
-    ? 'pb-[350px] overflow-y-auto'
-    : 'overflow-y-hidden';
+export default function SegmentsList({ currentEpisode }: SegmentsListProps) {
+  const { isOrganizedByLength } = useSegments();
 
   return (
-    <div className="relative flex flex-col justify-center h-full min-w-screen">
+    <div className="min-w-screen relative flex h-full flex-col justify-center">
       {/* Segments */}
-      <div className={`flex justify-center w-full mt-2 ${containerClass}`}>
+      <div className={`mt-2 flex w-full justify-center`}>
         <ul className="list-none">
           {currentEpisode.episode_data
             .sort(
@@ -42,24 +27,7 @@ export default function SegmentsList({
                 key={segment.segment_number}
                 className="border-b border-white border-opacity-30 bg-base"
               >
-                <EpisodeSegment
-                  segment={segment}
-                  segmentNumber={index}
-                  isOrganizedByLength={isOrganizedByLength}
-                  youtube_url={currentEpisode.youtube_url}
-                  showSegmentIndex={showSegmentIndex}
-                  setShowSegmentIndex={setShowSegmentIndex}
-                  onSegmentClick={(index) => {
-                    history.pushState(null, '', `#segment-${index}`);
-                    setSelectedSegmentIndex(
-                      selectedSegmentIndex === index ? null : index,
-                    );
-                    const segmentRef = segmentRefs.current[index]?.current;
-                    if (segmentRef) {
-                      segmentRef.scrollIntoView();
-                    }
-                  }}
-                />
+                <EpisodeSegment segment={segment} segmentNumber={index} />
               </div>
             ))}
         </ul>

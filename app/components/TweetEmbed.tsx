@@ -1,18 +1,14 @@
-import React, { useEffect } from "react";
-import { TwitterTweetEmbed } from "react-twitter-embed";
-import { getTweetIdFromUrl } from "@/app/utils/utils";
+import React, { useEffect } from 'react';
+import { TwitterTweetEmbed } from 'react-twitter-embed';
+import { getTweetIdFromUrl } from '@/app/utils/utils';
+import { useSegments } from '../hooks/useSegments';
 
 interface TweetEmbedProps {
   url: string;
-  isTweetLoaded: boolean;
-  setIsTweetLoaded: (isTweetLoaded: boolean) => void;
 }
 
-const TweetEmbed: React.FC<TweetEmbedProps> = ({
-  url,
-  isTweetLoaded,
-  setIsTweetLoaded,
-}) => {
+const TweetEmbed: React.FC<TweetEmbedProps> = ({ url }) => {
+  const { isTweetLoaded, setIsTweetLoaded } = useSegments();
   const tweetId = getTweetIdFromUrl(url);
 
   useEffect(() => {
@@ -23,12 +19,12 @@ const TweetEmbed: React.FC<TweetEmbedProps> = ({
   }, [tweetId, setIsTweetLoaded]);
 
   return (
-    <div className="flex justify-center w-full mt-4">
+    <div className="mt-4 flex w-full justify-center">
       <div className="inline-block w-full max-w-[300px] md:max-w-[400px] lg:max-w-[560px]">
         {tweetId ? (
           <TwitterTweetEmbed
             tweetId={tweetId}
-            options={{ theme: "dark" }}
+            options={{ theme: 'dark' }}
             onLoad={() => setIsTweetLoaded(true)}
           />
         ) : (
