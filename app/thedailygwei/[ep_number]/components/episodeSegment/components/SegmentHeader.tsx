@@ -1,5 +1,6 @@
 'use client';
 
+import { useApp } from '@/app/hooks/useApp';
 import { useSegments } from '@/app/hooks/useSegments';
 import { SegmentProps } from '@/types';
 import { FaPlayCircle } from 'react-icons/fa';
@@ -13,13 +14,14 @@ export const SegmentHeader = ({
   segment,
   segmentNumber,
 }: SegmentHeaderProps) => {
-  const { isOrganizedByLength, handleSegmentToggle, toggleVideoDrawer } =
-    useSegments();
+  const { state } = useApp();
+
+  const { handleSegmentToggle, toggleVideoDrawer } = useSegments();
 
   return (
     <div
       className="group my-1 flex h-24 w-full items-center bg-gradient-to-r from-transparent via-base1 to-transparent duration-300 hover:bg-base3 md:text-xl lg:text-2xl xl:w-[1200px]"
-      onClick={() => handleSegmentToggle(segmentNumber)}
+      onClick={() => handleSegmentToggle(segmentNumber, segment)}
     >
       {/* Play Button */}
       <div className="h-full w-2 bg-base1 duration-500 group-hover:bg-secondary"></div>
@@ -37,11 +39,11 @@ export const SegmentHeader = ({
       {/* INDEX */}
       <div
         className={`flex h-full w-20 min-w-fit grow-0 border-r border-base3 bg-base2 px-2 text-center font-semibold text-secondary ${
-          isOrganizedByLength ? ' w-20' : 'w-10'
+          state.segmentsByLength ? ' w-20' : 'w-10'
         }`}
       >
         <p className="m-auto ">
-          {isOrganizedByLength
+          {state.segmentsByLength
             ? `${Math.floor(segment.segment_length_ms / 60000)}:${(
                 (segment.segment_length_ms % 60000) /
                 1000

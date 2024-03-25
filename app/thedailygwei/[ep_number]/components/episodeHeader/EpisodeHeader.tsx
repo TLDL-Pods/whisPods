@@ -5,20 +5,22 @@ import { EpisodeProps } from '@/types';
 import Link from 'next/link';
 import SegmentTimeline from './EpisodeTimeline';
 import { useSegments } from '@/app/hooks/useSegments';
+import { useApp } from '@/app/hooks/useApp';
 
 interface EpisodeHeaderProps {
   currentEpisode: EpisodeProps;
 }
 
 export default function EpisodeHeader({ currentEpisode }: EpisodeHeaderProps) {
-  const { isOrganizedByLength, toggleOrganization } = useSegments();
+  const { toggleOrganization } = useSegments();
+  const { state } = useApp();
 
   return (
-    <div className="max-w-screen w-full px-4">
-      <div>
+    <div className="max-w-screen flex w-full flex-col px-4">
+      <div className="text-center">
         <Link
           href={`/thedailygwei`}
-          className="mx-auto w-fit pt-8 text-center text-xl text-secondary duration-100 hover:opacity-90 md:pt-0 md:text-xl lg:text-2xl"
+          className="mx-auto pt-8 text-center text-xl text-secondary duration-100 hover:opacity-90 md:pt-0 md:text-xl lg:text-2xl"
         >
           The Daily Gwei Refuel
         </Link>
@@ -36,8 +38,8 @@ export default function EpisodeHeader({ currentEpisode }: EpisodeHeaderProps) {
         </div>
       </div>
 
-      <div className="mt-8 lg:mx-auto lg:max-w-[1200px]">
-        <div className="flex justify-between">
+      <div className="mt-8 w-full lg:mx-auto lg:max-w-6xl">
+        <div className="flex w-full justify-between">
           {/* Back to Episodes button */}
           <Link
             href={'/thedailygwei'}
@@ -52,7 +54,7 @@ export default function EpisodeHeader({ currentEpisode }: EpisodeHeaderProps) {
             className="border border-white border-opacity-40 bg-base1 px-6 py-1 duration-300 hover:border-opacity-100 hover:bg-base"
             title="Presentation order or longest first"
           >
-            {isOrganizedByLength ? <ImListNumbered /> : <BiSolidTimer />}
+            {state.segmentsByLength ? <ImListNumbered /> : <BiSolidTimer />}
           </button>
         </div>
       </div>

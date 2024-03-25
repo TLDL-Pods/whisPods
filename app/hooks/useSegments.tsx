@@ -13,18 +13,12 @@ export function useSegments() {
   //-----> App Context
   const { state, setState } = useApp();
 
-  //-----> Segment States
-  const [selectedSegmentIndex, setSelectedSegmentIndex] = useState<
-    number | null
-  >(null);
-  const [showSegmentIndex, setShowSegmentIndex] = useState<number | null>(null);
-  const [isTweetLoaded, setIsTweetLoaded] = useState<boolean>(false);
-
   //-----> Toggling Segment Organization
-  const [isOrganizedByLength, setIsOrganizedByLength] = useState<boolean>(true);
-
   const toggleOrganization = () => {
-    setIsOrganizedByLength(!isOrganizedByLength);
+    setState((prevState) => ({
+      ...prevState,
+      segmentsByLength: !prevState.segmentsByLength,
+    }));
   };
 
   //-----> Copying & Sharing Segments
@@ -63,10 +57,23 @@ export function useSegments() {
   };
 
   //-----> Toggle Segment Expand
-  const handleSegmentToggle = (segmentNumber: number) => {
-    setShowSegmentIndex(
-      showSegmentIndex === segmentNumber ? null : segmentNumber,
-    );
+  const handleSegmentToggle = (
+    segmentNumber: number,
+    segment: SegmentProps,
+  ) => {
+    if (state.currentSegmentIndex === segmentNumber) {
+      setState(() => ({
+        ...state,
+        currentSegmentIndex: null,
+        currentSegment: null,
+      }));
+    } else {
+      setState(() => ({
+        ...state,
+        currentSegmentIndex: segmentNumber,
+        currentSegment: segment,
+      }));
+    }
   };
 
   const toggleVideoDrawer = (segment: SegmentProps) => {
@@ -86,18 +93,10 @@ export function useSegments() {
   };
 
   return {
-    isOrganizedByLength,
-    setIsOrganizedByLength,
     toggleOrganization,
-    selectedSegmentIndex,
-    setSelectedSegmentIndex,
-    showSegmentIndex,
-    setShowSegmentIndex,
     handleShare,
     copySuccess,
     setCopySuccess,
-    isTweetLoaded,
-    setIsTweetLoaded,
     handleSegmentToggle,
     toggleVideoDrawer,
   };

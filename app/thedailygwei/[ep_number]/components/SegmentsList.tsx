@@ -1,13 +1,14 @@
 import { EpisodeProps, SegmentProps } from '@/types';
 import EpisodeSegment from '@/app/thedailygwei/[ep_number]/components/episodeSegment/EpisodeSegment';
 import { useSegments } from '@/app/hooks/useSegments';
+import { useApp } from '@/app/hooks/useApp';
 
 interface SegmentsListProps {
   currentEpisode: EpisodeProps;
 }
 
 export default function SegmentsList({ currentEpisode }: SegmentsListProps) {
-  const { isOrganizedByLength } = useSegments();
+  const { state } = useApp();
 
   return (
     <div className="min-w-screen relative flex h-full flex-col justify-center">
@@ -16,7 +17,7 @@ export default function SegmentsList({ currentEpisode }: SegmentsListProps) {
         <ul className="list-none">
           {currentEpisode.episode_data
             .sort(
-              isOrganizedByLength
+              state.segmentsByLength
                 ? (a: SegmentProps, b: SegmentProps) =>
                     b.segment_length_ms - a.segment_length_ms
                 : (a: SegmentProps, b: SegmentProps) =>

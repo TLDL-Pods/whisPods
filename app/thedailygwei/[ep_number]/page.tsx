@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 
 import { useEpisodes } from '@/app/hooks/useEpisodes';
 import SegmentsList from './components/SegmentsList';
-import EpisodeHeader from './components/segmentHeader/EpisodeHeader';
+import EpisodeHeader from './components/episodeHeader/EpisodeHeader';
 import { useApp } from '@/app/hooks/useApp';
 
 export default function EpisodePage({

@@ -5,10 +5,15 @@ import { useSegments } from '../hooks/useSegments';
 
 interface TweetEmbedProps {
   url: string;
+  isTweetLoaded: boolean;
+  setIsTweetLoaded: (isTweetLoaded: boolean) => void;
 }
 
-const TweetEmbed: React.FC<TweetEmbedProps> = ({ url }) => {
-  const { isTweetLoaded, setIsTweetLoaded } = useSegments();
+const TweetEmbed: React.FC<TweetEmbedProps> = ({
+  url,
+  isTweetLoaded,
+  setIsTweetLoaded,
+}) => {
   const tweetId = getTweetIdFromUrl(url);
 
   useEffect(() => {

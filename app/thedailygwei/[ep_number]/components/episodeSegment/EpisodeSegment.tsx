@@ -1,6 +1,6 @@
 'use client';
 
-import React, { FC, useEffect } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { FaCheck } from 'react-icons/fa';
 import { SegmentProps } from '@/types';
 import TweetEmbed from '../../../../components/TweetEmbed';
@@ -8,6 +8,7 @@ import { FiShare } from 'react-icons/fi';
 import SummarySlider from './components/SummarySlider';
 import SegmentHeader from './components/SegmentHeader';
 import { useSegments } from '@/app/hooks/useSegments';
+import { useApp } from '@/app/hooks/useApp';
 
 interface EpisodeSegmentProps {
   segment: SegmentProps;
@@ -18,22 +19,19 @@ const EpisodeSegment: FC<EpisodeSegmentProps> = ({
   segment,
   segmentNumber,
 }) => {
-  const {
-    showSegmentIndex,
-    setShowSegmentIndex,
-    handleShare,
-    copySuccess,
-    setCopySuccess,
-    isTweetLoaded,
-    setIsTweetLoaded,
-  } = useSegments();
+  const { handleShare, copySuccess, setCopySuccess } = useSegments();
+  const { state, setState } = useApp();
+  const [isTweetLoaded, setIsTweetLoaded] = useState<boolean>(false);
 
   useEffect(() => {
     const hash = window.location.hash;
     if (hash) {
       const segmentNumFromURL = parseInt(hash.substring(1), 10);
       if (!isNaN(segmentNumFromURL) && segmentNumFromURL === segmentNumber) {
-        setShowSegmentIndex(segmentNumber);
+        setState(() => ({
+          ...state,
+          currentSegmentIndex: segmentNumber,
+        }));
       }
     }
   }, [segmentNumber]);
@@ -52,7 +50,7 @@ const EpisodeSegment: FC<EpisodeSegmentProps> = ({
     >
       <li className="cursor-pointer">
         <SegmentHeader segment={segment} segmentNumber={segmentNumber} />
-        {showSegmentIndex === segmentNumber && (
+        {state.currentSegmentIndex === segmentNumber && (
           <div className="md-text-l relative w-full max-w-full flex-col bg-base1 pb-8 text-accent shadow-inner shadow-black">
             <button
               className={`absolute top-7 flex items-center justify-center rounded border border-white border-opacity-40 bg-base1 px-6 py-1 font-bold text-primary shadow-lg duration-500 hover:bg-base1 md:hover:border-opacity-100 ${
@@ -86,7 +84,12 @@ const EpisodeSegment: FC<EpisodeSegmentProps> = ({
               {/* Embed Tweet */}
               {segment.URL &&
                 segment.URL.map((url, index) => (
-                  <TweetEmbed key={url} url={url} />
+                  <TweetEmbed
+                    key={url}
+                    url={url}
+                    isTweetLoaded={isTweetLoaded}
+                    setIsTweetLoaded={setIsTweetLoaded}
+                  />
                 ))}
             </div>
           </div>
