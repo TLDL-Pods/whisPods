@@ -12,7 +12,7 @@ export const initialState: AppState = {
   hasSearched: false,
   searchTerm: '',
   currentSegment: null,
-  currentSegmentIndex: null,
+  currentSegmentIndex: 0,
   segmentsByLength: false,
   isMenuModalOpen: false,
 };

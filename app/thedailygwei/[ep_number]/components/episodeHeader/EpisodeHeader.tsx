@@ -16,7 +16,7 @@ export default function EpisodeHeader({ currentEpisode }: EpisodeHeaderProps) {
   const { state } = useApp();
 
   return (
-    <div className="max-w-screen flex w-full flex-col px-4">
+    <div className="max-w-screen mb-8 flex w-full flex-col px-4">
       <div className="text-center">
         <Link
           href={`/thedailygwei`}

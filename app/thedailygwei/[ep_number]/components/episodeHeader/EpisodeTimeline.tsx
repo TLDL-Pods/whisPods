@@ -44,14 +44,17 @@ export default function SegmentTimeline({
   return (
     <div className="mx-auto flex w-11/12 flex-col text-xs">
       <p className="text-center">
-        {state.segmentsByLength ? 'Segments By Length' : 'Segments By Order'}
+        {
+          segments[state.currentSegmentIndex ? state.currentSegmentIndex : 0]
+            .title
+        }
       </p>
-      <div className="relative my-auto h-2 w-full">
-        {segments.map((segment) => (
+      <div className="relative my-auto flex h-2 w-full items-center">
+        {segments.map((segment, i) => (
           <div
-            key={segment.index} // Use original index to ensure keys are stable through re-renders
+            key={i} // Use original index to ensure keys are stable through re-renders
             title={segment.title}
-            className={`absolute h-full border-r-2  ${state.currentSegmentIndex === segment.index ? 'bg-accent' : 'bg-base3'} hover:bg-accent`}
+            className={`absolute border-r-2  ${state.currentSegmentIndex === i ? 'h-2.5 bg-accent' : 'h-2 bg-base3 hover:bg-white hover:bg-opacity-40'}`}
             style={{
               left: `${segment.startPositionPercentage}%`,
               width: `${segment.lengthPercentage}%`,
@@ -59,7 +62,7 @@ export default function SegmentTimeline({
             onClick={() =>
               setState((prevState) => ({
                 ...prevState,
-                currentSegmentIndex: segment.index,
+                currentSegmentIndex: i,
               }))
             }
           />

@@ -24,7 +24,9 @@ export const SegmentHeader = ({
       onClick={() => handleSegmentToggle(segmentNumber, segment)}
     >
       {/* Play Button */}
-      <div className="h-full w-2 bg-base1 duration-500 group-hover:bg-secondary"></div>
+      <div
+        className={`h-full w-2 duration-500 ${state.currentSegmentIndex === segmentNumber ? 'bg-accent' : 'bg-base1 group-hover:bg-secondary'}`}
+      ></div>
       <div className="flex h-full w-16 min-w-fit bg-base2 px-2 text-center">
         <button
           className="m-auto text-4xl text-accent duration-300 hover:text-secondary"
