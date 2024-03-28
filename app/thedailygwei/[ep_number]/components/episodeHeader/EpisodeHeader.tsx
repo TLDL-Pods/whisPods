@@ -34,7 +34,7 @@ export default function EpisodeHeader({ currentEpisode }: EpisodeHeaderProps) {
         </h3>
       </div>
       <div
-        className={`fixed bottom-0 z-20 flex w-full lg:px-24 ${state.isVideoModalOpen ? 'h-0' : 'h-32 p-3 pb-4 lg:h-40'} flex-col justify-between bg-black bg-opacity-95 duration-300 lg:flex-row`}
+        className={`fixed bottom-0 z-20 flex w-full lg:px-24 ${state.isVideoModalOpen ? 'h-0' : 'h-3 p-3 pb-4 lg:h-44'} flex-col justify-between bg-black bg-opacity-95 duration-300 lg:flex-row`}
       >
         <div className="w-full">
           <SegmentTimeline currentEpisode={currentEpisode} />

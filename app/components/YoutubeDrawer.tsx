@@ -105,7 +105,7 @@ const YoutubeDrawer: React.FC = () => {
       >
         <p className="text-bold my-4 text-2xl ">TLDL </p>
         <div className="mx-auto flex w-full max-w-2xl flex-col space-y-2">
-          {state.currentSegment
+          {state.currentSegment && state.isVideoModalOpen
             ? state.currentSegment.bullets.map((bullet, idx) => (
                 <div key={idx} className="my-auto flex rounded-lg bg-base p-2">
                   <div className="text-textBase my-auto flex text-lg">

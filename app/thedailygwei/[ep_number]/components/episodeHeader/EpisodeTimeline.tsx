@@ -83,7 +83,7 @@ export default function SegmentTimeline({
           <div
             key={i} // Use original index to ensure keys are stable through re-renders
             title={segment.title}
-            className={`absolute cursor-pointer border-r-2  ${state.currentSegmentIndex === i ? 'h-2.5 bg-accent' : 'h-2 bg-base3 hover:bg-white hover:bg-opacity-40'}`}
+            className={`absolute cursor-pointer border-r-2 duration-300  ${state.currentSegmentIndex === i ? 'h-2.5 bg-accent' : 'h-2 bg-base3 hover:bg-white hover:bg-opacity-40'}`}
             style={{
               left: `${segment.startPositionPercentage}%`,
               width: `${segment.lengthPercentage}%`,
@@ -93,6 +93,7 @@ export default function SegmentTimeline({
                 ...prevState,
                 currentSegmentIndex: i,
               }));
+              console.log(state.currentSegmentIndex);
               if (state.currentSegmentIndex === i) {
                 toggleVideoDrawer(
                   sortedSegments[state.currentSegmentIndex || 0],
