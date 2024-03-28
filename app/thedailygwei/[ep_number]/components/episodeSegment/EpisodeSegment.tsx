@@ -1,14 +1,11 @@
 'use client';
 
 import React, { FC, useEffect, useRef, useState } from 'react';
-import { FaCheck } from 'react-icons/fa';
 import { SegmentProps } from '@/types';
 import TweetEmbed from '../../../../components/TweetEmbed';
-import { FiShare } from 'react-icons/fi';
-import SummarySlider from './components/SummarySlider';
 import SegmentHeader from './components/SegmentHeader';
-import { useSegments } from '@/app/hooks/useSegments';
 import { useApp } from '@/app/hooks/useApp';
+import { RiMegaphoneLine } from 'react-icons/ri';
 
 interface EpisodeSegmentProps {
   segment: SegmentProps;
@@ -19,9 +16,10 @@ const EpisodeSegment: FC<EpisodeSegmentProps> = ({
   segment,
   segmentNumber,
 }) => {
-  const { handleShare, copySuccess, setCopySuccess } = useSegments();
   const { state, setState } = useApp();
   const [isTweetLoaded, setIsTweetLoaded] = useState<boolean>(false);
+  const [showSummary, setShowSummary] = useState<boolean>(false);
+
   const segmentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -34,7 +32,7 @@ const EpisodeSegment: FC<EpisodeSegmentProps> = ({
         element.getBoundingClientRect().top + window.scrollY;
 
       // Define the offset as 10% of the viewport height
-      const offset = window.innerHeight * 0.1;
+      const offset = window.innerHeight * 0.11;
 
       // Calculate the final scroll position with offset
       const scrollToPosition = elementPosition - offset;
@@ -76,25 +74,30 @@ const EpisodeSegment: FC<EpisodeSegmentProps> = ({
       <li className="cursor-pointer">
         <SegmentHeader segment={segment} segmentNumber={segmentNumber} />
         {state.currentSegmentIndex === segmentNumber && (
-          <div className="md-text-l relative w-full max-w-full flex-col bg-base1 pb-8 text-accent shadow-inner shadow-black">
-            <button
-              className={`absolute top-7 flex items-center justify-center rounded border border-white border-opacity-40 bg-base1 px-6 py-1 font-bold text-primary shadow-lg duration-500 hover:bg-base1 md:hover:border-opacity-100 ${
-                copySuccess === true ? 'shadow-transparent ' : 'shadow-black'
-              } hover:bg-baseText2 right-4 xl:right-52`}
-              onClick={() => handleShare({ segment, setCopySuccess })}
-            >
-              {copySuccess === true ? (
-                <div className="text-accent">
-                  <FaCheck size={20} />
-                </div>
-              ) : (
-                <div className="text-primary">
-                  <FiShare size={20} />
-                </div>
-              )}
-            </button>
+          <div className="relative w-full max-w-full flex-col bg-base1 p-4">
             {isTweetLoaded ? (
-              <SummarySlider segment={segment} />
+              <div className="mx-auto flex w-full max-w-2xl flex-col">
+                <div>
+                  <p className="text-bold my-2 text-center text-2xl">TLDL </p>
+                </div>
+                {segment.bullets.map((bullet, idx) => (
+                  <div
+                    key={idx}
+                    className="mt-2 flex rounded-lg border-l border-accent bg-base p-2"
+                  >
+                    <div className="text-textBase my-auto flex text-lg">
+                      <RiMegaphoneLine />
+                    </div>
+                    <p className="ml-4">{bullet}</p>
+                  </div>
+                ))}
+                <button
+                  onClick={() => setShowSummary(true)}
+                  className="mx-auto mt-6 flex w-fit rounded-lg border border-white border-opacity-40 bg-base px-6 pb-0.5"
+                >
+                  Full Summary
+                </button>
+              </div>
             ) : (
               <div className="flex w-full items-center justify-center align-middle">
                 <div className="mt-10 h-1/2 w-full text-center">
@@ -120,6 +123,31 @@ const EpisodeSegment: FC<EpisodeSegmentProps> = ({
           </div>
         )}
       </li>
+      {showSummary ? (
+        <div className="lg:max-h-1/2 fixed left-0 top-0 z-20 h-full w-full rounded-lg bg-base p-8 pt-28 lg:bottom-0 lg:right-0 lg:m-auto lg:h-fit lg:w-1/2 lg:border lg:border-base3 lg:pt-8">
+          <div className="relative">
+            <button
+              className={`text-md absolute -top-1 right-0 -mr-4 h-8 w-8 border border-white border-opacity-40 bg-base1 px-1 text-center text-red-400 duration-300 hover:border-opacity-100 hover:bg-base3 md:w-16 lg:-top-4`}
+              onClick={() => setShowSummary(false)}
+              aria-label="Close Summary"
+            >
+              X
+            </button>
+
+            <p className="relative mb-2 font-semibold text-baseText1">
+              FULL SUMMARY
+            </p>
+
+            <p className="mb-2 text-xl font-semibold text-secondary">
+              {segment.segment_title}
+            </p>
+
+            <p className="mt-6 h-full overflow-y-auto rounded-lg text-baseText">
+              {segment.summary}
+            </p>
+          </div>
+        </div>
+      ) : null}
     </div>
   );
 };

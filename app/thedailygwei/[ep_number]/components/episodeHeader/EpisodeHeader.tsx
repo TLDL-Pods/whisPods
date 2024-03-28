@@ -17,7 +17,7 @@ export default function EpisodeHeader({ currentEpisode }: EpisodeHeaderProps) {
 
   return (
     <div className="max-w-screen flex w-full flex-col">
-      <div className="w-full p-4 pb-6 pt-2 lg:mx-auto lg:mb-6 lg:max-w-6xl">
+      <div className="w-full bg-black p-4 pb-6 pt-2 lg:mx-auto lg:mb-6 lg:max-w-6xl lg:bg-base">
         <div>
           <Link
             href={`/thedailygwei`}
@@ -34,7 +34,7 @@ export default function EpisodeHeader({ currentEpisode }: EpisodeHeaderProps) {
         </h3>
       </div>
       <div
-        className={`fixed bottom-0 z-20 flex w-full lg:px-24 ${state.isVideoModalOpen ? 'h-0' : 'h-32 p-3 pb-4 lg:h-40'} flex-col justify-between bg-black bg-opacity-95 duration-300 lg:flex-row`}
+        className={`fixed bottom-0 z-20 flex w-full lg:px-24 ${state.isVideoModalOpen ? 'h-0' : 'h-32 p-3 pb-4 lg:h-44'} flex-col justify-between bg-black bg-opacity-95 duration-300 lg:flex-row`}
       >
         <div className="w-full">
           <SegmentTimeline currentEpisode={currentEpisode} />
@@ -42,7 +42,7 @@ export default function EpisodeHeader({ currentEpisode }: EpisodeHeaderProps) {
       </div>
       <button
         onClick={toggleOrganization}
-        className="mx-auto flex h-8 w-full justify-center border border-base3 bg-base2 p-1 text-lg duration-300 hover:border-opacity-100 hover:bg-base lg:mb-2 lg:max-w-6xl"
+        className="mx-auto flex h-8 w-full justify-center border border-base3 bg-base1 p-1 text-lg duration-300 hover:border-opacity-100 hover:bg-base lg:mb-2 lg:max-w-6xl"
         title="Sort Segments"
       >
         {state.segmentsByLength ? (
