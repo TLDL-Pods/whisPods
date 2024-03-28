@@ -17,19 +17,19 @@ export default function EpisodeHeader({ currentEpisode }: EpisodeHeaderProps) {
 
   return (
     <div className="max-w-screen flex w-full flex-col">
-      <div className="w-full p-2 lg:mx-auto lg:mb-6 lg:max-w-6xl">
-        <div className="px-2">
+      <div className="w-full p-4 pb-6 pt-2 lg:mx-auto lg:mb-6 lg:max-w-6xl">
+        <div>
           <Link
             href={`/thedailygwei`}
             className="text-center text-secondary md:text-xl lg:text-2xl"
           >
             The Daily Gwei Refuel - {currentEpisode.episode_number}
           </Link>
-          <div className="overflow-clip text-ellipsis text-lg text-primary md:text-xl lg:text-xl">
+          <div className="overflow-clip text-ellipsis whitespace-nowrap text-lg text-primary md:text-xl lg:text-xl">
             {currentEpisode.episode_title}
           </div>
         </div>
-        <h3 className="w-fit px-2 text-xs text-baseText1">
+        <h3 className="w-fit text-xs text-baseText1">
           {currentEpisode.release_date}
         </h3>
       </div>
