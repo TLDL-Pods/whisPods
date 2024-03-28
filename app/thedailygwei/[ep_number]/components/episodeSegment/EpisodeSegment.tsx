@@ -1,10 +1,8 @@
 'use client';
 
 import React, { FC, useEffect, useRef, useState } from 'react';
-import { FaCheck } from 'react-icons/fa';
 import { SegmentProps } from '@/types';
 import TweetEmbed from '../../../../components/TweetEmbed';
-import { FiShare } from 'react-icons/fi';
 import SummarySlider from './components/SummarySlider';
 import SegmentHeader from './components/SegmentHeader';
 import { useSegments } from '@/app/hooks/useSegments';
@@ -19,7 +17,6 @@ const EpisodeSegment: FC<EpisodeSegmentProps> = ({
   segment,
   segmentNumber,
 }) => {
-  const { handleShare, copySuccess, setCopySuccess } = useSegments();
   const { state, setState } = useApp();
   const [isTweetLoaded, setIsTweetLoaded] = useState<boolean>(false);
   const segmentRef = useRef<HTMLDivElement>(null);
@@ -77,22 +74,6 @@ const EpisodeSegment: FC<EpisodeSegmentProps> = ({
         <SegmentHeader segment={segment} segmentNumber={segmentNumber} />
         {state.currentSegmentIndex === segmentNumber && (
           <div className="md-text-l relative w-full max-w-full flex-col bg-base1 pb-8 text-accent shadow-inner shadow-black">
-            <button
-              className={`absolute top-7 flex items-center justify-center rounded border border-white border-opacity-40 bg-base1 px-6 py-1 font-bold text-primary shadow-lg duration-500 hover:bg-base1 md:hover:border-opacity-100 ${
-                copySuccess === true ? 'shadow-transparent ' : 'shadow-black'
-              } hover:bg-baseText2 right-4 xl:right-52`}
-              onClick={() => handleShare({ segment, setCopySuccess })}
-            >
-              {copySuccess === true ? (
-                <div className="text-accent">
-                  <FaCheck size={20} />
-                </div>
-              ) : (
-                <div className="text-primary">
-                  <FiShare size={20} />
-                </div>
-              )}
-            </button>
             {isTweetLoaded ? (
               <SummarySlider segment={segment} />
             ) : (

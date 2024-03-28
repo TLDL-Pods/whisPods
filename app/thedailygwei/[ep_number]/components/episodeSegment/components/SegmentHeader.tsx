@@ -3,7 +3,8 @@
 import { useApp } from '@/app/hooks/useApp';
 import { useSegments } from '@/app/hooks/useSegments';
 import { SegmentProps } from '@/types';
-import { FaPlayCircle } from 'react-icons/fa';
+import { FaPlayCircle, FaCheck } from 'react-icons/fa';
+import { FiShare } from 'react-icons/fi';
 
 interface SegmentHeaderProps {
   segment: SegmentProps;
@@ -15,8 +16,13 @@ export const SegmentHeader = ({
   segmentNumber,
 }: SegmentHeaderProps) => {
   const { state } = useApp();
-
-  const { handleSegmentToggle, toggleVideoDrawer } = useSegments();
+  const {
+    handleShare,
+    copySuccess,
+    setCopySuccess,
+    handleSegmentToggle,
+    toggleVideoDrawer,
+  } = useSegments();
 
   return (
     <div
@@ -29,7 +35,7 @@ export const SegmentHeader = ({
 
       {/* INDEX */}
       <div
-        className={`flex h-full w-20 min-w-fit gap-2 border-r border-base3 text-center font-semibold text-secondary lg:w-32`}
+        className={`flex h-full w-28 min-w-fit gap-2 border-r border-base3 text-center font-semibold text-secondary lg:w-32`}
       >
         <p className="m-auto ">
           {state.segmentsByLength
@@ -55,11 +61,27 @@ export const SegmentHeader = ({
       </div>
 
       {/* HEADLINE*/}
-      <div className="text-textBase my-auto flex h-16 max-h-16 w-10/12 items-start px-4">
+      <div className="text-textBase my-auto flex h-16 max-h-16 w-full items-start px-0.5">
         <span className="my-auto line-clamp-2 text-left">
           {segment.segment_title}
         </span>
       </div>
+      <button
+        className={`flex h-full items-center justify-center border-l border-white border-opacity-40 bg-base1 px-1 font-bold text-primary shadow-lg duration-500 hover:bg-base1 md:hover:border-opacity-100 ${
+          copySuccess === true ? 'shadow-transparent ' : 'shadow-black'
+        } hover:bg-baseText2`}
+        onClick={() => handleShare({ segment, setCopySuccess })}
+      >
+        {copySuccess === true ? (
+          <div className="text-accent">
+            <FaCheck size={20} />
+          </div>
+        ) : (
+          <div className="text-primary">
+            <FiShare size={20} />
+          </div>
+        )}
+      </button>
     </div>
   );
 };
