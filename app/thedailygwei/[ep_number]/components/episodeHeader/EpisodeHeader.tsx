@@ -12,53 +12,51 @@ interface EpisodeHeaderProps {
 }
 
 export default function EpisodeHeader({ currentEpisode }: EpisodeHeaderProps) {
-  const { toggleOrganization } = useSegments();
   const { state } = useApp();
+  const { toggleOrganization } = useSegments();
 
   return (
-    <div className="max-w-screen mb-8 flex w-full flex-col px-4">
-      <div className="text-center">
-        <Link
-          href={`/thedailygwei`}
-          className="mx-auto pt-8 text-center text-xl text-secondary duration-100 hover:opacity-90 md:pt-0 md:text-xl lg:text-2xl"
-        >
-          The Daily Gwei Refuel
-        </Link>
-        <div className="text-center text-primary md:text-xl lg:text-xl">
-          {currentEpisode.episode_title}
-        </div>
-        <div className="mx-auto hidden w-64 border-b lg:my-4 lg:block"></div>
-        <div className="max-w-screen flex justify-between pt-4 lg:flex-col lg:pt-1">
-          <h3 className="text-center font-semibold text-baseText md:text-lg lg:text-xl">
-            Episode {currentEpisode.episode_number}
-          </h3>
-          <h3 className="text-center text-baseText1">
-            {currentEpisode.release_date}
-          </h3>
-        </div>
-      </div>
-      <div className="mt-8 w-full lg:mx-auto lg:max-w-6xl">
-        <div className="flex w-full justify-between">
-          {/* Back to Episodes button */}
+    <div className="max-w-screen flex w-full flex-col">
+      <div className="w-full p-2 lg:mx-auto lg:mb-6 lg:max-w-6xl">
+        <div className="px-2">
           <Link
-            href={'/thedailygwei'}
-            className="border border-white border-opacity-40 bg-base1 px-6 py-1 font-bold text-white duration-300 hover:border-opacity-100 hover:bg-base"
+            href={`/thedailygwei`}
+            className="text-center text-secondary md:text-xl lg:text-2xl"
           >
-            <IoArrowBack size={24} className="inline-block" />
+            The Daily Gwei Refuel - {currentEpisode.episode_number}
           </Link>
-          <div className="hidden w-full lg:flex">
-            <SegmentTimeline currentEpisode={currentEpisode} />
+          <div className="overflow-clip text-ellipsis text-lg text-primary md:text-xl lg:text-xl">
+            {currentEpisode.episode_title}
           </div>
-          {/* Organize by time or order button */}
-          <button
-            onClick={toggleOrganization}
-            className="border border-white border-opacity-40 bg-base1 px-6 py-1 duration-300 hover:border-opacity-100 hover:bg-base"
-            title="Presentation order or longest first"
-          >
-            {state.segmentsByLength ? <ImListNumbered /> : <BiSolidTimer />}
-          </button>
+        </div>
+        <h3 className="w-fit px-2 text-xs text-baseText1">
+          {currentEpisode.release_date}
+        </h3>
+      </div>
+      <div
+        className={`fixed bottom-0 z-20 flex w-full lg:px-24 ${state.isVideoModalOpen ? 'h-0' : 'h-32 p-3 pb-4 lg:h-40'} flex-col justify-between bg-black bg-opacity-95 duration-300 lg:flex-row`}
+      >
+        <div className="w-full">
+          <SegmentTimeline currentEpisode={currentEpisode} />
         </div>
       </div>
+      <button
+        onClick={toggleOrganization}
+        className="mx-auto flex h-8 w-full justify-center border border-base3 bg-base2 p-1 text-lg duration-300 hover:border-opacity-100 hover:bg-base lg:mb-2 lg:max-w-6xl"
+        title="Sort Segments"
+      >
+        {state.segmentsByLength ? (
+          <div className="flex items-center text-2xl">
+            <BiSolidTimer />{' '}
+            <span className="ml-2 text-sm">Sort By Length</span>
+          </div>
+        ) : (
+          <div className="flex items-center">
+            <ImListNumbered />{' '}
+            <span className="ml-2 text-sm">Sort By Order</span>
+          </div>
+        )}
+      </button>
     </div>
   );
 }

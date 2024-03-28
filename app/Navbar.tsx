@@ -59,7 +59,7 @@ export default function Navbar() {
         {/*NavMenu */}
         <div
           onBlur={navMenuToggle}
-          className={`${state.isMenuModalOpen ? 'left-0' : '-left-[100%]'} absolute top-24 mx-auto flex w-full flex-col justify-center gap-2 bg-black bg-opacity-[96%] px-8 pb-8 duration-300 lg:w-64 lg:rounded-br-2xl lg:px-10 lg:pt-4`}
+          className={`${state.isMenuModalOpen ? 'left-0' : '-left-[100%]'} absolute top-24 mx-auto flex h-screen w-full flex-col gap-2 bg-black bg-opacity-[96%] px-8 pb-8 duration-300 lg:w-64 lg:rounded-br-2xl lg:px-10 lg:pt-4`}
         >
           <div
             className={`mb-2 w-full flex-col items-center justify-center duration-300 lg:hidden`}

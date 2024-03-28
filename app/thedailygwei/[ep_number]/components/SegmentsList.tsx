@@ -11,9 +11,9 @@ export default function SegmentsList({ currentEpisode }: SegmentsListProps) {
   const { state } = useApp();
 
   return (
-    <div className="min-w-screen relative flex h-full flex-col justify-center">
+    <div className="min-w-screen relative flex h-full flex-col justify-center pb-20 lg:max-w-6xl">
       {/* Segments */}
-      <div className={`mt-2 flex w-full justify-center`}>
+      <div className={`flex w-full justify-center`}>
         <ul className="list-none">
           {currentEpisode.episode_data
             .sort(

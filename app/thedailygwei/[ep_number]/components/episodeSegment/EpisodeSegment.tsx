@@ -1,6 +1,6 @@
 'use client';
 
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useEffect, useRef, useState } from 'react';
 import { FaCheck } from 'react-icons/fa';
 import { SegmentProps } from '@/types';
 import TweetEmbed from '../../../../components/TweetEmbed';
@@ -22,6 +22,30 @@ const EpisodeSegment: FC<EpisodeSegmentProps> = ({
   const { handleShare, copySuccess, setCopySuccess } = useSegments();
   const { state, setState } = useApp();
   const [isTweetLoaded, setIsTweetLoaded] = useState<boolean>(false);
+  const segmentRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    // Check if this segment is the current segment
+    if (state.currentSegmentIndex === segmentNumber && segmentRef.current) {
+      const element = segmentRef.current;
+
+      // Calculate the top position of the element relative to the document
+      const elementPosition =
+        element.getBoundingClientRect().top + window.scrollY;
+
+      // Define the offset as 10% of the viewport height
+      const offset = window.innerHeight * 0.1;
+
+      // Calculate the final scroll position with offset
+      const scrollToPosition = elementPosition - offset;
+
+      // Scroll to the calculated position smoothly
+      window.scrollTo({
+        top: scrollToPosition,
+        behavior: 'smooth',
+      });
+    }
+  }, [state.currentSegmentIndex, segmentNumber]);
 
   useEffect(() => {
     const hash = window.location.hash;
@@ -45,6 +69,7 @@ const EpisodeSegment: FC<EpisodeSegmentProps> = ({
 
   return (
     <div
+      ref={segmentRef}
       id={`${segment.segment_number}`}
       className="relative align-middle shadow-inner shadow-black xl:max-w-[1200px]"
     >

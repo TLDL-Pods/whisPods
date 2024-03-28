@@ -30,7 +30,7 @@ export default function EpisodePage({
   }
 
   return (
-    <div className="min-w-screen max-w-screen relative flex h-full w-full flex-col justify-center">
+    <div className="min-w-screen max-w-screen relative flex h-full w-full flex-col items-center justify-center pb-16">
       <EpisodeHeader currentEpisode={state.currentEpisode} />
       <SegmentsList currentEpisode={state.currentEpisode} />
     </div>

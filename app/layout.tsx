@@ -27,7 +27,7 @@ export default function RootLayout({
           <nav className="fixed top-0 z-50 w-full">
             <Navbar />
           </nav>
-          <div className="flex min-h-screen flex-col bg-base pt-32">
+          <div className="flex min-h-screen flex-col bg-base pt-24 lg:pt-32">
             <Suspense fallback={<div>Loading...</div>}>
               <main className="flex-grow overflow-y-auto">{children}</main>
             </Suspense>
