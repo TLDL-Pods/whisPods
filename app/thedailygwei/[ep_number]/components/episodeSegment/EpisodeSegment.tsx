@@ -34,7 +34,7 @@ const EpisodeSegment: FC<EpisodeSegmentProps> = ({
         element.getBoundingClientRect().top + window.scrollY;
 
       // Define the offset as 10% of the viewport height
-      const offset = window.innerHeight * 0.1;
+      const offset = window.innerHeight * 0.11;
 
       // Calculate the final scroll position with offset
       const scrollToPosition = elementPosition - offset;

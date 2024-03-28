@@ -17,7 +17,7 @@ export default function EpisodeHeader({ currentEpisode }: EpisodeHeaderProps) {
 
   return (
     <div className="max-w-screen flex w-full flex-col">
-      <div className="w-full p-4 pb-6 pt-2 lg:mx-auto lg:mb-6 lg:max-w-6xl">
+      <div className="w-full bg-black p-4 pb-6 pt-2 lg:mx-auto lg:mb-6 lg:max-w-6xl lg:bg-base">
         <div>
           <Link
             href={`/thedailygwei`}

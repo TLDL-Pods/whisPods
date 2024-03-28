@@ -2,6 +2,7 @@ import { useApp } from '@/app/hooks/useApp';
 import { useSegments } from '@/app/hooks/useSegments';
 import { EpisodeProps } from '@/types';
 import { BiSolidTimer } from 'react-icons/bi';
+import { FaPlayCircle } from 'react-icons/fa';
 import { ImListNumbered } from 'react-icons/im';
 
 interface SegmentTimelineProps {
@@ -12,7 +13,7 @@ export default function SegmentTimeline({
   currentEpisode,
 }: SegmentTimelineProps) {
   const { state, setState } = useApp();
-  const { toggleOrganization } = useSegments();
+  const { toggleOrganization, toggleVideoDrawer } = useSegments();
 
   const totalDurationMs = currentEpisode.episode_data.reduce(
     (total, segment) => total + segment.segment_length_ms,
@@ -82,28 +83,44 @@ export default function SegmentTimeline({
           <div
             key={i} // Use original index to ensure keys are stable through re-renders
             title={segment.title}
-            className={`absolute border-r-2  ${state.currentSegmentIndex === i ? 'h-2.5 bg-accent' : 'h-2 bg-base3 hover:bg-white hover:bg-opacity-40'}`}
+            className={`absolute cursor-pointer border-r-2  ${state.currentSegmentIndex === i ? 'h-2.5 bg-accent' : 'h-2 bg-base3 hover:bg-white hover:bg-opacity-40'}`}
             style={{
               left: `${segment.startPositionPercentage}%`,
               width: `${segment.lengthPercentage}%`,
             }}
-            onClick={() =>
+            onClick={() => {
               setState((prevState) => ({
                 ...prevState,
                 currentSegmentIndex: i,
-              }))
-            }
+              }));
+              if (state.currentSegmentIndex === i) {
+                toggleVideoDrawer(
+                  sortedSegments[state.currentSegmentIndex || 0],
+                );
+              }
+            }}
           />
         ))}
       </div>
-      <div className="mt-1 text-center text-baseText1">
-        {formatTimestamp(
-          sortedSegments[state.currentSegmentIndex || 0].start_time_ms,
-        )}{' '}
-        -{' '}
-        {formatTimestamp(
-          sortedSegments[state.currentSegmentIndex || 0].end_time_ms,
-        )}
+      <div className="mt-2 flex items-center justify-center gap-2 lg:mt-4">
+        <button
+          className="my-auto mt-1 text-2xl text-accent duration-300 hover:text-secondary"
+          onClick={(e) => {
+            e.stopPropagation(),
+              toggleVideoDrawer(sortedSegments[state.currentSegmentIndex || 0]);
+          }}
+        >
+          <FaPlayCircle />
+        </button>
+        <div className="text-center text-baseText1">
+          {formatTimestamp(
+            sortedSegments[state.currentSegmentIndex || 0].start_time_ms,
+          )}{' '}
+          -{' '}
+          {formatTimestamp(
+            sortedSegments[state.currentSegmentIndex || 0].end_time_ms,
+          )}
+        </div>
       </div>
       <button
         onClick={toggleOrganization}

@@ -1,5 +1,4 @@
 import { SegmentProps } from '@/types';
-import { GiSoundWaves } from 'react-icons/gi';
 import { RiMegaphoneLine } from 'react-icons/ri';
 import Slider from 'react-slick';
 
