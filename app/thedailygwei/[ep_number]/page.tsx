@@ -1,9 +1,9 @@
 'use client';
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 
 import { useEpisodes } from '@/app/hooks/useEpisodes';
 import SegmentsList from './components/SegmentsList';
-import EpisodeHeader from './components/EpisodeHeader';
+import EpisodeHeader from './components/episodeHeader/EpisodeHeader';
 import { useApp } from '@/app/hooks/useApp';
 
 export default function EpisodePage({
@@ -12,13 +12,7 @@ export default function EpisodePage({
   params: { ep_number: string };
 }) {
   const { fetchEpisodeData } = useEpisodes();
-  const { state, setState } = useApp();
-
-  const [isOrganizedByLength, setIsOrganizedByLength] = useState<boolean>(true);
-
-  const toggleOrganization = () => {
-    setIsOrganizedByLength(!isOrganizedByLength);
-  };
+  const { state } = useApp();
 
   useEffect(() => {
     fetchEpisodeData(params.ep_number);
@@ -26,8 +20,8 @@ export default function EpisodePage({
 
   if (!state.currentEpisode) {
     return (
-      <div className="w-full flex h-screen justify-center align-middle items-center">
-        <div className="w-full text-center h-1/2">
+      <div className="flex h-screen w-full items-center justify-center align-middle">
+        <div className="h-1/2 w-full text-center">
           <div className="spinner"></div>
           <p className="m-auto mt-3">Loading...</p>
         </div>
@@ -36,16 +30,9 @@ export default function EpisodePage({
   }
 
   return (
-    <div className="relative flex flex-col justify-center h-full min-w-screen w-full max-w-screen">
-      <EpisodeHeader
-        isOrganizedByLength={isOrganizedByLength}
-        currentEpisode={state.currentEpisode}
-        toggleOrganization={toggleOrganization}
-      />
-      <SegmentsList
-        isOrganizedByLength={isOrganizedByLength}
-        currentEpisode={state.currentEpisode}
-      />
+    <div className="min-w-screen max-w-screen relative flex h-full w-full flex-col items-center justify-center pb-16">
+      <EpisodeHeader currentEpisode={state.currentEpisode} />
+      <SegmentsList currentEpisode={state.currentEpisode} />
     </div>
   );
 }

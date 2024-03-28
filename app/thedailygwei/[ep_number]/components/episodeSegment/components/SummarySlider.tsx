@@ -20,31 +20,23 @@ export const SummarySlider = ({ segment }: SummarySliderProps) => {
   const sliderContentArray = [...segment.bullets, segment.summary];
 
   return (
-    <div className="flex flex-col w-full p-3 mx-auto text-baseText">
-      <Slider {...sliderSettings} className="mx-auto w-72 md:w-1/2 max-w-md">
-        <div className="flex flex-col justify-between w-full py-8">
-          <p className="mb-2 text-2xl font-semibold text-baseText text-center ">
-            TLDL
-          </p>
-
-          <div className="flex flex-col space-y-1 w-full ">
-            {sliderContentArray.slice(0, -1).map((bullet, idx) => (
-              <div key={idx} className="flex p-2 my-auto0 bg-base rounded-lg">
-                <div className="flex my-auto text-lg text-textBase">
-                  <RiMegaphoneLine />
-                </div>
-                <p className="ml-4">{bullet}</p>
-              </div>
-            ))}
+    <div className="mx-auto flex w-full flex-col p-3 text-baseText">
+      <div className="mx-auto flex w-full max-w-2xl flex-col space-y-1 pt-16">
+        {sliderContentArray.slice(0, -1).map((bullet, idx) => (
+          <div key={idx} className="my-auto0 flex rounded-lg bg-base p-2">
+            <div className="text-textBase my-auto flex text-lg">
+              <RiMegaphoneLine />
+            </div>
+            <p className="ml-4">{bullet}</p>
           </div>
-        </div>
-        <div className="text-textBase">
+        ))}
+      </div>
+      {/* <div className="text-textBase">
           <p className="mb-2 text-xl font-semibold text-center">SUMMARY</p>
-          <p className="p-4 overflow-y-auto bg-base text-baseText h-80 rounded-lg">
+          <p className="p-4 overflow-y-auto rounded-lg h-80 bg-base text-baseText">
             {sliderContentArray[sliderContentArray.length - 1]}
           </p>
-        </div>
-      </Slider>
+        </div> */}
     </div>
   );
 };

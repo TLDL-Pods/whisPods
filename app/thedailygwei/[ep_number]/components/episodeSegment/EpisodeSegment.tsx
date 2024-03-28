@@ -1,53 +1,61 @@
 'use client';
-import React, { FC, useState, useEffect } from 'react';
+
+import React, { FC, useEffect, useRef, useState } from 'react';
 import { FaCheck } from 'react-icons/fa';
 import { SegmentProps } from '@/types';
 import TweetEmbed from '../../../../components/TweetEmbed';
-
-import 'slick-carousel/slick/slick.css';
-import 'slick-carousel/slick/slick-theme.css';
 import { FiShare } from 'react-icons/fi';
-import { handleShare } from '../../../../utils/handleShare';
 import SummarySlider from './components/SummarySlider';
 import SegmentHeader from './components/SegmentHeader';
+import { useSegments } from '@/app/hooks/useSegments';
+import { useApp } from '@/app/hooks/useApp';
 
 interface EpisodeSegmentProps {
   segment: SegmentProps;
   segmentNumber: number;
-  isOrganizedByLength: boolean;
-  youtube_url: string;
-  onSegmentClick: (segmentNumber: number) => void;
-  showSegmentIndex: number | null;
-  setShowSegmentIndex: (value: number | null) => void;
 }
 
 const EpisodeSegment: FC<EpisodeSegmentProps> = ({
   segment,
   segmentNumber,
-  isOrganizedByLength,
-  youtube_url,
-  showSegmentIndex,
-  setShowSegmentIndex,
 }) => {
-  const [copySuccess, setCopySuccess] = useState<boolean>(false);
+  const { handleShare, copySuccess, setCopySuccess } = useSegments();
+  const { state, setState } = useApp();
   const [isTweetLoaded, setIsTweetLoaded] = useState<boolean>(false);
+  const segmentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (copySuccess) {
-      const timer = setTimeout(() => {
-        setCopySuccess(false);
-      }, 1000);
+    // Check if this segment is the current segment
+    if (state.currentSegmentIndex === segmentNumber && segmentRef.current) {
+      const element = segmentRef.current;
 
-      return () => clearTimeout(timer);
+      // Calculate the top position of the element relative to the document
+      const elementPosition =
+        element.getBoundingClientRect().top + window.scrollY;
+
+      // Define the offset as 10% of the viewport height
+      const offset = window.innerHeight * 0.1;
+
+      // Calculate the final scroll position with offset
+      const scrollToPosition = elementPosition - offset;
+
+      // Scroll to the calculated position smoothly
+      window.scrollTo({
+        top: scrollToPosition,
+        behavior: 'smooth',
+      });
     }
-  }, [copySuccess]);
+  }, [state.currentSegmentIndex, segmentNumber]);
 
   useEffect(() => {
     const hash = window.location.hash;
     if (hash) {
       const segmentNumFromURL = parseInt(hash.substring(1), 10);
       if (!isNaN(segmentNumFromURL) && segmentNumFromURL === segmentNumber) {
-        setShowSegmentIndex(segmentNumber);
+        setState(() => ({
+          ...state,
+          currentSegmentIndex: segmentNumber,
+        }));
       }
     }
   }, [segmentNumber]);
@@ -61,29 +69,19 @@ const EpisodeSegment: FC<EpisodeSegmentProps> = ({
 
   return (
     <div
+      ref={segmentRef}
       id={`${segment.segment_number}`}
       className="relative align-middle shadow-inner shadow-black xl:max-w-[1200px]"
-      key={segment.segment_number}
     >
       <li className="cursor-pointer">
-        <SegmentHeader
-          segment={segment}
-          segmentNumber={segmentNumber}
-          showSegmentIndex={showSegmentIndex}
-          youtube_url={youtube_url}
-          setShowSegmentIndex={setShowSegmentIndex}
-          isOrganizedByLength={isOrganizedByLength}
-        />
-
-        {showSegmentIndex === segmentNumber && (
+        <SegmentHeader segment={segment} segmentNumber={segmentNumber} />
+        {state.currentSegmentIndex === segmentNumber && (
           <div className="md-text-l relative w-full max-w-full flex-col bg-base1 pb-8 text-accent shadow-inner shadow-black">
             <button
               className={`absolute top-7 flex items-center justify-center rounded border border-white border-opacity-40 bg-base1 px-6 py-1 font-bold text-primary shadow-lg duration-500 hover:bg-base1 md:hover:border-opacity-100 ${
                 copySuccess === true ? 'shadow-transparent ' : 'shadow-black'
               } hover:bg-baseText2 right-4 xl:right-52`}
-              onClick={() =>
-                handleShare({ segment, youtube_url, setCopySuccess })
-              }
+              onClick={() => handleShare({ segment, setCopySuccess })}
             >
               {copySuccess === true ? (
                 <div className="text-accent">

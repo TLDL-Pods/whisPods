@@ -14,7 +14,7 @@ export default function Page({ params }: any) {
     setLoading(true);
     try {
       const response = await fetch(
-        `/api/search/${encodeURIComponent(searchTerm)}?page=${page}&pageSize=10`,
+        `/api/search/?searchTerm=${searchTerm}?page=${page}&pageSize=10`,
       );
 
       if (!response.ok) {
@@ -27,6 +27,7 @@ export default function Page({ params }: any) {
       }
 
       const { data, message } = await response.json();
+
       if (!data || data.length === 0) {
         setHasMore(false);
       } else {
@@ -52,7 +53,7 @@ export default function Page({ params }: any) {
   return (
     <main className="flex flex-col items-center">
       {loading ? null : (
-        <p className="mb-4">
+        <p className="my-2">
           Results for "<span className="font-semibold">{searchTerm}</span>"
         </p>
       )}

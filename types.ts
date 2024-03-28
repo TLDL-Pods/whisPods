@@ -49,9 +49,11 @@ export interface AppState {
   latestEpisodes: EpisodeProps[] | null;
   currentEpisode: EpisodeProps | null;
   currentSegment: SegmentProps | null;
+  currentSegmentIndex: number | null;
+  segmentsByLength: boolean;
   currentYouTubeVideo: string | null;
   hasSearched: boolean;
-  searchTerm:string;
+  searchTerm: string;
   isMenuModalOpen: boolean;
 }
 

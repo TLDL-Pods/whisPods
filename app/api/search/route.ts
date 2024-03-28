@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { getClientAndDb } from '../../mongo/db';
+import { getClientAndDb } from '../mongo/db';
 
 export async function GET(req: NextRequest) {
   const url = new URL(req.url);
@@ -23,7 +23,6 @@ export async function GET(req: NextRequest) {
                 text: {
                   query: searchTerm,
                   path: 'episode_title',
-                  fuzzy: {},
                   score: { boost: { value: 3 } },
                 },
               },
@@ -57,6 +56,7 @@ export async function GET(req: NextRequest) {
     }
 
     const searchResults = await collection.aggregate(pipeline).toArray();
+
     return new NextResponse(
       JSON.stringify({
         status: 200,
