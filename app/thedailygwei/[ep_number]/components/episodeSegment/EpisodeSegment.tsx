@@ -76,14 +76,14 @@ const EpisodeSegment: FC<EpisodeSegmentProps> = ({
         {state.currentSegmentIndex === segmentNumber && (
           <div className="relative w-full max-w-full flex-col bg-base1 p-4">
             {isTweetLoaded ? (
-              <div className="mx-auto flex w-full max-w-2xl flex-col space-y-2">
+              <div className="mx-auto flex w-full max-w-2xl flex-col">
                 <div>
                   <p className="text-bold my-2 text-center text-2xl">TLDL </p>
                 </div>
                 {segment.bullets.map((bullet, idx) => (
                   <div
                     key={idx}
-                    className="flex rounded-lg border-l border-accent bg-base p-2"
+                    className="mt-2 flex rounded-lg border-l border-accent bg-base p-2"
                   >
                     <div className="text-textBase my-auto flex text-lg">
                       <RiMegaphoneLine />
@@ -93,7 +93,7 @@ const EpisodeSegment: FC<EpisodeSegmentProps> = ({
                 ))}
                 <button
                   onClick={() => setShowSummary(true)}
-                  className="mx-auto flex w-fit rounded-lg border border-white border-opacity-40 bg-base px-6 pb-0.5"
+                  className="mx-auto mt-6 flex w-fit rounded-lg border border-white border-opacity-40 bg-base px-6 pb-0.5"
                 >
                   Full Summary
                 </button>
