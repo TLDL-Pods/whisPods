@@ -42,7 +42,7 @@ export default function EpisodeHeader({ currentEpisode }: EpisodeHeaderProps) {
       </div>
       <button
         onClick={toggleOrganization}
-        className="mx-auto flex h-8 w-full justify-center border border-base3 bg-base2 p-1 text-lg duration-300 hover:border-opacity-100 hover:bg-base lg:mb-2 lg:max-w-6xl"
+        className="mx-auto flex h-8 w-full justify-center border border-base3 bg-base1 p-1 text-lg duration-300 hover:border-opacity-100 hover:bg-base lg:mb-2 lg:max-w-6xl"
         title="Sort Segments"
       >
         {state.segmentsByLength ? (

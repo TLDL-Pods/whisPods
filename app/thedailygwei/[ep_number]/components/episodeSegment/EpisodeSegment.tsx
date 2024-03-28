@@ -3,10 +3,9 @@
 import React, { FC, useEffect, useRef, useState } from 'react';
 import { SegmentProps } from '@/types';
 import TweetEmbed from '../../../../components/TweetEmbed';
-import SummarySlider from './components/SummarySlider';
 import SegmentHeader from './components/SegmentHeader';
-import { useSegments } from '@/app/hooks/useSegments';
 import { useApp } from '@/app/hooks/useApp';
+import { RiMegaphoneLine } from 'react-icons/ri';
 
 interface EpisodeSegmentProps {
   segment: SegmentProps;
@@ -19,6 +18,8 @@ const EpisodeSegment: FC<EpisodeSegmentProps> = ({
 }) => {
   const { state, setState } = useApp();
   const [isTweetLoaded, setIsTweetLoaded] = useState<boolean>(false);
+  const [showSummary, setShowSummary] = useState<boolean>(false);
+
   const segmentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -73,9 +74,30 @@ const EpisodeSegment: FC<EpisodeSegmentProps> = ({
       <li className="cursor-pointer">
         <SegmentHeader segment={segment} segmentNumber={segmentNumber} />
         {state.currentSegmentIndex === segmentNumber && (
-          <div className="md-text-l relative w-full max-w-full flex-col bg-base1 pb-8 text-accent shadow-inner shadow-black">
+          <div className="relative w-full max-w-full flex-col bg-base1 p-4">
             {isTweetLoaded ? (
-              <SummarySlider segment={segment} />
+              <div className="mx-auto flex w-full max-w-2xl flex-col space-y-2">
+                <div>
+                  <p className="text-bold my-2 text-center text-2xl">TLDL </p>
+                </div>
+                {segment.bullets.map((bullet, idx) => (
+                  <div
+                    key={idx}
+                    className="flex rounded-lg border-l border-accent bg-base p-2"
+                  >
+                    <div className="text-textBase my-auto flex text-lg">
+                      <RiMegaphoneLine />
+                    </div>
+                    <p className="ml-4">{bullet}</p>
+                  </div>
+                ))}
+                <button
+                  onClick={() => setShowSummary(true)}
+                  className="mx-auto flex w-fit rounded-lg border border-white border-opacity-40 bg-base px-6 pb-0.5"
+                >
+                  Full Summary
+                </button>
+              </div>
             ) : (
               <div className="flex w-full items-center justify-center align-middle">
                 <div className="mt-10 h-1/2 w-full text-center">
@@ -101,6 +123,31 @@ const EpisodeSegment: FC<EpisodeSegmentProps> = ({
           </div>
         )}
       </li>
+      {showSummary ? (
+        <div className="lg:max-h-1/2 fixed left-0 top-0 z-20 h-full w-full rounded-lg bg-base p-8 pt-28 lg:bottom-0 lg:right-0 lg:m-auto lg:h-fit lg:w-1/2 lg:border lg:border-base3 lg:pt-8">
+          <div className="relative">
+            <button
+              className={`text-md absolute -top-1 right-0 -mr-4 h-8 w-8 border border-white border-opacity-40 bg-base1 px-1 text-center text-red-400 duration-300 hover:border-opacity-100 hover:bg-base3 md:w-16 lg:-top-4`}
+              onClick={() => setShowSummary(false)}
+              aria-label="Close Summary"
+            >
+              X
+            </button>
+
+            <p className="relative mb-2 font-semibold text-baseText1">
+              FULL SUMMARY
+            </p>
+
+            <p className="mb-2 text-xl font-semibold text-secondary">
+              {segment.segment_title}
+            </p>
+
+            <p className="mt-6 h-full overflow-y-auto rounded-lg text-baseText">
+              {segment.summary}
+            </p>
+          </div>
+        </div>
+      ) : null}
     </div>
   );
 };
