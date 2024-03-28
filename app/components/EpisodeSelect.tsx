@@ -3,50 +3,62 @@ import Image from 'next/image';
 import { EpisodeProps } from '@/types';
 import { RiMegaphoneLine } from 'react-icons/ri';
 import TDG from '@/app/assets/the-daily-gwei.jpg';
+import { useApp } from '../hooks/useApp';
 
 interface EpisodeSelectProps {
   episode: EpisodeProps;
 }
 
 export default function EpisodeSelect({ episode }: EpisodeSelectProps) {
+  const { setState } = useApp();
+
   const topThreeSegments = episode.episode_data
     .sort((a, b) => b.segment_length_ms - a.segment_length_ms)
     .slice(0, 3);
 
   return (
-    <Link href={`/thedailygwei/${episode.episode_number}`}>
-      <div className="flex my-1 flex-col flex-grow w-full min-h-full text-center transition-all duration-500 bg-gradient-to-r from-transparent via-base1 to-transparent border-b border-opacity-40 border-white hover:bg-base2 py-2">
+    <Link
+      href={`/thedailygwei/${episode.episode_number}`}
+      onClick={() =>
+        setState((prevState) => ({
+          ...prevState,
+          currentSegmentIndex: null,
+          currentSegment: null,
+        }))
+      }
+    >
+      <div className="my-1 flex min-h-full w-full flex-grow flex-col border-b border-white border-opacity-40 bg-gradient-to-r from-transparent via-base1 to-transparent py-2 text-center transition-all duration-500 hover:bg-base2">
         {/* Image, Episode Number, and Date for mobile */}
         <div className="h-full w-4 bg-purple-600"></div>
 
-        <div className="flex items-center mx-auto w-full lg:p-0 p-2">
-          <div className="flex flex-col mr-2 w-32 items-center">
-            <span className=" font-bold text-accent lg:text-2xl lg:border-b-2 border-accent border-opacity-40 w-fit lg:pb-1 lg:mb-2">
+        <div className="mx-auto flex w-full items-center p-2 lg:p-0">
+          <div className="mr-2 flex w-32 flex-col items-center">
+            <span className="w-fit border-accent border-opacity-40 font-bold text-accent lg:mb-2 lg:border-b-2 lg:pb-1 lg:text-2xl">
               {episode.episode_number}
             </span>
             <span className="text-xs text-secondary text-opacity-80 lg:text-sm">
               {episode.release_date}
             </span>
           </div>
-          <div className="w-24 h-16 min-w-min mr-1 lg:w-64 lg:h-40 lg:p-4">
+          <div className="mr-1 h-16 w-24 min-w-min lg:h-40 lg:w-64 lg:p-4">
             {/* Image container */}
             <Image
               src={TDG}
               alt="Background"
-              className="object-cover w-16 h-16 lg:h-32 lg:w-32"
+              className="h-16 w-16 object-cover lg:h-32 lg:w-32"
             />
           </div>
 
           <div className="w-full">
-            <div className="lg:text-2xl lg:text-left text-textBase line-clamp-2">
+            <div className="text-textBase line-clamp-2 lg:text-left lg:text-2xl">
               {episode.episode_title
                 ? episode.episode_title.toUpperCase()
                 : null}
             </div>
-            <div className="mt-2 text-baseText1 hidden lg:block">
+            <div className="mt-2 hidden text-baseText1 lg:block">
               {topThreeSegments.map((segment, index) => (
                 <div key={segment.segment_number} className="flex">
-                  <div className="mt-1 text-textBase">
+                  <div className="text-textBase mt-1">
                     <RiMegaphoneLine />
                   </div>
 

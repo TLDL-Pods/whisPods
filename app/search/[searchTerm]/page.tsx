@@ -53,7 +53,7 @@ export default function Page({ params }: any) {
   return (
     <main className="flex flex-col items-center">
       {loading ? null : (
-        <p className="mb-4">
+        <p className="my-2">
           Results for "<span className="font-semibold">{searchTerm}</span>"
         </p>
       )}
