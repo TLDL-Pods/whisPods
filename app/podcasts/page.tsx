@@ -16,33 +16,6 @@ const podcasts = [
       'The Daily Gwei Refuel gives you a recap every week day on everything that happened in the Ethereum and crypto ecosystems over the previous 24 hours - hosted by Anthony Sassano.',
     category: ['Crypto', 'Finance'],
   },
-  {
-    name: 'The Daily Gwei Refuel',
-    href: '/thedailygwei',
-    image: TDG,
-    hosts: ['Anthony Sassano'],
-    description:
-      'The Daily Gwei Refuel gives you a recap every week day on everything that happened in the Ethereum and crypto ecosystems over the previous 24 hours - hosted by Anthony Sassano.',
-    category: ['Crypto', 'Finance'],
-  },
-  {
-    name: 'The Daily Gwei Refuel',
-    href: '/thedailygwei',
-    image: TDG,
-    hosts: ['Anthony Sassano'],
-    description:
-      'The Daily Gwei Refuel gives you a recap every week day on everything that happened in the Ethereum and crypto ecosystems over the previous 24 hours - hosted by Anthony Sassano.',
-    category: ['Crypto', 'Finance'],
-  },
-  {
-    name: 'The Daily Gwei Refuel',
-    href: '/thedailygwei',
-    image: TDG,
-    hosts: ['Anthony Sassano'],
-    description:
-      'The Daily Gwei Refuel gives you a recap every week day on everything that happened in the Ethereum and crypto ecosystems over the previous 24 hours - hosted by Anthony Sassano.',
-    category: ['Crypto', 'Finance'],
-  },
 ];
 
 export default function Home() {
@@ -54,7 +27,7 @@ export default function Home() {
         <span className="mr-3 hidden font-semibold sm:block">TLDL </span>
         SUPPORTED PODCASTS
       </h1>
-      <div className="grid-rows-auto mt-4 grid max-w-5xl grid-cols-1 gap-x-20 gap-y-12 sm:mt-12 lg:grid-cols-2">
+      <div className="grid-rows-auto lg:grid-cols-auto mt-4 grid max-w-5xl grid-cols-1 gap-x-20 gap-y-12 sm:mt-12">
         {podcasts.map((podcast) => (
           <Link href={podcast.href}>
             <Card

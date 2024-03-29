@@ -28,7 +28,7 @@ export default function Navbar() {
         className={`z-10 flex h-24 items-center justify-between duration-300`}
       >
         <div
-          className={`${state.isMenuModalOpen ? ' rounded-none' : 'lg:rounded-br-2xl'}  flex h-24 w-full flex-row-reverse items-center justify-between gap-4 bg-black bg-opacity-[96%] px-4 duration-300 lg:w-64 lg:flex-row lg:justify-center lg:px-6`}
+          className={`${state.isMenuModalOpen ? ' rounded-none' : 'lg:rounded-br-2xl'}  flex h-24 w-full flex-row-reverse items-center justify-between gap-4 bg-black bg-opacity-[96%] px-4 shadow shadow-baseShadow duration-300 lg:w-64 lg:flex-row lg:justify-center lg:px-6`}
         >
           {/* TLDL Title */}
           <div
