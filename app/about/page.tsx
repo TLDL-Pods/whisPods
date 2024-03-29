@@ -6,23 +6,21 @@ import { teamMembers, aboutQuestions } from '../data/aboutData';
 export default function About() {
   return (
     <div className="flex justify-center p-6 pt-12 lg:pt-20">
-      <div className="w-full max-w-5xl ">
-        <h1 className="text-center text-4xl font-semibold text-secondary">
-          ABOUT
-        </h1>
+      <div className="w-full max-w-5xl">
+        <h1 className="text-center text-3xl font-thin">ABOUT</h1>
 
-        <div className="mx-auto mt-4 flex max-w-4xl flex-col gap-8 lg:mt-12">
+        <div className="mx-auto mt-8 flex max-w-4xl flex-col gap-8 lg:mt-12">
           {aboutQuestions.map((question, i) => (
             <div key={i} className="mt-4">
-              <h3 className="text-3xl font-semibold">{question.q}</h3>
+              <h3 className="text-3xl font-semibold text-secondary">
+                {question.q}
+              </h3>
               <p className="mt-2">{question.a}</p>
             </div>
           ))}
         </div>
         <div className="mx-auto my-12 w-4/5 border-b border-baseText1 lg:my-24"></div>
-        <h1 className="text-center text-4xl font-semibold text-secondary">
-          THE TEAM
-        </h1>
+        <h1 className="text-center text-3xl font-thin">THE TEAM</h1>
         <div className="mt-12 flex flex-col gap-2 space-y-6 lg:mt-6 lg:flex-row lg:space-y-0">
           {teamMembers.map((member) => (
             <div

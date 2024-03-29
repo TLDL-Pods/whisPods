@@ -46,6 +46,7 @@ export default function Home() {
                 </h3>
               }
             />
+            <h2 className="mt-2 text-center text-2xl">{podcast.name}</h2>
           </Link>
         ))}
       </div>
