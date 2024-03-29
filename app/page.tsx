@@ -67,16 +67,16 @@ export default function Home() {
           />
         </div>
         <Link href={`/thedailygwei`}>
-          <div className="mt-8 hidden py-4 text-center text-xl text-secondary duration-300 hover:opacity-90 md:text-xl lg:block lg:text-3xl">
-            Latest Episodes
+          <div className="mt-8 hidden py-4 text-center text-3xl font-thin duration-300 hover:opacity-90 md:text-xl lg:block lg:text-3xl">
+            LATEST EPISODES{' '}
           </div>
         </Link>
       </div>
       <div className="lg:h-[780px]"></div>
       <div>
         <Link href={`/thedailygwei`}>
-          <div className="py-4 text-center text-xl text-secondary duration-300 hover:opacity-90 md:text-xl lg:mt-8 lg:hidden lg:text-3xl">
-            Latest Episodes
+          <div className="py-4 text-center text-xl font-thin duration-300 hover:opacity-90 md:text-xl lg:mt-8 lg:hidden lg:text-3xl">
+            LATEST EPISODES
           </div>
         </Link>
         <div className="mx-auto text-center lg:max-w-7xl">
