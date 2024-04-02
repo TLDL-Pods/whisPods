@@ -30,12 +30,12 @@ export const SegmentHeader = ({
       onClick={() => handleSegmentToggle(segmentNumber, segment)}
     >
       <div
-        className={`h-full w-0.5 duration-500 ${state.currentSegmentIndex === segmentNumber ? 'bg-secondary' : 'bg-base1 group-hover:bg-secondary'}`}
+        className={`h-full w-0.5 duration-500 ${state.currentSegmentIndex === segmentNumber ? 'bg-secondary' : 'bg-base group-hover:bg-secondary'}`}
       ></div>
 
       {/* INDEX */}
       <div
-        className={`flex h-full w-28 min-w-fit gap-2 border-r border-base3 text-center font-semibold text-secondary lg:w-32`}
+        className={`flex h-full w-16 min-w-fit gap-2 text-center font-semibold text-secondary lg:w-16`}
       >
         <p className="m-auto ">
           {state.segmentsByLength
@@ -47,17 +47,6 @@ export const SegmentHeader = ({
                 .padStart(2, '0')}`
             : segmentNumber + 1}
         </p>
-        {/* Play Button */}
-        <div className="mr-2 flex h-full min-w-fit text-center">
-          <button
-            className="m-auto text-2xl text-accent duration-300 hover:text-secondary lg:text-4xl"
-            onClick={(e) => {
-              e.stopPropagation(), toggleVideoDrawer(segment);
-            }}
-          >
-            <FaPlayCircle />
-          </button>
-        </div>
       </div>
 
       {/* HEADLINE*/}
@@ -65,6 +54,17 @@ export const SegmentHeader = ({
         <span className="my-auto line-clamp-2 text-left">
           {segment.segment_title}
         </span>
+      </div>
+      {/* Play Button */}
+      <div className="mr-2 flex h-full min-w-fit text-center">
+        <button
+          className="m-auto text-2xl text-accent duration-300 hover:text-secondary lg:text-4xl"
+          onClick={(e) => {
+            e.stopPropagation(), toggleVideoDrawer(segment);
+          }}
+        >
+          <FaPlayCircle />
+        </button>
       </div>
       <button
         className={`flex h-full items-center justify-center border-l border-white border-opacity-40 bg-base1 px-1 font-bold text-primary shadow-lg duration-500 hover:bg-base1 md:hover:border-opacity-100 ${
