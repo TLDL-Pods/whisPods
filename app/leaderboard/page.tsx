@@ -1,25 +1,45 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 
-// Define the type for your data items
+// Define the type for each data item
 type DuneDataItem = {
-  // Define your data structure here based on the API response
-  // For example:
-  id: number;
-  name: string;
-  value: number;
+  N: number;
+  donor_name: string;
+  historical_value: number;
+  current_value: number;
+  value_percentage_change: number;
+  donations: number;
+  tx_hashes: string;
 };
 
+// Define the type for the entire API response, incorporating the nested structure
+type ApiResponse = {
+  status: number;
+  message: string;
+  data: {
+    metadata: {
+      column_names: string[];
+      datapoint_count: number;
+      execution_time_millis: number;
+      pending_time_millis: number;
+      result_set_bytes: number;
+      row_count: number;
+      total_result_set_bytes: number;
+      total_row_count: number;
+    };
+    rows: DuneDataItem[];
+  };
+};
 const DuneDataDisplay: React.FC = () => {
-  const [data, setData] = useState<DuneDataItem[]>([]);
+  const [data, setData] = useState<ApiResponse | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await fetch('/api/leaderboard');
-        const data = await response.json();
-        setData(data); // Assuming the data format matches your component's state
+        const jsonData: ApiResponse = await response.json();
+        setData(jsonData);
         setLoading(false);
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -32,22 +52,50 @@ const DuneDataDisplay: React.FC = () => {
 
   if (loading) return <div className="text-center">Loading...</div>;
 
+  // Ensure that data is not null before trying to access its properties
+  if (!data) return <div>No data found</div>;
+
   return (
-    console.log(data),
-    (
-      <div className="flex flex-col items-center">
-        {/* {data.map((item) => (
-        <div
-          key={item.id}
-          className="m-2 rounded border border-gray-200 p-4 shadow"
-        >
-          <div>Name: {item.name}</div>
-          <div>Value: {item.value}</div>
-        </div> */}
-        hello world
-        {/* ))} */}
-      </div>
-    )
+    <div className="flex flex-col items-center">
+      <table className="m-2 table-auto border-collapse border border-gray-200">
+        <thead>
+          <tr>
+            <th className="border border-gray-300 px-4 py-2">Donor Name</th>
+            <th className="border border-gray-300 px-4 py-2">Current Value</th>
+            <th className="border border-gray-300 px-4 py-2">Donations</th>
+            <th className="border border-gray-300 px-4 py-2">
+              Historical Value
+            </th>
+            <th className="border border-gray-300 px-4 py-2">
+              Value Change (%)
+            </th>
+            {/* Add more columns as needed */}
+          </tr>
+        </thead>
+        <tbody>
+          {data.data.rows.map((item, index) => (
+            <tr key={index}>
+              <td className="border border-gray-300 px-4 py-2">
+                {item.donor_name}
+              </td>
+              <td className="border border-gray-300 px-4 py-2">
+                {item.current_value}
+              </td>
+              <td className="border border-gray-300 px-4 py-2">
+                {item.donations}
+              </td>
+              <td className="border border-gray-300 px-4 py-2">
+                {item.historical_value}
+              </td>
+              <td className="border border-gray-300 px-4 py-2">
+                {(item.value_percentage_change * 100).toFixed(2)}%
+              </td>
+              {/* Render additional cells as needed */}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 };
 
