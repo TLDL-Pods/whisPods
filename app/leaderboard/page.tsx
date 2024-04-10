@@ -90,7 +90,6 @@ const DuneDataDisplay: React.FC = () => {
               <td className="border border-gray-300 px-4 py-2">
                 {(item.value_percentage_change * 100).toFixed(2)}%
               </td>
-              {/* Render additional cells as needed */}
             </tr>
           ))}
         </tbody>
