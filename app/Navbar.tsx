@@ -28,9 +28,22 @@ export default function Navbar() {
         className={`z-10 flex h-24 items-center justify-between duration-300`}
       >
         <div
-          className={`${state.isMenuModalOpen ? ' rounded-none' : 'lg:rounded-br-2xl'}  flex h-24 w-full flex-row-reverse items-center justify-between gap-4 bg-black bg-opacity-[96%] px-4 shadow shadow-baseShadow duration-300 lg:w-64 lg:flex-row lg:justify-center lg:px-6`}
+          className={`${state.isMenuModalOpen ? ' rounded-none' : 'lg:rounded-br-2xl'}  flex h-24 w-full items-center justify-between gap-4 bg-black bg-opacity-[96%] px-4 shadow shadow-baseShadow duration-300 lg:flex-row lg:justify-center lg:px-12`}
         >
           {/* TLDL Title */}
+
+          <Link href={'/'}>
+            <p className="text-4xl font-semibold">TLDL</p>
+            <h1 className="mt-1 text-xs text-baseText1">
+              Too Long Didn't Listen
+            </h1>
+          </Link>
+          {/* Search */}
+          <div
+            className={`mx-auto hidden w-11/12 flex-col items-center justify-center duration-300 lg:block lg:w-1/2`}
+          >
+            <SearchBar />
+          </div>
           <div
             onClick={navMenuToggle}
             className={`${
@@ -41,40 +54,29 @@ export default function Navbar() {
           >
             <GiHamburgerMenu />
           </div>
-          <Link href={'/'}>
-            <p className="text-4xl font-semibold">TLDL</p>
-            <h1 className="mt-1 text-xs text-baseText1">
-              Too Long Didn't Listen
-            </h1>
-          </Link>
-        </div>
-
-        {/* Search */}
-        <div
-          className={`absolute left-0 right-0 top-6 mx-auto hidden w-11/12 flex-col items-center justify-center duration-300 lg:block lg:w-1/2`}
-        >
-          <SearchBar />
         </div>
 
         {/*NavMenu */}
         <div
           onBlur={navMenuToggle}
-          className={`${state.isMenuModalOpen ? 'left-0' : '-left-[100%]'} absolute top-24 mx-auto flex h-screen w-full flex-col gap-2 bg-black bg-opacity-[96%] px-8 pb-8 duration-300 lg:w-64 lg:rounded-br-2xl lg:px-10 lg:pt-4`}
+          className={`${state.isMenuModalOpen ? 'right-0' : '-right-[100%]'} absolute top-24 mx-auto flex h-screen w-full flex-col gap-2 bg-black bg-opacity-[96%] px-8 pb-8 duration-300 lg:w-64 lg:rounded-br-2xl lg:px-10 lg:pt-4`}
         >
           <div
-            className={`mb-2 w-full flex-col items-center justify-center duration-300 lg:hidden`}
+            className={`mb-2 mt-2 w-full flex-col items-center justify-center duration-300 lg:hidden`}
           >
             <SearchBar />
           </div>
-          {links.map((link, i) => (
-            <Link
-              onClick={navMenuToggle}
-              href={link.href}
-              className="text-2xl hover:text-baseText1"
-            >
-              <p>{link.name}</p>
-            </Link>
-          ))}
+          <div className="my-8 flex flex-col gap-8">
+            {links.map((link, i) => (
+              <Link
+                onClick={navMenuToggle}
+                href={link.href}
+                className="text-center text-2xl hover:text-baseText1"
+              >
+                <p>{link.name}</p>
+              </Link>
+            ))}
+          </div>
         </div>
       </div>
 

@@ -26,7 +26,7 @@ export default function SegmentsList({ currentEpisode }: SegmentsListProps) {
             .map((segment, index) => (
               <div
                 key={segment.segment_number}
-                className="border-b border-white border-opacity-30 bg-base"
+                className="border-b border-white border-opacity-10 bg-base"
               >
                 <EpisodeSegment segment={segment} segmentNumber={index} />
               </div>

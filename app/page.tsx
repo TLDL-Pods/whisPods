@@ -57,7 +57,7 @@ export default function Home() {
         />{' '}
       </div>
 
-      <div className="absolute top-0 w-full">
+      <div className="absolute top-0 mt-24 w-full">
         <div className="relative hidden h-[800px] w-full object-cover lg:block">
           <div className="absolute top-0 h-full w-full bg-gradient-to-r from-black via-transparent to-black"></div>
           <Image
@@ -66,20 +66,15 @@ export default function Home() {
             className="h-[800px] w-full object-cover"
           />
         </div>
-        <Link href={`/thedailygwei`}>
-          <div className="mt-8 hidden py-4 text-center text-xl text-secondary duration-300 hover:opacity-90 md:text-xl lg:block lg:text-3xl">
-            Latest Episodes
-          </div>
-        </Link>
       </div>
       <div className="lg:h-[780px]"></div>
       <div>
-        <Link href={`/thedailygwei`}>
-          <div className="py-4 text-center text-xl text-secondary duration-300 hover:opacity-90 md:text-xl lg:mt-8 lg:hidden lg:text-3xl">
-            Latest Episodes
-          </div>
-        </Link>
         <div className="mx-auto text-center lg:max-w-7xl">
+          <Link href={`/thedailygwei`}>
+            <div className="mt-2 py-4 text-center text-3xl font-thin text-secondary duration-300 hover:opacity-90 md:my-8 md:text-xl lg:block lg:text-5xl">
+              LATEST EPISODES{' '}
+            </div>
+          </Link>
           {episodes.map((episode: any) => (
             <EpisodeSelect key={episode._id} episode={episode} />
           ))}
