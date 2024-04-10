@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@duneanalytics/client-sdk": "^0.1.4",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "@mui/material": "^5.14.18",
@@ -39,7 +40,8 @@
     "react-youtube": "^10.1.0",
     "slick-carousel": "^1.8.1",
     "tailwindcss": "3.3.3",
-    "typescript": "5.1.6"
+    "typescript": "5.1.6",
+    "whisPods": "link:"
   },
   "devDependencies": {
     "@types/gtag.js": "^0.0.13",
