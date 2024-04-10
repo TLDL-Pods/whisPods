@@ -63,6 +63,7 @@ const DuneDataDisplay: React.FC = () => {
       <table className="m-2 table-auto">
         <thead className="bg-base">
           <tr>
+            <th className={tableHeaderCellClass}>Place</th>
             <th className={tableHeaderCellClass}>Donor Name</th>
             <th className={tableHeaderCellClass}>Current Value</th>
             <th className={tableHeaderCellClass}>Donations</th>
@@ -75,16 +76,30 @@ const DuneDataDisplay: React.FC = () => {
               key={index}
               className={`${index % 2 ? 'bg-base1' : 'bg-base2'}`}
             >
-              <td className={tableRowCellClass}>{item.donor_name}</td>
-              <td className={tableRowCellClass}>
-                {item.current_value.toFixed(3)} (
+              <td className={`${tableRowCellClass} text-center font-semibold`}>
+                {index + 1}
+              </td>
+              <td className={`${tableRowCellClass}`}>{item.donor_name}</td>
+              <td className={`${tableRowCellClass} text-right`}>
+                $
+                <span className="font-semibold">
+                  {item.current_value.toFixed(0)}
+                </span>{' '}
+                (
                 <span
                   className={`${item.value_percentage_change * 100 < 0 ? 'text-red-500' : 'text-green-400'} text-xs`}
                 >{`${(item.value_percentage_change * 100).toFixed(2)}%`}</span>
                 )
               </td>
-              <td className={tableRowCellClass}>{item.donations}</td>
-              <td className={tableRowCellClass}>{item.historical_value}</td>
+              <td className={`${tableRowCellClass} text-right`}>
+                {item.donations}
+              </td>
+              <td className={`${tableRowCellClass} text-right`}>
+                $
+                <span className={`font-semibold`}>
+                  {item.historical_value.toFixed(0)}
+                </span>
+              </td>
             </tr>
           ))}
         </tbody>
