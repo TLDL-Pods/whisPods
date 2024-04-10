@@ -1,6 +1,9 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 
+const tableHeaderCellClass = 'border-2 border-gray-400 px-4 py-2';
+const tableRowCellClass = 'border border-gray-500 px-4 py-2';
+
 // Define the type for each data item
 type DuneDataItem = {
   N: number;
@@ -57,39 +60,31 @@ const DuneDataDisplay: React.FC = () => {
 
   return (
     <div className="flex flex-col items-center">
-      <table className="m-2 table-auto border-collapse border border-gray-200">
-        <thead>
+      <table className="m-2 table-auto">
+        <thead className="bg-base">
           <tr>
-            <th className="border border-gray-300 px-4 py-2">Donor Name</th>
-            <th className="border border-gray-300 px-4 py-2">Current Value</th>
-            <th className="border border-gray-300 px-4 py-2">Donations</th>
-            <th className="border border-gray-300 px-4 py-2">
-              Historical Value
-            </th>
-            <th className="border border-gray-300 px-4 py-2">
-              Value Change (%)
-            </th>
-            {/* Add more columns as needed */}
+            <th className={tableHeaderCellClass}>Donor Name</th>
+            <th className={tableHeaderCellClass}>Current Value</th>
+            <th className={tableHeaderCellClass}>Donations</th>
+            <th className={tableHeaderCellClass}>Historical Value</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className="border-2 border-gray-400">
           {data.data.rows.map((item, index) => (
-            <tr key={index}>
-              <td className="border border-gray-300 px-4 py-2">
-                {item.donor_name}
+            <tr
+              key={index}
+              className={`${index % 2 ? 'bg-base1' : 'bg-base2'}`}
+            >
+              <td className={tableRowCellClass}>{item.donor_name}</td>
+              <td className={tableRowCellClass}>
+                {item.current_value.toFixed(3)} (
+                <span
+                  className={`${item.value_percentage_change * 100 < 0 ? 'text-red-500' : 'text-green-400'} text-xs`}
+                >{`${(item.value_percentage_change * 100).toFixed(2)}%`}</span>
+                )
               </td>
-              <td className="border border-gray-300 px-4 py-2">
-                {item.current_value}
-              </td>
-              <td className="border border-gray-300 px-4 py-2">
-                {item.donations}
-              </td>
-              <td className="border border-gray-300 px-4 py-2">
-                {item.historical_value}
-              </td>
-              <td className="border border-gray-300 px-4 py-2">
-                {(item.value_percentage_change * 100).toFixed(2)}%
-              </td>
+              <td className={tableRowCellClass}>{item.donations}</td>
+              <td className={tableRowCellClass}>{item.historical_value}</td>
             </tr>
           ))}
         </tbody>
