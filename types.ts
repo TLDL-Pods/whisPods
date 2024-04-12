@@ -62,3 +62,33 @@ export interface YouTubePlayerEvent {
     playVideo: () => void;
   };
 }
+
+// Define the type for each data item
+export type DuneDataItem = {
+  N: number;
+  donor_name: string;
+  historical_value: number;
+  current_value: number;
+  value_percentage_change: number;
+  donations: number;
+  tx_hashes: string;
+};
+
+// Define the type for the entire API response, incorporating the nested structure
+export type ApiResponse = {
+  status: number;
+  message: string;
+  data: {
+    metadata: {
+      column_names: string[];
+      datapoint_count: number;
+      execution_time_millis: number;
+      pending_time_millis: number;
+      result_set_bytes: number;
+      row_count: number;
+      total_result_set_bytes: number;
+      total_row_count: number;
+    };
+    rows: DuneDataItem[];
+  };
+};

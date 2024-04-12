@@ -1,5 +1,5 @@
 export const getTweetIdFromUrl = (url: string): string | null => {
-  if (url.includes("twitter.com")) {
+  if (url.includes('twitter.com')) {
     // Decode URL to handle any encoded characters
     const decodedUrl = decodeURIComponent(url);
 
