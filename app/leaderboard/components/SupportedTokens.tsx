@@ -23,7 +23,9 @@ const SupportedTokens = () => {
         ))}
       </div>
       <p className="mt-2 text-center text-xs text-secondary">
-        *Don't see your favorite L2? Reachout to @sters on Farcaster!
+        *Don't see your favorite L2? Reachout to{' '}
+        <span className="text-sm font-semibold">@trust</span> on farcaster or{' '}
+        <span className="text-sm font-semibold">@0xsters</span> on twitter!
       </p>
     </div>
   );
