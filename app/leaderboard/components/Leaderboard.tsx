@@ -26,11 +26,17 @@ const Leaderboard = () => {
   const getIcon = (index: number) => {
     switch (index) {
       case 0:
-        return <GiCrownCoin className="text-3xl text-yellow-300 opacity-80" />;
+        return (
+          <GiCrownCoin className="text-2xl text-yellow-300 opacity-80 lg:text-3xl" />
+        );
       case 1:
-        return <GiTwoCoins className="text-3xl text-zinc-400 opacity-80" />;
+        return (
+          <GiTwoCoins className="text-2xl text-zinc-400 opacity-80 lg:text-3xl" />
+        );
       case 2:
-        return <GiToken className="text-3xl text-yellow-700 opacity-80" />;
+        return (
+          <GiToken className="text-2xl text-yellow-700 opacity-80 lg:text-3xl" />
+        );
       default:
         return null;
     }
@@ -50,10 +56,12 @@ const Leaderboard = () => {
           <tr>
             <th className="text-center">Rank</th>
             <th className="py-4 text-left">Donor Name</th>
-            <th className="text-right">Current Value</th>
-            <th className="text-right">Historical Value</th>
-            <th className="text-right">% Change</th>
-            <th className="text-right"># Donations</th>
+            <th className="pr-2 text-right">Current Value</th>
+            <th className="pr-2 text-right max-lg:hidden">Historical Value</th>
+            <th className="pr-2 text-right lg:hidden">OG Value</th>
+
+            <th className="pr-2 text-right max-lg:hidden">% Change</th>
+            <th className="pr-2 text-right"># Donations</th>
           </tr>
         </thead>
         <tbody className="w-full rounded-b-lg">
@@ -69,7 +77,7 @@ const Leaderboard = () => {
                 {index + 1}
               </td>
               <td
-                className={`overflow-x-hidden text-ellipsis whitespace-nowrap px-1`}
+                className={`max-w-[150px] overflow-x-hidden text-ellipsis whitespace-nowrap px-1`}
               >
                 {item.donor_name}
               </td>
@@ -85,14 +93,14 @@ const Leaderboard = () => {
                   {item.historical_value.toFixed(0)}
                 </span>
               </td>
-              <td className={`px-1 text-right`}>
+              <td className={`px-1 text-right max-lg:hidden`}>
                 <span
                   className={`${item.value_percentage_change < 0 ? 'text-red-400' : 'text-green-400'}`}
                 >
                   {`${(item.value_percentage_change * 100).toFixed(2)}%`}
                 </span>
               </td>
-              <td className={`px-1 text-right`}>{item.donations}</td>
+              <td className={`pr-2 text-right`}>{item.donations}</td>
             </tr>
           ))}
         </tbody>
