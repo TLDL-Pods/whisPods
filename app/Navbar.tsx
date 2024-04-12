@@ -10,7 +10,7 @@ import Image from 'next/image';
 const links = [
   { name: 'HOME', href: '/' },
   { name: 'PODCASTS', href: '/podcasts' },
-  { name: 'LEADERBOARD', href: '/leaderboard' },
+  { name: 'DONATE', href: '/donate' },
   { name: 'ABOUT', href: '/about' },
 ];
 
