@@ -18,7 +18,7 @@ const DonateButton = () => {
 
   return (
     <div
-      onClick={() => handleCopy(' 0x88BA0f60a9E7Daaf765A907523eCec88022adFae')}
+      onClick={() => handleCopy('0x88BA0f60a9E7Daaf765A907523eCec88022adFae')}
       className="relative mx-auto mt-4 flex cursor-pointer items-center rounded-lg border-2 border-gray-700 bg-base2 px-4 py-1 duration-300 hover:border-accent"
     >
       <div className="flex text-2xl">
