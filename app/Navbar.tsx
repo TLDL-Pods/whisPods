@@ -5,10 +5,12 @@ import { GiHamburgerMenu } from 'react-icons/gi';
 import YoutubeDrawer from './components/YoutubeDrawer';
 import { useApp } from './hooks/useApp';
 import SearchBar from './components/SearchBar';
+import Image from 'next/image';
 
 const links = [
   { name: 'HOME', href: '/' },
   { name: 'PODCASTS', href: '/podcasts' },
+  { name: 'LEADERBOARD', href: '/leaderboard' },
   { name: 'ABOUT', href: '/about' },
 ];
 
@@ -31,13 +33,15 @@ export default function Navbar() {
           className={`${state.isMenuModalOpen ? ' rounded-none' : 'lg:rounded-br-2xl'}  flex h-24 w-full items-center justify-between gap-4 bg-black bg-opacity-[96%] px-4 shadow shadow-baseShadow duration-300 lg:flex-row lg:justify-center lg:px-12`}
         >
           {/* TLDL Title */}
-
           <Link href={'/'}>
-            <p className="text-4xl font-semibold">TLDL</p>
-            <h1 className="mt-1 text-xs text-baseText1">
-              Too Long Didn't Listen
-            </h1>
+            <Image
+              src={'/tldl-logo-dm.svg'}
+              alt={'TLDL'}
+              width={120}
+              height={100}
+            />
           </Link>
+
           {/* Search */}
           <div
             className={`mx-auto hidden w-11/12 flex-col items-center justify-center duration-300 lg:block lg:w-1/2`}
@@ -47,10 +51,8 @@ export default function Navbar() {
           <div
             onClick={navMenuToggle}
             className={`${
-              state.isMenuModalOpen
-                ? 'rotate-90 text-baseText1'
-                : 'rotate-0 text-baseText'
-            } z-50 flex h-12 w-12 items-center justify-center rounded-md border bg-base3 p-1 text-4xl duration-300`}
+              state.isMenuModalOpen ? 'rotate-90 bg-base3' : 'rotate-0'
+            } z-50 flex h-12 w-12 items-center justify-center border-2 p-1 text-3xl text-baseText duration-300`}
           >
             <GiHamburgerMenu />
           </div>

@@ -33,7 +33,7 @@ export const SearchBar = () => {
       <input
         type="text"
         placeholder="Search for episodes..."
-        className="h-12 w-full rounded-md border border-gray-200 bg-black bg-opacity-[96%] py-2 pl-10 pr-10 transition-colors duration-150 hover:bg-base2 focus:border-[#9c22ee] focus:bg-black focus:outline-none md:shadow-lg md:shadow-base"
+        className="h-12 w-full border-2 border-gray-200 bg-black bg-opacity-[96%] py-2 pl-10 pr-10 transition-colors duration-150 hover:bg-base2 focus:border-[#9c22ee] focus:bg-black focus:outline-none md:shadow-lg md:shadow-base"
         value={inputValue}
         onChange={(e) => setInputValue(e.target.value)}
         onKeyDown={(e) => {
