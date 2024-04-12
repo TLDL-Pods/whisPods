@@ -51,7 +51,9 @@ export default function Navbar() {
           <div
             onClick={navMenuToggle}
             className={`${
-              state.isMenuModalOpen ? 'rotate-90 bg-base3' : 'rotate-0'
+              state.isMenuModalOpen
+                ? 'rotate-90 border-accent bg-base3'
+                : 'rotate-0'
             } z-50 flex h-12 w-12 items-center justify-center border-2 p-1 text-3xl text-baseText duration-300`}
           >
             <GiHamburgerMenu />
