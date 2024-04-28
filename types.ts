@@ -55,6 +55,7 @@ export interface AppState {
   hasSearched: boolean;
   searchTerm: string;
   isMenuModalOpen: boolean;
+  scrollYLock: boolean;
 }
 
 export interface YouTubePlayerEvent {

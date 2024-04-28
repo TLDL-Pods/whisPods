@@ -15,6 +15,7 @@ export const initialState: AppState = {
   currentSegmentIndex: null,
   segmentsByLength: false,
   isMenuModalOpen: false,
+  scrollYLock: false,
 };
 
 export const AppStateContext = createContext<{

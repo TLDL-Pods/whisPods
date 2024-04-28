@@ -1,6 +1,8 @@
 'use client';
 
 import EpisodeSelect from '@/app/components/EpisodeSelect';
+import SegmentsList from '@/app/thedailygwei/[ep_number]/components/SegmentsList';
+import EpisodeSegment from '@/app/thedailygwei/[ep_number]/components/episodeSegment/EpisodeSegment';
 import { useState } from 'react';
 
 export default function Page({ params }: any) {
@@ -10,11 +12,11 @@ export default function Page({ params }: any) {
   const [hasMore, setHasMore] = useState(true);
   const [loading, setLoading] = useState(false);
 
-  const loadMore = async () => {
+  const loadMore = async (nextPage: number) => {
     setLoading(true);
     try {
       const response = await fetch(
-        `/api/search/?searchTerm=${searchTerm}?page=${page}&pageSize=10`,
+        `/api/search/?searchTerm=${encodeURIComponent(searchTerm)}&page=${nextPage}&pageSize=10`,
       );
 
       if (!response.ok) {
@@ -40,14 +42,17 @@ export default function Page({ params }: any) {
     }
   };
 
-  const handleLoadMoreClick = () => {
-    setPage((prevPage) => prevPage + 1);
-    loadMore();
+  const handleLoadMoreClick = async () => {
+    const nextPage = page + 1;
+    setPage(nextPage);
+
+    // Fetch the new page of results
+    await loadMore(nextPage);
   };
 
   // Load initial results
   useState(() => {
-    loadMore();
+    loadMore(0);
   });
 
   return (
@@ -59,9 +64,11 @@ export default function Page({ params }: any) {
       )}
 
       <div>
-        {searchResults.map((result: any) => (
+        {searchResults.map((result: any, i: number) => (
           <div key={result._id} className="flex flex-col">
-            <EpisodeSelect episode={result} />
+            {' '}
+            <EpisodeSegment segment={result} segmentNumber={i} />
+            <p>{result.episode_number}</p>
           </div>
         ))}
       </div>

@@ -6,6 +6,8 @@ import Link from 'next/link';
 import logoBannerWide from '@/app/assets/TLDL_wide.png';
 import logoBanner from '@/app/assets/TLDL.png';
 import Image from 'next/image';
+import TLDL from './components/TLDL';
+import { EpisodeProps } from '@/types';
 
 export default function Home() {
   const [episodes, setEpisodes] = useState<any>([]);
@@ -17,7 +19,7 @@ export default function Home() {
     setLoading(true);
     try {
       const response = await fetch(
-        `/api/all-episodes?page=${page}&pageSize=25`,
+        `/api/all-episodes?page=${page}&pageSize=10`,
       );
 
       if (!response.ok) {
@@ -72,12 +74,15 @@ export default function Home() {
         <div className="mx-auto text-center lg:max-w-7xl">
           <Link href={`/thedailygwei`}>
             <div className="mt-2 py-4 text-center text-3xl font-thin text-secondary duration-300 hover:opacity-90 md:my-8 md:text-xl lg:block lg:text-5xl">
-              LATEST EPISODES{' '}
+              WHAT'S NEW?{' '}
             </div>
           </Link>
-          {episodes.map((episode: any) => (
-            <EpisodeSelect key={episode._id} episode={episode} />
-          ))}
+          <div className="flex flex-col items-center gap-32">
+            {episodes.map((episode: EpisodeProps) => (
+              // <EpisodeSelect key={episode._id} episode={episode} />
+              <TLDL episode={episode} />
+            ))}
+          </div>
           {hasMore && (
             <button
               onClick={handleLoadMoreClick}

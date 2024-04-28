@@ -13,6 +13,7 @@ export const SearchBar = () => {
   const handleSearch = (inputValue: string) => {
     if (!inputValue.trim()) return; // Do nothing for empty search
     router.push(`/search/${encodeURIComponent(inputValue)}`);
+    console.log(encodeURIComponent(inputValue));
     setState((prevState) => ({
       ...prevState,
       isMenuModalOpen: !prevState.isMenuModalOpen,
