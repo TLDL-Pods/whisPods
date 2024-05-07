@@ -1,39 +1,57 @@
 'use client';
 
-import EpisodeSelect from '@/app/components/EpisodeSelect';
-import SegmentsList from '@/app/thedailygwei/[ep_number]/components/SegmentsList';
-import EpisodeSegment from '@/app/thedailygwei/[ep_number]/components/episodeSegment/EpisodeSegment';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { SegmentProps } from '@/types';
+import TLDL from '@/app/components/TLDL';
 
 export default function Page({ params }: any) {
-  const searchTerm = params.searchTerm;
-  const [searchResults, setSearchResults] = useState<any>([]);
+  // Decode searchTerm for internal use and display
+  const decodedSearchTerm = decodeURIComponent(params.searchTerm);
+  const [searchResults, setSearchResults] = useState<SegmentProps[]>([]);
+  const [totalResults, setTotalResults] = useState(0);
   const [page, setPage] = useState(0);
   const [hasMore, setHasMore] = useState(true);
   const [loading, setLoading] = useState(false);
 
   const loadMore = async (nextPage: number) => {
+    if (loading) return;
     setLoading(true);
+
     try {
       const response = await fetch(
-        `/api/search/?searchTerm=${encodeURIComponent(searchTerm)}&page=${nextPage}&pageSize=10`,
+        `/api/search/?searchTerm=${encodeURIComponent(decodedSearchTerm)}&page=${nextPage}&pageSize=10`,
       );
-
-      if (!response.ok) {
+      if (!response.ok)
         throw new Error(`An error occurred: ${response.statusText}`);
-      }
 
       const contentType = response.headers.get('content-type');
-      if (!contentType || !contentType.includes('application/json')) {
+      if (!contentType || !contentType.includes('application/json'))
         throw new Error('Received non-JSON response');
-      }
 
-      const { data, message } = await response.json();
+      const { data, totalCount, message } = await response.json();
+      console.log('Fetched data:', data); // Debug log
 
+      setTotalResults(totalCount);
       if (!data || data.length === 0) {
         setHasMore(false);
       } else {
-        setSearchResults((prev: any) => [...prev, ...data]);
+        setSearchResults((prev: SegmentProps[]) => {
+          const newData = data.filter(
+            (d: SegmentProps) =>
+              !prev.some(
+                (p: SegmentProps) => p.segment_title === d.segment_title,
+              ),
+          );
+          console.log('New data to add:', newData);
+          if (newData.length > 0) {
+            const newResultsCount = prev.length + newData.length;
+            setHasMore(newResultsCount < totalCount);
+            return [...prev, ...newData];
+          } else {
+            setHasMore(false);
+            return prev;
+          }
+        });
       }
     } catch (error: any) {
       console.error('Fetch error:', error.message);
@@ -51,30 +69,32 @@ export default function Page({ params }: any) {
   };
 
   // Load initial results
-  useState(() => {
+  useEffect(() => {
     loadMore(0);
-  });
+  }, []); // Ensuring loadMore is called only once on component mount
 
   return (
-    <main className="flex flex-col items-center">
+    <main className="flex flex-col items-center px-1 pt-4">
       {loading ? null : (
-        <p className="my-2">
-          Results for "<span className="font-semibold">{searchTerm}</span>"
+        <p>
+          {totalResults} Results for "
+          <span className="font-semibold">{decodedSearchTerm}</span>"
         </p>
       )}
 
-      <div>
-        {searchResults.map((result: any, i: number) => (
-          <div key={result._id} className="flex flex-col">
-            {' '}
-            <EpisodeSegment segment={result} segmentNumber={i} />
-            <p>{result.episode_number}</p>
+      <div className="w-full">
+        {searchResults.map((result: SegmentProps, i: number) => (
+          <div key={result._id} className="flex flex-col py-4 ">
+            <TLDL segment={result} />
           </div>
         ))}
       </div>
       {hasMore && (
         <button
-          onClick={handleLoadMoreClick}
+          onClick={(e) => {
+            e.stopPropagation();
+            handleLoadMoreClick();
+          }}
           disabled={loading}
           className="my-4"
         >

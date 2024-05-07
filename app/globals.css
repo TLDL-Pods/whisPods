@@ -7,12 +7,17 @@
     --color-base: rgb(13, 13, 14);
     --color-base1: rgb(28, 28, 29);
     --color-base2: rgb(37, 37, 39);
-    --color-base3: rgb(48, 48, 51);
+    --color-base3: rgb(53, 53, 56);
+    --color-base4: rgb(61, 61, 66);
+    --color-base5: rgb(105, 105, 121);
+
     --color-baseText: #ffffff;
     --color-baseText1: #cacaca;
     --color-primary: rgb(247, 247, 247);
     --color-secondary: rgb(167, 220, 255);
     --color-accent: rgb(57, 176, 255);
+    --color-accentDark: rgb(10, 95, 151);
+
     --color-baseShadow: rgb(0, 0, 0);
   }
 }

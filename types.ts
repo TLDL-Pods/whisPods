@@ -16,6 +16,10 @@ export interface SegmentProps {
   segment_title: string;
   tweet_embed?: string[];
   keywords?: string[];
+  _id?: string;
+  episode_number?: number;
+  episode_title?: string;
+  release_date?: string;
 }
 
 export interface EpisodeProps {

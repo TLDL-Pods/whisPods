@@ -7,19 +7,12 @@ export async function GET(req: NextRequest) {
   const page = parseInt(url.searchParams.get('page') || '0', 10);
   const pageSize = parseInt(url.searchParams.get('pageSize') || '10', 10);
   const skip = page * pageSize;
-  console.log(
-    'Search Term:',
-    searchTerm,
-    'Page:',
-    page,
-    'Page Size:',
-    pageSize,
-  );
+
   try {
     const { db } = await getClientAndDb();
     const collection = db.collection('thedailygweiRecap');
 
-    let pipeline = [
+    const pipeline = [
       {
         $search: {
           index: 'default',
@@ -29,7 +22,7 @@ export async function GET(req: NextRequest) {
                 text: {
                   query: searchTerm,
                   path: 'episode_data.segment_title',
-                  score: { boost: { value: 3 } }, // Highest priority
+                  score: { boost: { value: 3 } },
                 },
               },
               {
@@ -37,7 +30,15 @@ export async function GET(req: NextRequest) {
                   query: searchTerm,
                   path: 'episode_data.summary',
                   fuzzy: {},
-                  score: { boost: { value: 1 } }, // Lower priority
+                  score: { boost: { value: 1 } },
+                },
+              },
+              {
+                text: {
+                  query: searchTerm,
+                  path: 'episode_data.complete_transcript',
+                  fuzzy: {},
+                  score: { boost: { value: 0.5 } },
                 },
               },
             ],
@@ -51,30 +52,43 @@ export async function GET(req: NextRequest) {
           matchScore: {
             $add: [
               {
-                $cond: {
-                  if: {
+                $cond: [
+                  {
                     $regexMatch: {
                       input: '$episode_data.segment_title',
                       regex: searchTerm,
                       options: 'i',
                     },
                   },
-                  then: 1,
-                  else: 0,
-                },
+                  1,
+                  0,
+                ],
               },
               {
-                $cond: {
-                  if: {
+                $cond: [
+                  {
                     $regexMatch: {
                       input: '$episode_data.summary',
                       regex: searchTerm,
                       options: 'i',
                     },
                   },
-                  then: 1,
-                  else: 0,
-                },
+                  1,
+                  0,
+                ],
+              },
+              {
+                $cond: [
+                  {
+                    $regexMatch: {
+                      input: '$episode_data.complete_transcript',
+                      regex: searchTerm,
+                      options: 'i',
+                    },
+                  },
+                  1,
+                  0,
+                ],
               },
             ],
           },
@@ -82,31 +96,36 @@ export async function GET(req: NextRequest) {
       },
       { $match: { matchScore: { $gt: 0 } } },
       {
-        $addFields: {
-          'episode_data.episode_id': '$_id',
-          'episode_data.episode_title': '$episode_title',
-          'episode_data.episode_number': '$episode_number',
-          'episode_data.timestamp': '$episode_data.start_time_ms', // Added timestamp field
+        $facet: {
+          totalCount: [{ $count: 'total' }],
+          paginatedResults: [
+            { $sort: { matchScore: -1 } },
+            { $skip: skip },
+            { $limit: pageSize },
+            {
+              $addFields: {
+                'episode_data.episode_id': '$_id',
+                'episode_data.episode_title': '$episode_title',
+                'episode_data.episode_number': '$episode_number',
+                'episode_data.timestamp': '$episode_data.start_time_ms',
+              },
+            },
+            { $replaceRoot: { newRoot: '$episode_data' } },
+          ],
         },
       },
-      { $sort: { matchScore: -1 } }, // Sort by match score in descending order
-      { $replaceRoot: { newRoot: '$episode_data' } },
-      { $skip: skip },
-      { $limit: pageSize },
     ];
 
-    if (!searchTerm) {
-      pipeline = pipeline.filter(
-        (stage) => !(stage['$search'] || stage['$match']),
-      );
-    }
+    const result = await collection.aggregate(pipeline).toArray();
+    const totalCount =
+      result[0].totalCount.length > 0 ? result[0].totalCount[0].total : 0;
+    const searchResults = result[0].paginatedResults;
 
-    const searchResults = await collection.aggregate(pipeline).toArray();
-    console.log(searchResults);
     return new NextResponse(
       JSON.stringify({
         status: 200,
         message: 'Success',
+        totalCount: totalCount,
         data: searchResults,
       }),
       {

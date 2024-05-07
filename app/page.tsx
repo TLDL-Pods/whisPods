@@ -6,8 +6,8 @@ import Link from 'next/link';
 import logoBannerWide from '@/app/assets/TLDL_wide.png';
 import logoBanner from '@/app/assets/TLDL.png';
 import Image from 'next/image';
-import TLDL from './components/TLDL';
 import { EpisodeProps } from '@/types';
+import EpisodeOverview from './components/EpisodeOverview';
 
 export default function Home() {
   const [episodes, setEpisodes] = useState<any>([]);
@@ -79,8 +79,10 @@ export default function Home() {
           </Link>
           <div className="flex flex-col items-center gap-32">
             {episodes.map((episode: EpisodeProps) => (
-              // <EpisodeSelect key={episode._id} episode={episode} />
-              <TLDL episode={episode} />
+              <div key={episode._id}>
+                <EpisodeSelect episode={episode} />
+                {/* <EpisodeOverview episode={episode} /> */}
+              </div>
             ))}
           </div>
           {hasMore && (
