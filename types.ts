@@ -20,6 +20,8 @@ export interface SegmentProps {
   episode_number?: number;
   episode_title?: string;
   release_date?: string;
+  score?: number;
+  highlights?: string[];
 }
 
 export interface EpisodeProps {

@@ -5,21 +5,38 @@ import { SegmentProps } from '@/types';
 import TLDL from '@/app/components/TLDL';
 
 export default function Page({ params }: any) {
-  // Decode searchTerm for internal use and display
   const decodedSearchTerm = decodeURIComponent(params.searchTerm);
-  const [searchResults, setSearchResults] = useState<SegmentProps[]>([]);
-  const [totalResults, setTotalResults] = useState(0);
-  const [page, setPage] = useState(0);
-  const [hasMore, setHasMore] = useState(true);
-  const [loading, setLoading] = useState(false);
 
-  const loadMore = async (nextPage: number) => {
+  const [searchResults, setSearchResults] = useState<SegmentProps[]>([]);
+  const [totalResults, setTotalResults] = useState<number>(0);
+  const [page, setPage] = useState<number>(0);
+  const [hasMore, setHasMore] = useState<boolean>(true);
+  const [loading, setLoading] = useState<boolean>(false);
+
+  const [sortField, setSortField] = useState('score');
+  const [sortOrder, setSortOrder] = useState('desc');
+
+  const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const [field, order] = e.target.value.split('|');
+    setSortField(field);
+    setSortOrder(order);
+    setSearchResults([]);
+    setPage(0);
+    loadMore(0, field, order); // Pass field and order directly
+    console.log(`Fetching with sortField: ${field}, sortOrder: ${order}`);
+  };
+
+  const loadMore = async (
+    nextPage: number,
+    field = sortField,
+    order = sortOrder,
+  ) => {
     if (loading) return;
     setLoading(true);
 
     try {
       const response = await fetch(
-        `/api/search/?searchTerm=${encodeURIComponent(decodedSearchTerm)}&page=${nextPage}&pageSize=10`,
+        `/api/search/?searchTerm=${encodeURIComponent(decodedSearchTerm)}&page=${nextPage}&pageSize=10&sortField=${field}&sortOrder=${order}`,
       );
       if (!response.ok)
         throw new Error(`An error occurred: ${response.statusText}`);
@@ -28,33 +45,16 @@ export default function Page({ params }: any) {
       if (!contentType || !contentType.includes('application/json'))
         throw new Error('Received non-JSON response');
 
-      const { data, totalCount, message } = await response.json();
-      console.log('Fetched data:', data); // Debug log
+      const { data, totalCount } = await response.json();
 
       setTotalResults(totalCount);
-      if (!data || data.length === 0) {
-        setHasMore(false);
-      } else {
-        setSearchResults((prev: SegmentProps[]) => {
-          const newData = data.filter(
-            (d: SegmentProps) =>
-              !prev.some(
-                (p: SegmentProps) => p.segment_title === d.segment_title,
-              ),
-          );
-          console.log('New data to add:', newData);
-          if (newData.length > 0) {
-            const newResultsCount = prev.length + newData.length;
-            setHasMore(newResultsCount < totalCount);
-            return [...prev, ...newData];
-          } else {
-            setHasMore(false);
-            return prev;
-          }
-        });
-      }
-    } catch (error: any) {
-      console.error('Fetch error:', error.message);
+      setSearchResults((prev) => {
+        const newResults = [...prev, ...data];
+        setHasMore(newResults.length < totalCount);
+        return newResults;
+      });
+    } catch (error) {
+      console.error('Fetch error:', error);
     } finally {
       setLoading(false);
     }
@@ -63,15 +63,12 @@ export default function Page({ params }: any) {
   const handleLoadMoreClick = async () => {
     const nextPage = page + 1;
     setPage(nextPage);
-
-    // Fetch the new page of results
-    await loadMore(nextPage);
+    loadMore(nextPage);
   };
 
-  // Load initial results
   useEffect(() => {
     loadMore(0);
-  }, []); // Ensuring loadMore is called only once on component mount
+  }, []);
 
   return (
     <main className="flex flex-col items-center px-1 pt-4">
@@ -81,6 +78,17 @@ export default function Page({ params }: any) {
           <span className="font-semibold">{decodedSearchTerm}</span>"
         </p>
       )}
+
+      <select
+        className="rounded-lg border border-base5 bg-base2 p-1"
+        onChange={handleSortChange}
+        value={`${sortField}|${sortOrder}`}
+      >
+        <option value="score|desc">Sort by Relevance Desc</option>
+        <option value="score|asc">Sort by Relevance Asc</option>
+        <option value="release_date|desc">Sort by Date Desc</option>
+        <option value="release_date|asc">Sort by Date Asc</option>
+      </select>
 
       <div className="w-full">
         {searchResults.map((result: SegmentProps, i: number) => (

@@ -6,12 +6,20 @@ export async function GET(req: NextRequest) {
   const searchTerm = url.searchParams.get('searchTerm');
   const page = parseInt(url.searchParams.get('page') || '0', 10);
   const pageSize = parseInt(url.searchParams.get('pageSize') || '10', 10);
+  const sortField = url.searchParams.get('sortField') || 'score';
+  const sortOrder = url.searchParams.get('sortOrder') || 'desc';
   const skip = page * pageSize;
 
   try {
     const { db } = await getClientAndDb();
     const collection = db.collection('thedailygweiRecap');
-
+    let sortObject: any = {};
+    if (sortField === 'release_date') {
+      // Ensure dates sort in the correct order regardless of default behavior
+      sortObject[sortField] = sortOrder === 'desc' ? 1 : -1; // Reverse the logic specifically for date
+    } else {
+      sortObject[sortField] = sortOrder === 'asc' ? 1 : -1;
+    }
     const pipeline = [
       {
         $search: {
@@ -37,7 +45,10 @@ export async function GET(req: NextRequest) {
                 text: {
                   query: searchTerm,
                   path: 'episode_data.complete_transcript',
-                  fuzzy: {},
+                  fuzzy: {
+                    maxEdits: 1,
+                    prefixLength: 3,
+                  },
                   score: { boost: { value: 0.5 } },
                 },
               },
@@ -49,6 +60,7 @@ export async function GET(req: NextRequest) {
       { $unwind: '$episode_data' },
       {
         $addFields: {
+          score: { $meta: 'searchScore' },
           matchScore: {
             $add: [
               {
@@ -94,12 +106,15 @@ export async function GET(req: NextRequest) {
           },
         },
       },
+
       { $match: { matchScore: { $gt: 0 } } },
+
+      { $sort: sortObject },
+
       {
         $facet: {
           totalCount: [{ $count: 'total' }],
           paginatedResults: [
-            { $sort: { matchScore: -1 } },
             { $skip: skip },
             { $limit: pageSize },
             {
@@ -107,7 +122,8 @@ export async function GET(req: NextRequest) {
                 'episode_data.episode_id': '$_id',
                 'episode_data.episode_title': '$episode_title',
                 'episode_data.episode_number': '$episode_number',
-                'episode_data.timestamp': '$episode_data.start_time_ms',
+                'episode_data.release_date': '$release_date',
+                'episode_data.score': '$score',
               },
             },
             { $replaceRoot: { newRoot: '$episode_data' } },
