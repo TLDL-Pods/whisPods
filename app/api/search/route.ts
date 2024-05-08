@@ -30,6 +30,10 @@ export async function GET(req: NextRequest) {
                 text: {
                   query: searchTerm,
                   path: 'episode_data.segment_title',
+                  fuzzy: {
+                    maxEdits: 2,
+                    prefixLength: 1,
+                  },
                   score: { boost: { value: 3 } },
                 },
               },
@@ -37,7 +41,10 @@ export async function GET(req: NextRequest) {
                 text: {
                   query: searchTerm,
                   path: 'episode_data.summary',
-                  fuzzy: {},
+                  fuzzy: {
+                    maxEdits: 2,
+                    prefixLength: 1,
+                  },
                   score: { boost: { value: 1 } },
                 },
               },
@@ -46,8 +53,8 @@ export async function GET(req: NextRequest) {
                   query: searchTerm,
                   path: 'episode_data.complete_transcript',
                   fuzzy: {
-                    maxEdits: 1,
-                    prefixLength: 3,
+                    maxEdits: 2,
+                    prefixLength: 1,
                   },
                   score: { boost: { value: 0.5 } },
                 },

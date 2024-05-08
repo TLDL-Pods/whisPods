@@ -80,7 +80,7 @@ export default function Page({ params }: any) {
       )}
 
       <select
-        className="rounded-lg border border-base5 bg-base2 p-1"
+        className="mt-4 rounded-lg border border-base5 bg-base2 p-1"
         onChange={handleSortChange}
         value={`${sortField}|${sortOrder}`}
       >
