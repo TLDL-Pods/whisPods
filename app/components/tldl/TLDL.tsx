@@ -1,7 +1,7 @@
 import { SegmentProps } from '@/types';
 import Link from 'next/link';
 import { useState } from 'react';
-import { useSegments } from '../hooks/useSegments';
+import { useSegments } from '../../hooks/useSegments';
 import { FaCheck } from 'react-icons/fa';
 import { FiShare } from 'react-icons/fi';
 

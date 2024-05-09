@@ -2,7 +2,8 @@
 
 import { useState, useEffect } from 'react';
 import { SegmentProps } from '@/types';
-import TLDL from '@/app/components/TLDL';
+import TLDL from '@/app/components/tldl/TLDL';
+import DateRangePicker from '@/app/components/DateRangePicker';
 
 export default function Page({ params }: any) {
   const decodedSearchTerm = decodeURIComponent(params.searchTerm);
@@ -15,6 +16,21 @@ export default function Page({ params }: any) {
 
   const [sortField, setSortField] = useState('score');
   const [sortOrder, setSortOrder] = useState('desc');
+
+  const [selectedRange, setSelectedRange] = useState<any>({
+    from: undefined,
+    to: undefined,
+  });
+
+  const handleRangeSelect = (range: any | undefined) => {
+    if (range) {
+      setSelectedRange(range);
+      setSearchResults([]); // Clear existing results
+      setPage(0); // Reset to the first page
+      loadMore(0, sortField, sortOrder, range.from, range.to); // Fetch with new date range
+      console.log(`Fetching with range: ${range.from}, sortOrder: ${range.to}`);
+    }
+  };
 
   const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const [field, order] = e.target.value.split('|');
@@ -30,20 +46,22 @@ export default function Page({ params }: any) {
     nextPage: number,
     field = sortField,
     order = sortOrder,
+    from = selectedRange.from,
+    to = selectedRange.to,
   ) => {
     if (loading) return;
     setLoading(true);
 
+    let apiUrl = `/api/search/?searchTerm=${encodeURIComponent(decodedSearchTerm)}&page=${nextPage}&pageSize=10&sortField=${field}&sortOrder=${order}`;
+    if (from && to) {
+      // Add date filtering to the API endpoint if dates are set
+      apiUrl += `&from=${encodeURIComponent(from)}&to=${encodeURIComponent(to)}`;
+    }
+
     try {
-      const response = await fetch(
-        `/api/search/?searchTerm=${encodeURIComponent(decodedSearchTerm)}&page=${nextPage}&pageSize=10&sortField=${field}&sortOrder=${order}`,
-      );
+      const response = await fetch(apiUrl);
       if (!response.ok)
         throw new Error(`An error occurred: ${response.statusText}`);
-
-      const contentType = response.headers.get('content-type');
-      if (!contentType || !contentType.includes('application/json'))
-        throw new Error('Received non-JSON response');
 
       const { data, totalCount } = await response.json();
 
@@ -78,18 +96,22 @@ export default function Page({ params }: any) {
           <span className="font-semibold">{decodedSearchTerm}</span>"
         </p>
       )}
-
-      <select
-        className="mt-4 rounded-lg border border-base5 bg-base2 p-1 px-4"
-        onChange={handleSortChange}
-        value={`${sortField}|${sortOrder}`}
-      >
-        <option value="score|desc">Sort by Relevance Desc</option>
-        <option value="score|asc">Sort by Relevance Asc</option>
-        <option value="release_date|desc">Sort by Date Desc</option>
-        <option value="release_date|asc">Sort by Date Asc</option>
-      </select>
-
+      <div className="flex flex-col">
+        <select
+          className="mx-auto mt-4 max-w-fit rounded-lg border border-base5 bg-base2 p-1 px-4"
+          onChange={handleSortChange}
+          value={`${sortField}|${sortOrder}`}
+        >
+          <option value="score|desc">Sort by Relevance Desc</option>
+          <option value="score|asc">Sort by Relevance Asc</option>
+          <option value="release_date|desc">Sort by Date Desc</option>
+          <option value="release_date|asc">Sort by Date Asc</option>
+        </select>
+        <DateRangePicker
+          selectedRange={selectedRange}
+          handleRangeSelect={handleRangeSelect}
+        />
+      </div>
       <div className="mt-4 w-full overflow-y-clip bg-base">
         {searchResults.map((result: SegmentProps, i: number) => (
           <div key={result._id} className="flex flex-col ">

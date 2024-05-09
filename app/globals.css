@@ -116,3 +116,51 @@
   text-overflow: ellipsis;
   white-space: normal;
 }
+
+/* General styling for the date picker wrapper */
+.date-picker-custom .react-date-picker__wrapper {
+  color: #fff; /* White text */
+  border: 0px;
+}
+
+/* Styling for the input fields */
+.date-picker-custom .react-date-picker__inputGroup__input {
+  color: #fff; /* White text */
+}
+
+/* Customizing button colors for better visibility */
+.date-picker-custom .react-date-picker__button {
+  color: #ccc; /* Light grey to stand out on the dark background */
+  background-color: transparent; /* Clear background */
+}
+
+.date-picker-custom .react-date-picker__button:enabled:hover,
+.date-picker-custom .react-date-picker__button:enabled:focus {
+  background-color: #555; /* Darker background for hover/focus states */
+}
+
+/* Calendar styling */
+.date-picker-custom .react-calendar {
+  background-color: #222; /* Darker shade for the calendar */
+}
+
+.date-picker-custom .react-calendar__navigation {
+  background-color: transparent; /* No background in the navigation header */
+  color: #fff; /* White text */
+}
+
+.date-picker-custom .react-calendar__navigation button {
+  color: #fff; /* Ensures arrows are visible */
+}
+
+.date-picker-custom .react-calendar__month-view__days__day {
+  color: #fff; /* White text for days */
+}
+
+.date-picker-custom .react-date-picker__calendar-button {
+  display: none; /* Hides the calendar icon */
+}
+
+.date-picker-custom .react-date-picker__x-button {
+  color: red !important; /* Changes the color of the "X" to red */
+}

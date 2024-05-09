@@ -20,6 +20,7 @@ export async function GET(req: NextRequest) {
     } else {
       sortObject[sortField] = sortOrder === 'asc' ? 1 : -1;
     }
+
     const pipeline = [
       {
         $search: {
