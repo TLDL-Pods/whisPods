@@ -24,6 +24,7 @@ module.exports = {
         baseText1: 'var(--color-baseText1)',
         primary: 'var(--color-primary)',
         secondary: 'var(--color-secondary)',
+        secondaryLight: 'var(--color-secondaryLight)',
         accent: 'var(--color-accent)',
         accentDark: 'var(--color-accentDark)',
         baseShadow: 'var(--color-baseShadow)',

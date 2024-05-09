@@ -30,13 +30,11 @@ export default function TLDL({ segment }: TLDLProps) {
 
   const scoreColor = scoreToColor(segment.score);
   return (
-    <div className="relative mx-auto flex w-full flex-col gap-2 border-t-2 border-accentDark py-8">
+    <div className="relative mx-auto flex w-full flex-col gap-2 border-t-2 border-accent pb-12 pt-8">
       <div className="flex w-full justify-between p-4 py-0 text-sm text-baseText1">
-        <p className="flex items-center text-xl font-semibold">
+        <p className="flex items-center text-xl font-semibold text-secondary">
           Ep. {segment.episode_number} -
-          <span className="ml-1 text-secondary">
-            TLDL #{segment.segment_number}
-          </span>
+          <span className="ml-1">TLDL #{segment.segment_number}</span>
         </p>
 
         <span className="my-auto text-sm font-semibold">
@@ -44,7 +42,7 @@ export default function TLDL({ segment }: TLDLProps) {
           )
         </span>
       </div>
-      <div className="flex w-full justify-end p-4 pt-0 text-right text-sm text-baseText1">
+      <div className="flex w-full p-4 pt-0 text-right text-sm text-baseText1">
         <p>{segment.release_date}</p>
       </div>
       <div className="flex w-full flex-col justify-between gap-2 p-4 pt-0 font-thin">
@@ -58,10 +56,10 @@ export default function TLDL({ segment }: TLDLProps) {
         ))}
       </div>
 
-      <div className="mx-auto mt-2 flex w-full justify-evenly border-y border-base5">
+      <div className="text-secondaryLight mx-auto mt-2 flex w-full justify-evenly border-y border-base5">
         <Link
           href={`/thedailygwei/${segment.episode_number}`}
-          className="flex h-10 w-2/5 items-center justify-center bg-base4 px-2 text-primary duration-500 hover:bg-base1"
+          className="flex h-10 w-2/5 items-center justify-center bg-base4 px-2 duration-500 hover:bg-base1"
         >
           Go To Episode
         </Link>
@@ -69,22 +67,22 @@ export default function TLDL({ segment }: TLDLProps) {
           onClick={() => {
             setFullSumOpen(true);
           }}
-          className="flex h-10 w-2/5 items-center justify-center border-x border-base5 bg-base4 px-2 text-primary duration-500 hover:bg-base1"
+          className="flex h-10 w-2/5 items-center justify-center border-x border-base5 bg-base4 px-2 duration-500 hover:bg-base1"
         >
           Full Summary
         </button>
         <button
-          className={`flex h-10 w-1/5 items-center justify-center bg-base4 px-1 font-bold text-primary duration-500 hover:bg-base1 ${
+          className={`flex h-10 w-1/5 items-center justify-center bg-base4 px-1 font-bold duration-500 hover:bg-base1 ${
             copySuccess === true ? 'shadow-transparent ' : 'shadow-black'
           } hover:bg-baseText2`}
           onClick={() => handleShare({ segment, setCopySuccess })}
         >
           {copySuccess === true ? (
-            <div className="text-accent">
+            <div className="text-secondary">
               <FaCheck size={20} />
             </div>
           ) : (
-            <div className="text-primary">
+            <div className="text-secondary">
               <FiShare size={20} />
             </div>
           )}
