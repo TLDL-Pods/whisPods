@@ -71,7 +71,7 @@ export default function Page({ params }: any) {
   }, []);
 
   return (
-    <main className="flex flex-col items-center px-1 pt-4">
+    <main className="flex flex-col items-center bg-black px-1">
       {loading ? null : (
         <p>
           {totalResults} Results for "
@@ -80,7 +80,7 @@ export default function Page({ params }: any) {
       )}
 
       <select
-        className="mt-4 rounded-lg border border-base5 bg-base2 p-1"
+        className="mt-4 rounded-lg border border-base5 bg-base2 p-1 px-4"
         onChange={handleSortChange}
         value={`${sortField}|${sortOrder}`}
       >
@@ -90,9 +90,9 @@ export default function Page({ params }: any) {
         <option value="release_date|asc">Sort by Date Asc</option>
       </select>
 
-      <div className="w-full">
+      <div className="mt-4 w-full overflow-y-clip bg-base">
         {searchResults.map((result: SegmentProps, i: number) => (
-          <div key={result._id} className="flex flex-col py-4 ">
+          <div key={result._id} className="flex flex-col ">
             <TLDL segment={result} />
           </div>
         ))}
