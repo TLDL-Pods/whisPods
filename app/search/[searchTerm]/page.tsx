@@ -107,10 +107,10 @@ export default function Page({ params }: any) {
           <option value="release_date|desc">Sort by Date Desc</option>
           <option value="release_date|asc">Sort by Date Asc</option>
         </select>
-        <DateRangePicker
+        {/* <DateRangePicker
           selectedRange={selectedRange}
           handleRangeSelect={handleRangeSelect}
-        />
+        /> */}
       </div>
       <div className="mt-4 w-full overflow-y-clip bg-base">
         {searchResults.map((result: SegmentProps, i: number) => (
