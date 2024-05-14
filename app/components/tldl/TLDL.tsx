@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { useSegments } from '../../hooks/useSegments';
 import { FaCheck } from 'react-icons/fa';
 import { FiShare } from 'react-icons/fi';
+import SummaryModal from './SummaryModal';
 
 interface TLDLProps {
   segment: SegmentProps;
@@ -30,7 +31,7 @@ export default function TLDL({ segment }: TLDLProps) {
 
   const scoreColor = scoreToColor(segment.score);
   return (
-    <div className="relative mx-auto flex w-full flex-col gap-2 border-t-2 border-accent pb-12 pt-8 lg:w-1/2 lg:rounded-lg lg:bg-base2 lg:pb-4 lg:pt-4">
+    <div className="mx-auto flex w-full flex-col gap-2 border-t-2 border-accent pb-12 pt-8 lg:w-1/2 lg:rounded-lg lg:bg-base2 lg:pb-4 lg:pt-4">
       <div className="flex w-full justify-between p-4 py-0 text-sm text-baseText1">
         <p className="flex items-center text-xl font-semibold text-secondary">
           Ep. {segment.episode_number} -
@@ -95,28 +96,10 @@ export default function TLDL({ segment }: TLDLProps) {
       </div>
 
       {fullSumOpen && (
-        <div className="absolute bottom-0 left-0 right-0 top-0 h-full w-full bg-base2 py-4">
-          <button
-            onClick={() => setFullSumOpen(false)}
-            className="absolute right-1 top-1 flex h-6 w-6 items-center justify-center rounded-md border border-base5 bg-base4 px-1 pb-1 text-xl text-red-600"
-          >
-            X
-          </button>
-          <div className="flex h-[100%] flex-col items-center overflow-y-scroll p-2 px-8">
-            <p className="flex w-full border-l border-baseText1 bg-gradient-to-r from-base1 to-transparent p-2 text-secondary">
-              {segment.segment_title.toUpperCase()}
-            </p>
-            <div className="mt-4">{segment.summary}</div>
-            <button
-              onClick={() => {
-                setFullSumOpen(false);
-              }}
-              className="mx-auto my-3 w-fit rounded-lg border border-base4 bg-accentDark p-1  px-3 pb-1.5 font-semibold shadow-md shadow-black"
-            >
-              Back To Segment
-            </button>
-          </div>
-        </div>
+        <>
+          <div className="fixed left-0 top-0 h-full w-full bg-black opacity-70"></div>
+          <SummaryModal setFullSumOpen={setFullSumOpen} segment={segment} />
+        </>
       )}
     </div>
   );
