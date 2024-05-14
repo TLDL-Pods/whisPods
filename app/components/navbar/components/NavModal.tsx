@@ -18,7 +18,7 @@ interface NavModalProps {
 }
 
 export default function NavModal({ navMenuToggle, pathname }: NavModalProps) {
-  const { state } = useApp();
+  const { state, setState } = useApp();
 
   return (
     <div
@@ -26,7 +26,16 @@ export default function NavModal({ navMenuToggle, pathname }: NavModalProps) {
       className={`${state.isMenuModalOpen ? 'right-0' : '-right-[100%]'} absolute top-0 mx-auto flex h-screen w-full flex-col gap-2 bg-black bg-opacity-[96%] px-8 pb-8 duration-300 lg:w-64 lg:rounded-br-2xl lg:px-10 lg:pt-16`}
     >
       {/* TLDL Title */}
-      <Link href={'/'} className=" lg:hidden">
+      <Link
+        href={'/'}
+        onClick={() =>
+          setState((prevState) => ({
+            ...prevState,
+            isMenuModalOpen: false,
+          }))
+        }
+        className=" lg:hidden"
+      >
         <Image
           src={'/tldl-logo-dm.svg'}
           alt={'TLDL'}

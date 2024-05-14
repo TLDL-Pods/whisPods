@@ -5,7 +5,7 @@ import { teamMembers, aboutQuestions } from '../data/aboutData';
 
 export default function About() {
   return (
-    <div className="flex justify-center p-6 pt-12 lg:pt-20">
+    <div className="flex justify-center p-6 pt-28 lg:pt-32">
       <div className="w-full max-w-5xl">
         <h1 className="text-center text-3xl font-thin">ABOUT</h1>
 

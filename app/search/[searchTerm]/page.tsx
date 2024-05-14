@@ -89,7 +89,7 @@ export default function Page({ params }: any) {
   }, []);
 
   return (
-    <main className="relative flex flex-col items-center px-1">
+    <main className="relative flex flex-col items-center px-1 pt-28">
       {loading ? null : (
         <p>
           {totalResults} Results for "

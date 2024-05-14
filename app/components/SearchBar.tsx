@@ -5,7 +5,7 @@ import { useApp } from '../hooks/useApp';
 import { useRouter } from 'next/navigation';
 
 export const SearchBar = () => {
-  const { setState } = useApp();
+  const { state, setState } = useApp();
   const [inputValue, setInputValue] = useState<string>('');
   const router = useRouter();
 
@@ -14,10 +14,12 @@ export const SearchBar = () => {
     if (!inputValue.trim()) return; // Do nothing for empty search
     router.push(`/search/${encodeURIComponent(inputValue)}`);
     console.log(encodeURIComponent(inputValue));
-    setState((prevState) => ({
-      ...prevState,
-      isMenuModalOpen: !prevState.isMenuModalOpen,
-    }));
+    if (state.isMenuModalOpen) {
+      setState((prevState) => ({
+        ...prevState,
+        isMenuModalOpen: false,
+      }));
+    }
   };
 
   // Clear search results
