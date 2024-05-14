@@ -43,15 +43,15 @@ export default function Navbar() {
   }
 
   return (
-    <div className="max-w-screen">
+    <div className="max-w-screen bg-black">
       <div
         className={`z-10 flex h-24 items-center justify-between duration-300`}
       >
         <div
-          className={`${state.isMenuModalOpen ? ' rounded-none' : 'lg:rounded-br-2xl'}  flex h-24 w-full items-center justify-end gap-4 px-4 duration-300 lg:flex-row lg:justify-center lg:px-12`}
+          className={`${state.isMenuModalOpen ? ' rounded-none' : 'lg:rounded-br-2xl'}  flex h-24 w-full items-center justify-between gap-4 px-4 duration-300 lg:flex-row lg:justify-center lg:px-12`}
         >
           <Image
-            className=" w-[110px]"
+            className="w-[110px]"
             src={'/tldl-logo-dm.svg'}
             alt={'TLDL'}
             width={100}

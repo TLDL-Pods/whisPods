@@ -89,7 +89,7 @@ export default function Page({ params }: any) {
   }, []);
 
   return (
-    <main className="flex flex-col items-center bg-black px-1">
+    <main className="flex flex-col items-center px-1">
       {loading ? null : (
         <p>
           {totalResults} Results for "
@@ -112,7 +112,7 @@ export default function Page({ params }: any) {
           handleRangeSelect={handleRangeSelect}
         /> */}
       </div>
-      <div className="mt-4 w-full overflow-y-clip bg-base">
+      <div className="mt-4 flex w-full flex-col overflow-y-clip bg-base lg:w-3/4 lg:gap-8">
         {searchResults.map((result: SegmentProps, i: number) => (
           <div key={result._id} className="flex flex-col ">
             <TLDL segment={result} />

@@ -30,7 +30,7 @@ export default function TLDL({ segment }: TLDLProps) {
 
   const scoreColor = scoreToColor(segment.score);
   return (
-    <div className="relative mx-auto flex w-full flex-col gap-2 border-t-2 border-accent pb-12 pt-8">
+    <div className="relative mx-auto flex w-full flex-col gap-2 border-t-2 border-accent pb-12 pt-8 lg:w-1/2 lg:rounded-lg lg:bg-base2 lg:pb-4 lg:pt-4">
       <div className="flex w-full justify-between p-4 py-0 text-sm text-baseText1">
         <p className="flex items-center text-xl font-semibold text-secondary">
           Ep. {segment.episode_number} -
@@ -56,7 +56,7 @@ export default function TLDL({ segment }: TLDLProps) {
         ))}
       </div>
 
-      <div className="text-secondaryLight mx-auto mt-2 flex w-full justify-evenly border-y border-base5">
+      <div className="mx-auto mt-2 flex w-full justify-evenly border-y border-base5 text-secondaryLight">
         <Link
           href={`/thedailygwei/${segment.episode_number}`}
           className="flex h-10 w-2/5 items-center justify-center bg-base4 px-2 duration-500 hover:bg-base1"
