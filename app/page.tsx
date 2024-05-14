@@ -1,7 +1,6 @@
-'use client';
-
 import Image from 'next/image';
 import SearchBar from './components/SearchBar';
+import Ticker from './components/HomeTicker';
 
 export default function Home() {
   return (
@@ -16,6 +15,9 @@ export default function Home() {
       />
       <div className="mx-auto w-4/5 lg:w-1/2">
         <SearchBar />
+      </div>
+      <div className="absolute bottom-80 left-0 right-0 z-40 text-center">
+        <Ticker />
       </div>
       <div className="absolute left-0 top-0 h-full w-full bg-black"></div>
     </div>
