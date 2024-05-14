@@ -33,8 +33,8 @@ export const SearchBar = () => {
     <div className="relative z-20 flex w-full items-center">
       <input
         type="text"
-        placeholder="Search for episodes..."
-        className="h-12 w-full border-2 border-white bg-black bg-opacity-[96%] py-2 pl-10 pr-10 transition-colors duration-150 hover:bg-base2 focus:border-secondary focus:bg-black focus:outline-none md:shadow-lg md:shadow-base"
+        placeholder="Search The Daily Gwei Refuel..."
+        className="h-12 w-full border-2 border-white border-opacity-70 bg-base py-2 pl-10 pr-10 transition-colors duration-150 hover:border-opacity-90 hover:bg-base2 focus:border-secondary focus:bg-black focus:outline-none md:shadow-lg md:shadow-base"
         value={inputValue}
         onChange={(e) => setInputValue(e.target.value)}
         onKeyDown={(e) => {
