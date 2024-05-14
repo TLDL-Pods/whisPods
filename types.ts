@@ -16,6 +16,12 @@ export interface SegmentProps {
   segment_title: string;
   tweet_embed?: string[];
   keywords?: string[];
+  _id?: string;
+  episode_number?: number;
+  episode_title?: string;
+  release_date?: string;
+  score?: number;
+  highlights?: string[];
 }
 
 export interface EpisodeProps {
@@ -55,6 +61,7 @@ export interface AppState {
   hasSearched: boolean;
   searchTerm: string;
   isMenuModalOpen: boolean;
+  scrollYLock: boolean;
 }
 
 export interface YouTubePlayerEvent {

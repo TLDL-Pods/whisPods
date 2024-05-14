@@ -124,7 +124,7 @@ const EpisodeSegment: FC<EpisodeSegmentProps> = ({
         )}
       </li>
       {showSummary ? (
-        <div className="lg:max-h-1/2 fixed left-0 top-0 z-20 h-full w-full rounded-lg bg-base p-8 pt-28 lg:bottom-0 lg:right-0 lg:m-auto lg:h-fit lg:w-1/2 lg:border lg:border-base3 lg:pt-8">
+        <div className="lg:max-h-1/2 fixed left-0 top-0 z-40 h-full w-full overflow-y-auto rounded-lg bg-base p-8 pt-28 lg:bottom-0 lg:right-0 lg:m-auto lg:h-fit lg:w-1/2 lg:border lg:border-base3 lg:pt-8">
           <div className="relative">
             <button
               className={`text-md absolute -top-1 right-0 -mr-4 h-8 w-8 border border-white border-opacity-40 bg-base1 px-1 text-center text-red-400 duration-300 hover:border-opacity-100 hover:bg-base3 md:w-16 lg:-top-4`}

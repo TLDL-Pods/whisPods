@@ -7,12 +7,18 @@
     --color-base: rgb(13, 13, 14);
     --color-base1: rgb(28, 28, 29);
     --color-base2: rgb(37, 37, 39);
-    --color-base3: rgb(48, 48, 51);
+    --color-base3: rgb(53, 53, 56);
+    --color-base4: rgb(61, 61, 66);
+    --color-base5: rgb(105, 105, 121);
+
     --color-baseText: #ffffff;
     --color-baseText1: #cacaca;
     --color-primary: rgb(247, 247, 247);
+    --color-secondaryLight: rgb(211, 238, 255);
     --color-secondary: rgb(167, 220, 255);
     --color-accent: rgb(57, 176, 255);
+    --color-accentDark: rgb(25, 66, 94);
+
     --color-baseShadow: rgb(0, 0, 0);
   }
 }
@@ -109,4 +115,52 @@
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: normal;
+}
+
+/* General styling for the date picker wrapper */
+.date-picker-custom .react-date-picker__wrapper {
+  color: #fff; /* White text */
+  border: 0px;
+}
+
+/* Styling for the input fields */
+.date-picker-custom .react-date-picker__inputGroup__input {
+  color: #fff; /* White text */
+}
+
+/* Customizing button colors for better visibility */
+.date-picker-custom .react-date-picker__button {
+  color: #ccc; /* Light grey to stand out on the dark background */
+  background-color: transparent; /* Clear background */
+}
+
+.date-picker-custom .react-date-picker__button:enabled:hover,
+.date-picker-custom .react-date-picker__button:enabled:focus {
+  background-color: #555; /* Darker background for hover/focus states */
+}
+
+/* Calendar styling */
+.date-picker-custom .react-calendar {
+  background-color: #222; /* Darker shade for the calendar */
+}
+
+.date-picker-custom .react-calendar__navigation {
+  background-color: transparent; /* No background in the navigation header */
+  color: #fff; /* White text */
+}
+
+.date-picker-custom .react-calendar__navigation button {
+  color: #fff; /* Ensures arrows are visible */
+}
+
+.date-picker-custom .react-calendar__month-view__days__day {
+  color: #fff; /* White text for days */
+}
+
+.date-picker-custom .react-date-picker__calendar-button {
+  display: none; /* Hides the calendar icon */
+}
+
+.date-picker-custom .react-date-picker__x-button {
+  color: red !important; /* Changes the color of the "X" to red */
 }

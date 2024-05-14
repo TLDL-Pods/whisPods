@@ -1,7 +1,7 @@
 // layout.tsx
 
 import './globals.css';
-import Navbar from './Navbar';
+import Navbar from './components/navbar/Navbar';
 import { Analytics } from '@vercel/analytics/react';
 import GoogleAnalytics from './components/GoogleAnalyics';
 import CookieBanner from '@/app/components/CookieBanner';
@@ -27,11 +27,11 @@ export default function RootLayout({
           <nav className="fixed top-0 z-50 w-full">
             <Navbar />
           </nav>
-          <div className="flex min-h-screen flex-col bg-base pt-24 lg:pt-32">
+          <div className="flex min-h-screen flex-col pt-24 lg:pt-32">
             <Suspense fallback={<div>Loading...</div>}>
               <main className="flex-grow overflow-y-auto">{children}</main>
             </Suspense>
-            <footer className="flex w-full justify-center bg-base2 py-4 font-light"></footer>
+            <footer className="flex w-full justify-center py-4 font-light"></footer>
           </div>
         </AppStateProvider>
         <CookieBanner />
